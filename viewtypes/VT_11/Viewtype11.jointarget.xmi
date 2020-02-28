@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jt:root xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jt="ConsumerMonitoringViewtype"
+    xsi:schemaLocation="ConsumerMonitoringViewtype Viewtype11-target.ecore">
+  <NonConformLoadGroup
+      SubLoadArea="//@SubLoadArea.0"/>
+  <NonConformLoad
+      mRID="_653563"
+      pfixed="20.0"
+      LoadGroup="//@NonConformLoadGroup.0"/>
+  <NonConformLoad
+      mRID="_634532"
+      pfixed="98.0"
+      LoadGroup="//@NonConformLoadGroup.0"/>
+  <NonConformLoad
+      mRID="_345324"
+      pfixed="15.0"
+      LoadGroup="//@NonConformLoadGroup.0"/>
+  <ControlArea
+      mRID="AmprionControlArea"/>
+  <LoadArea
+      ControlArea="//@ControlArea.0"/>
+  <SubLoadArea
+      LoadArea="//@LoadArea.0"/>
+  <ConformLoadGroup
+      SubLoadArea="//@SubLoadArea.0"/>
+  <ConformLoad
+      mRID="_572235"
+      pfixed="44.0"
+      LoadGroup="//@ConformLoadGroup.0"/>
+  <ConformLoad
+      mRID="_537452"
+      pfixed="78.0"
+      LoadGroup="//@ConformLoadGroup.0"/>
+  <ConformLoad
+      mRID="_999352"
+      pfixed="100.0"
+      LoadGroup="//@ConformLoadGroup.0"/>
+  <ServiceDeliveryPoint
+      EnergyConsumer="//@NonConformLoad.0"
+      loadForecast="433.0"
+      DeliveredPower="253.0"/>
+  <ServiceDeliveryPoint
+      EnergyConsumer="//@NonConformLoad.1"
+      loadForecast="77.0"
+      DeliveredPower="155.0"/>
+  <ServiceDeliveryPoint
+      EnergyConsumer="//@NonConformLoad.2"
+      loadForecast="440.0"
+      DeliveredPower="332.0"/>
+  <ServiceDeliveryPoint
+      EnergyConsumer="//@ConformLoad.0"
+      loadForecast="209.0"
+      DeliveredPower="155.0"/>
+  <ServiceDeliveryPoint
+      EnergyConsumer="//@ConformLoad.1"
+      loadForecast="120.0"
+      DeliveredPower="111.0"/>
+  <ServiceDeliveryPoint
+      EnergyConsumer="//@ConformLoad.2"
+      loadForecast="200.0"
+      DeliveredPower="167.0"/>
+  <Meter ServiceDeliveryPoint="//@ServiceDeliveryPoint.0"
+      PowerImport="360.0"
+      PowerExport="24.0"/>
+  <Meter ServiceDeliveryPoint="//@ServiceDeliveryPoint.1"
+      PowerImport="77.0"/>
+  <Meter ServiceDeliveryPoint="//@ServiceDeliveryPoint.2"
+      PowerImport="333.0"
+      PowerExport="10.0"/>
+  <Meter ServiceDeliveryPoint="//@ServiceDeliveryPoint.3"
+      PowerImport="180.0"
+      PowerExport="24.0"/>
+  <Meter ServiceDeliveryPoint="//@ServiceDeliveryPoint.4"
+      PowerImport="120.0"
+      PowerExport="33.0"/>
+  <Meter ServiceDeliveryPoint="//@ServiceDeliveryPoint.5"
+      PowerImport="180.0"
+      PowerExport="43.0"/>
+</jt:root>

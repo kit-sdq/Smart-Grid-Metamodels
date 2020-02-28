@@ -1,0 +1,297 @@
+import "platform:/resource/CIM/model/schema.ecore"
+import "platform:/resource/CIM/model/COSEM.ecore"
+import "platform:/resource/CIM/model/61850.ecore"
+target "physicalGridView"
+
+theta join CIM.IEC61970.Wires.Switch with substationStandard.LNNodes.LNGroupX.XSWI where "CIM.IEC61970.Wires.Switch.mRID = substationStandard.LNNodes.LNGroupX.XSWI.NamePlt.IdNs" as jointarget.Switch {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+					CIM.IEC61970.Wires.Switch.normalOpen
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location {
+		keep outgoing CIM.IEC61968.Common.Location.Position as type jointarget.PositionPoint {
+		keep attributes CIM.IEC61968.Common.PositionPoint.xPosition,
+		CIM.IEC61968.Common.PositionPoint.yPosition,
+		CIM.IEC61968.Common.PositionPoint.zPosition
+		}
+	}
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer {
+		keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+		keep subtype CIM.IEC61970.Core.VoltageLevel as type jointarget.VoltageLevel {
+			keep outgoing CIM.IEC61970.Core.VoltageLevel.Substation as type jointarget.Substation {
+				keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+			}
+		}
+	}
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage {
+		keep attributes CIM.IEC61970.Core.BaseVoltage.nominalVoltage
+	}
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal {
+		keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+		keep attributes CIM.IEC61970.Core.Terminal.connected
+		keep outgoing CIM.IEC61970.Core.Terminal.ConnectivityNode as type jointarget.ConnectivityNode {
+			keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+		}
+	}
+	keep subtype CIM.IEC61970.Wires.Disconnector as type jointarget.Disconnector
+	keep subtype CIM.IEC61970.Wires.Jumper as type jointarget.Jumper
+	keep subtype CIM.IEC61970.Wires.LoadBreakSwitch as type jointarget.LoadBreakSwitch
+	keep subtype CIM.IEC61970.Wires.Fuse as type jointarget.Fuse {
+		keep attributes CIM.IEC61970.Wires.Fuse.ratingCurrent
+	}
+	keep subtype CIM.IEC61970.Wires.GroundDisconnector as type jointarget.GroundDisconnector
+}
+
+theta join CIM.IEC61970.Wires.PowerTransformer with substationStandard.LNNodes.LNGroupY.YPTR where "CIM.IEC61970.Wires.PowerTransformer.mRID = substationStandard.LNNodes.LNGroupY.YPTR.NamePlt.IdNs" as jointarget.PowerTransformer {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep calculated attribute "substationStandard::LNNodes::LNGroupY::YPTR.PwrRtg.setMag.f" as PowerTransformer.PowerRate:Double
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer  
+	keep outgoing CIM.IEC61970.Wires.PowerTransformer.TransformerWindings as type jointarget.TransformerWinding {
+		keep attributes CIM.IEC61970.Wires.TransformerWinding.g,
+		CIM.IEC61970.Wires.TransformerWinding.b,
+		CIM.IEC61970.Wires.TransformerWinding.x,
+		CIM.IEC61970.Wires.TransformerWinding.r,
+		CIM.IEC61970.Wires.TransformerWinding.ratedS,
+		CIM.IEC61970.Wires.TransformerWinding.ratedU,
+		CIM.IEC61970.Wires.TransformerWinding.emergencyS
+		keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+		keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal
+		keep outgoing CIM.IEC61970.Wires.TransformerWinding.PhaseTapChanger as type jointarget.PhaseTapChanger
+		keep outgoing CIM.IEC61970.Wires.TransformerWinding.RatioTapChanger as type jointarget.RatioTapChanger
+	}
+}
+
+theta join CIM.IEC61970.Wires.FrequencyConverter with substationStandard.LNNodes.LNGroupZ.ZTCF where "CIM.IEC61970.Wires.FrequencyConverter.mRID = substationStandard.LNNodes.LNGroupZ.ZTCF.NamePlt.IdNs" as jointarget.FrequencyConverter {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+					CIM.IEC61970.Wires.FrequencyConverter.frequency,
+					CIM.IEC61970.Wires.FrequencyConverter.maxP,
+					CIM.IEC61970.Wires.FrequencyConverter.minP,
+					CIM.IEC61970.Wires.FrequencyConverter.maxU,
+					CIM.IEC61970.Wires.FrequencyConverter.minU
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Wires.ACLineSegment with substationStandard.LNNodes.LNGroupZ.ZLIN where "CIM.IEC61970.Wires.ACLineSegment.mRID = substationStandard.LNNodes.LNGroupZ.ZLIN.NamePlt.IdNs" as jointarget.ACLineSegment {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+		keep attributes CIM.IEC61970.Wires.Conductor.length,
+					CIM.IEC61970.Wires.ACLineSegment.gch,
+					CIM.IEC61970.Wires.ACLineSegment.r,
+					CIM.IEC61970.Wires.ACLineSegment.x,
+					CIM.IEC61970.Wires.ACLineSegment.bch
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Wires.DCLineSegment with substationStandard.LNNodes.LNGroupZ.ZLIN where "CIM.IEC61970.Wires.DCLineSegment.mRID = substationStandard.LNNodes.LNGroupZ.ZLIN.NamePlt.IdNs" as jointarget.DCLineSegment {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+					CIM.IEC61970.Wires.Conductor.length,
+					CIM.IEC61970.Wires.DCLineSegment.dcSegmentResistance,
+					CIM.IEC61970.Wires.DCLineSegment.dcSegmentInductance
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Wires.StaticVarCompensator with substationStandard.LNNodes.LNGroupZ.ZTCR where "CIM.IEC61970.Wires.StaticVarCompensator.mRID = substationStandard.LNNodes.LNGroupZ.ZTCR.NamePlt.IdNs" as jointarget.StaticVarCompensator {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+					CIM.IEC61970.Wires.StaticVarCompensator.sVCControlMode,
+					CIM.IEC61970.Wires.StaticVarCompensator.inductiveRating,
+					CIM.IEC61970.Wires.StaticVarCompensator.capacitiveRating,
+					CIM.IEC61970.Wires.StaticVarCompensator.voltageSetPoint,
+					CIM.IEC61970.Wires.StaticVarCompensator.slope
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Wires.TapChanger with substationStandard.LNNodes.LNGroupY.YLTC where "CIM.IEC61970.Wires.TapChanger.mRID = substationStandard.LNNodes.LNGroupY.YLTC.NamePlt.IdNs" as jointarget.TapChanger {
+	keep attributes CIM.IEC61970.Wires.TapChanger.initialDelay,
+					CIM.IEC61970.Wires.TapChanger.subsequentDelay,
+					CIM.IEC61970.Wires.TapChanger.ltcFlag,
+					CIM.IEC61970.Wires.TapChanger.regulationStatus,
+					CIM.IEC61970.Wires.TapChanger.neutralStep,
+					CIM.IEC61970.Wires.TapChanger.neutralU,
+					CIM.IEC61970.Wires.TapChanger.lowStep,
+					CIM.IEC61970.Wires.TapChanger.highStep,
+					CIM.IEC61970.Wires.TapChanger.normalStep
+	keep calculated attribute "substationStandard.LNNodes.LNGroupY.YLTC.TapPos.valWTr.posVal" as TapChanger.posVal:Integer
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep subtype CIM.IEC61970.Wires.PhaseTapChanger as type jointarget.PhaseTapChanger {
+		keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+						CIM.IEC61970.Wires.PhaseTapChanger.phaseTapChangerType,
+						CIM.IEC61970.Wires.PhaseTapChanger.windingConnectionAngle,
+						CIM.IEC61970.Wires.PhaseTapChanger.stepPhaseShiftIncrement,
+						CIM.IEC61970.Wires.PhaseTapChanger.voltageStepIncrementOutOfPhase,
+						CIM.IEC61970.Wires.PhaseTapChanger.nominalVoltageOutOfPhase,
+						CIM.IEC61970.Wires.PhaseTapChanger.xStepMax,
+						CIM.IEC61970.Wires.PhaseTapChanger.xStepMin
+		keep outgoing CIM.IEC61970.Wires.PhaseTapChanger.TransformerWinding as type jointarget.TransformerWinding {
+			keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+		}
+	}
+	keep subtype CIM.IEC61970.Wires.RatioTapChanger as type jointarget.RatioTapChanger {
+		keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+						CIM.IEC61970.Wires.RatioTapChanger.tculControlMode
+		keep outgoing CIM.IEC61970.Wires.RatioTapChanger.TransformerWinding as type jointarget.TransformerWinding
+	}
+}
+
+theta join CIM.IEC61970.Wires.Breaker with substationStandard.LNNodes.LNGroupX.XCBR where "CIM.IEC61970.Wires.Breaker.mRID = substationStandard.LNNodes.LNGroupX.XCBR.NamePlt.IdNs" as jointarget.Breaker {
+	keep attributes CIM.IEC61970.Wires.Breaker.ratedCurrent,
+					CIM.IEC61970.Wires.Breaker.inTransitTime
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+	keep supertype CIM.IEC61970.Wires.Switch as type jointarget.Switch
+}
+
+theta join CIM.IEC61970.Wires.ShuntCompensator with substationStandard.LNNodes.LNGroupZ.ZCAP where "CIM.IEC61970.Wires.ShuntCompensator.mRID = substationStandard.LNNodes.LNGroupZ.ZCAP.NamePlt.IdNs" as jointarget.ShuntCapacitorCompensator {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+	CIM.IEC61970.Wires.ShuntCompensator.normalSections,
+	CIM.IEC61970.Wires.ShuntCompensator.minU,
+	CIM.IEC61970.Wires.ShuntCompensator.nomQ,
+	CIM.IEC61970.Wires.ShuntCompensator.nomU,
+	CIM.IEC61970.Wires.ShuntCompensator.maximumSections,
+	CIM.IEC61970.Wires.ShuntCompensator.maxU,
+	CIM.IEC61970.Wires.ShuntCompensator.bPerSection,
+	CIM.IEC61970.Wires.ShuntCompensator.gPerSection,
+	CIM.IEC61970.Wires.ShuntCompensator.voltageSensitivity,
+	CIM.IEC61970.Wires.ShuntCompensator.reactivePerSection
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Generation.Production.GeneratingUnit with substationStandard.LNNodes.LNGroupZ.ZGEN where "CIM.IEC61970.Generation.Production.GeneratingUnit.mRID = substationStandard.LNNodes.LNGroupZ.ZGEN.NamePlt.IdNs" as jointarget.GeneratingUnit {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.highControlLimit,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.autoCntrlMarginP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.ratedGrossMaxP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.allocSpinResP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.stepChange,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.startupCost,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.nominalP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.energyMinP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.initialP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.minEconomicP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.maxEconomicP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.ratedGrossMinP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.minOperatingP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.baseP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.maxOperatingP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.ratedNetMaxP,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.efficiency,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.controlDeadband,
+	CIM.IEC61970.Generation.Production.GeneratingUnit.normalPF
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.GnSt" as GeneratingUnit.State:String
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.GnSpd.mag.f" as GeneratingUnit.Speed:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.DmdPwr.setMag.f" as GeneratingUnit.DmdPwr:Integer
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.PwrRtg.setMag.f" as GeneratingUnit.PwrRtg:Integer
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Generation.Production.GeneratingUnit.SynchronousMachines as type jointarget.SynchronousMachine
+}
+
+theta join CIM.IEC61970.Wires.SynchronousMachine with substationStandard.LNNodes.LNGroupZ.ZRRC where "CIM.IEC61970.Wires.SynchronousMachine.mRID = substationStandard.LNNodes.LNGroupZ.ZRRC.NamePlt.IdNs" as jointarget.SynchronousMachine {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+	CIM.IEC61970.Wires.SynchronousMachine.xDirectSync,
+	CIM.IEC61970.Wires.SynchronousMachine.xQuadTrans,
+	CIM.IEC61970.Wires.SynchronousMachine.xQuadSubtrans,
+	CIM.IEC61970.Wires.SynchronousMachine.minQ,
+	CIM.IEC61970.Wires.SynchronousMachine.maxU,
+	CIM.IEC61970.Wires.SynchronousMachine.maxQ,
+	CIM.IEC61970.Wires.SynchronousMachine.type,
+	CIM.IEC61970.Wires.SynchronousMachine.r2,
+	CIM.IEC61970.Wires.SynchronousMachine.x2,
+	CIM.IEC61970.Wires.SynchronousMachine.r,
+	CIM.IEC61970.Wires.SynchronousMachine.x,
+	CIM.IEC61970.Wires.SynchronousMachine.xQuadSync,
+	CIM.IEC61970.Wires.SynchronousMachine.ratedS,
+	CIM.IEC61970.Wires.SynchronousMachine.minU,
+	CIM.IEC61970.Wires.SynchronousMachine.xDirectTrans,
+	CIM.IEC61970.Wires.SynchronousMachine.baseQ
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+	keep outgoing CIM.IEC61970.Wires.SynchronousMachine.GeneratingUnit as type jointarget.GeneratingUnit 
+}
+
+theta join CIM.IEC61970.Wires.Connector with CIM.IEC61970.Wires.Connector where "true" as jointarget.Connector {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Wires.Ground with CIM.IEC61970.Wires.Ground where "true" as jointarget.Ground {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Wires.EnergyConsumer with CIM.IEC61970.Wires.EnergyConsumer where "true" as jointarget.EnergyConsumer {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+	CIM.IEC61970.Wires.EnergyConsumer.pfixed,
+	CIM.IEC61970.Wires.EnergyConsumer.qfixedPct,
+	CIM.IEC61970.Wires.EnergyConsumer.pfixedPct,
+	CIM.IEC61970.Wires.EnergyConsumer.qfixed
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Wires.Resistor with CIM.IEC61970.Wires.Resistor where "true" as jointarget.Resistor {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Wires.RectifierInverter with CIM.IEC61970.Wires.RectifierInverter where "true" as jointarget.RectifierInverter {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+	CIM.IEC61970.Wires.RectifierInverter.minCompoundVoltage,
+	CIM.IEC61970.Wires.RectifierInverter.minP,
+	CIM.IEC61970.Wires.RectifierInverter.maxU,
+	CIM.IEC61970.Wires.RectifierInverter.operatingMode,
+	CIM.IEC61970.Wires.RectifierInverter.frequency,
+	CIM.IEC61970.Wires.RectifierInverter.maxP,
+	CIM.IEC61970.Wires.RectifierInverter.ratedU,
+	CIM.IEC61970.Wires.RectifierInverter.minU,
+	CIM.IEC61970.Wires.RectifierInverter.compoundResistance
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.BaseVoltage as type jointarget.BaseVoltage 
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal 
+}
+
+theta join CIM.IEC61970.Meas.CurrentTransformer with substationStandard.LNNodes.LNGroupT.TCTR where "CIM.IEC61970.Meas.CurrentTransformer.mRID = substationStandard.LNNodes.LNGroupT.TCTR.NamePlt.IdNs" as jointarget.CurrentTransformer {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+	CIM.IEC61970.Meas.CurrentTransformer.maxRatio
+	keep calculated attribute "substationStandard.LNNodes.LNGroupT.TCTR.Amp.instMag.f" as CurrentTransformer.Ampere:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupT.TCTR.ARtg.setMag.f" as CurrentTransformer.RatedAmpere:Double
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer 
+}
+
+theta join CIM.IEC61970.Meas.PotentialTransformer with substationStandard.LNNodes.LNGroupT.TVTR where "CIM.IEC61970.Meas.PotentialTransformer.mRID = substationStandard.LNNodes.LNGroupT.TVTR.NamePlt.IdNs" as jointarget.VoltageTransformer {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep attributes CIM.IEC61970.Meas.PotentialTransformer.nominalRatio
+	keep calculated attribute "substationStandard.LNNodes.LNGroupT.TVTR.Vol.instMag.f" as VoltageTransformer.Voltage:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupT.TVTR.VRtg.setMag.f" as VoltageTransformer.ratedVoltage:Double
+	keep outgoing CIM.IEC61970.Core.PowerSystemResource.Location as type jointarget.Location 
+	keep outgoing CIM.IEC61970.Core.Equipment.EquipmentContainer as type jointarget.EquipmentContainer  
+}

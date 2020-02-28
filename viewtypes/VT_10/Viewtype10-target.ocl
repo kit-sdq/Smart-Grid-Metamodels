@@ -1,0 +1,716 @@
+
+import _CIM : 'platform:/resource/CIM/model/schema.ecore'::cim 
+import _substationStandard : 'platform:/resource/CIM/model/61850.ecore'::sub 
+-- target metamodel
+import _jointarget : 'platform:/resource/CIM/src-gen/Viewtype10-target.ecore#/'
+-- trace metamodel
+import _mjtrace : 'platform:/resource/CIM/src-gen/Viewtype10-trace.ecore#/'
+
+
+
+
+-- ###
+-- # Theta Join Disconnector
+-- ##
+context _mjtrace::join_Disconnector_XSWI_Disconnector
+inv keepMappingPairs(
+	'The mapping in the join of "Disconnector" with "XSWI" does change '
+ + 'after translation for ' +
+		_CIM::IEC61970::Wires::Disconnector.allInstances()->iterate(
+			left : _CIM::IEC61970::Wires::Disconnector, pairsOuter: Sequence(OclAny) = Sequence{} |
+			pairsOuter->union(_substationStandard::LNNodes::LNGroupX::XSWI.allInstances()->iterate(
+				right : _substationStandard::LNNodes::LNGroupX::XSWI, pairs: Sequence(OclAny) = Sequence{} |
+					if ((left.mRID = right.NamePlt.ldNs) = ()) then pairs else pairs->append(Sequence{left, right}) endif
+			))
+		)->size().toString() + ' instance pairs.'):
+_CIM::IEC61970::Wires::Disconnector.allInstances()->forAll(left |
+	_substationStandard::LNNodes::LNGroupX::XSWI.allInstances()->forAll(right |
+		(let j = _mjtrace::join_Disconnector_XSWI_Disconnector.allInstances()->select(j|j.left = left or j.right = right)->asOrderedSet() in (not j->isEmpty() and j->first().target.oclIsUndefined())) or
+		((left.mRID = right.NamePlt.ldNs) = ())
+	)
+)
+inv consistentDeletion_Disconnector(
+	'The deletion of a target class instance of type "Disconnector" leads to the deletion'
+  + ' of other target class instances of type "Disconnector".'
+):
+self.target.oclIsUndefined() implies
+_mjtrace::join_Disconnector_XSWI_Disconnector.allInstances()->select(other |
+	other.left = self.left
+)->forAll(other |
+	other.target.oclIsUndefined()
+)
+inv attributeMapping_Disconnector_mRID(
+	'The new attribute value "' + self.target.mRID.toString() + '" of "Disconnector.mRID" '
+  + 'must be the same for all target classes instances, which share the same left source class instance. The value of '
+  + 'the source class attributes "Disconnector.mRID" is "' + self.left.mRID.toString() + '".'):
+not self.target.oclIsUndefined() implies self.target.mRID = self.left.var_CIM_IEC61970_Wires_Disconnector_mRID
+inv attributeMapping_Disconnector_Position(
+	'The value of the calculated attribute "Disconnector.Position" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.Position = 
+inv attributeMapping_Disconnector_PositionA(
+	'The value of the calculated attribute "Disconnector.PositionA" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionA = 
+inv attributeMapping_Disconnector_PositionB(
+	'The value of the calculated attribute "Disconnector.PositionB" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionB = 
+inv attributeMapping_Disconnector_PositionC(
+	'The value of the calculated attribute "Disconnector.PositionC" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionC = 
+
+context _jointarget::Disconnector
+inv noNewTargetInstances:
+_mjtrace::join_Disconnector_XSWI_Disconnector.allInstances()->select(tj | tj.target = self)->notEmpty()
+inv attributeMapping_Disconnector_mRID:
+self.mRID = self.var_CIM_IEC61970_Wires_Disconnector_mRID__jointarget_Disconnector
+
+-- ###
+-- # Theta Join LoadBreakSwitch
+-- ##
+context _mjtrace::join_LoadBreakSwitch_XSWI_LoadBreakSwitch
+inv keepMappingPairs(
+	'The mapping in the join of "LoadBreakSwitch" with "XSWI" does change '
+ + 'after translation for ' +
+		_CIM::IEC61970::Wires::LoadBreakSwitch.allInstances()->iterate(
+			left : _CIM::IEC61970::Wires::LoadBreakSwitch, pairsOuter: Sequence(OclAny) = Sequence{} |
+			pairsOuter->union(_substationStandard::LNNodes::LNGroupX::XSWI.allInstances()->iterate(
+				right : _substationStandard::LNNodes::LNGroupX::XSWI, pairs: Sequence(OclAny) = Sequence{} |
+					if ((left.mRID = right.NamePlt.ldNs) = ()) then pairs else pairs->append(Sequence{left, right}) endif
+			))
+		)->size().toString() + ' instance pairs.'):
+_CIM::IEC61970::Wires::LoadBreakSwitch.allInstances()->forAll(left |
+	_substationStandard::LNNodes::LNGroupX::XSWI.allInstances()->forAll(right |
+		(let j = _mjtrace::join_LoadBreakSwitch_XSWI_LoadBreakSwitch.allInstances()->select(j|j.left = left or j.right = right)->asOrderedSet() in (not j->isEmpty() and j->first().target.oclIsUndefined())) or
+		((left.mRID = right.NamePlt.ldNs) = ())
+	)
+)
+inv consistentDeletion_LoadBreakSwitch(
+	'The deletion of a target class instance of type "LoadBreakSwitch" leads to the deletion'
+  + ' of other target class instances of type "LoadBreakSwitch".'
+):
+self.target.oclIsUndefined() implies
+_mjtrace::join_LoadBreakSwitch_XSWI_LoadBreakSwitch.allInstances()->select(other |
+	other.left = self.left
+)->forAll(other |
+	other.target.oclIsUndefined()
+)
+inv attributeMapping_LoadBreakSwitch_mRID(
+	'The new attribute value "' + self.target.mRID.toString() + '" of "LoadBreakSwitch.mRID" '
+  + 'must be the same for all target classes instances, which share the same left source class instance. The value of '
+  + 'the source class attributes "LoadBreakSwitch.mRID" is "' + self.left.mRID.toString() + '".'):
+not self.target.oclIsUndefined() implies self.target.mRID = self.left.var_CIM_IEC61970_Wires_LoadBreakSwitch_mRID
+inv attributeMapping_LoadBreakSwitch_Position(
+	'The value of the calculated attribute "LoadBreakSwitch.Position" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.Position = 
+inv attributeMapping_LoadBreakSwitch_PositionA(
+	'The value of the calculated attribute "LoadBreakSwitch.PositionA" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionA = 
+inv attributeMapping_LoadBreakSwitch_PositionB(
+	'The value of the calculated attribute "LoadBreakSwitch.PositionB" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionB = 
+inv attributeMapping_LoadBreakSwitch_PositionC(
+	'The value of the calculated attribute "LoadBreakSwitch.PositionC" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionC = 
+
+context _jointarget::LoadBreakSwitch
+inv noNewTargetInstances:
+_mjtrace::join_LoadBreakSwitch_XSWI_LoadBreakSwitch.allInstances()->select(tj | tj.target = self)->notEmpty()
+inv attributeMapping_LoadBreakSwitch_mRID:
+self.mRID = self.var_CIM_IEC61970_Wires_LoadBreakSwitch_mRID__jointarget_LoadBreakSwitch
+
+-- ###
+-- # Theta Join GroundDisconnector
+-- ##
+context _mjtrace::join_GroundDisconnector_XSWI_GroundDisconnector
+inv keepMappingPairs(
+	'The mapping in the join of "GroundDisconnector" with "XSWI" does change '
+ + 'after translation for ' +
+		_CIM::IEC61970::Wires::GroundDisconnector.allInstances()->iterate(
+			left : _CIM::IEC61970::Wires::GroundDisconnector, pairsOuter: Sequence(OclAny) = Sequence{} |
+			pairsOuter->union(_substationStandard::LNNodes::LNGroupX::XSWI.allInstances()->iterate(
+				right : _substationStandard::LNNodes::LNGroupX::XSWI, pairs: Sequence(OclAny) = Sequence{} |
+					if ((left.mRID = right.NamePlt.ldNs) = ()) then pairs else pairs->append(Sequence{left, right}) endif
+			))
+		)->size().toString() + ' instance pairs.'):
+_CIM::IEC61970::Wires::GroundDisconnector.allInstances()->forAll(left |
+	_substationStandard::LNNodes::LNGroupX::XSWI.allInstances()->forAll(right |
+		(let j = _mjtrace::join_GroundDisconnector_XSWI_GroundDisconnector.allInstances()->select(j|j.left = left or j.right = right)->asOrderedSet() in (not j->isEmpty() and j->first().target.oclIsUndefined())) or
+		((left.mRID = right.NamePlt.ldNs) = ())
+	)
+)
+inv consistentDeletion_GroundDisconnector(
+	'The deletion of a target class instance of type "GroundDisconnector" leads to the deletion'
+  + ' of other target class instances of type "GroundDisconnector".'
+):
+self.target.oclIsUndefined() implies
+_mjtrace::join_GroundDisconnector_XSWI_GroundDisconnector.allInstances()->select(other |
+	other.left = self.left
+)->forAll(other |
+	other.target.oclIsUndefined()
+)
+inv attributeMapping_GroundDisconnector_mRID(
+	'The new attribute value "' + self.target.mRID.toString() + '" of "GroundDisconnector.mRID" '
+  + 'must be the same for all target classes instances, which share the same left source class instance. The value of '
+  + 'the source class attributes "GroundDisconnector.mRID" is "' + self.left.mRID.toString() + '".'):
+not self.target.oclIsUndefined() implies self.target.mRID = self.left.var_CIM_IEC61970_Wires_GroundDisconnector_mRID
+inv attributeMapping_GroundDisconnector_Position(
+	'The value of the calculated attribute "GroundDisconnector.Position" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.Position = 
+inv attributeMapping_GroundDisconnector_PositionA(
+	'The value of the calculated attribute "GroundDisconnector.PositionA" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionA = 
+inv attributeMapping_GroundDisconnector_PositionB(
+	'The value of the calculated attribute "GroundDisconnector.PositionB" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionB = 
+inv attributeMapping_GroundDisconnector_PositionC(
+	'The value of the calculated attribute "GroundDisconnector.PositionC" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionC = 
+
+context _jointarget::GroundDisconnector
+inv noNewTargetInstances:
+_mjtrace::join_GroundDisconnector_XSWI_GroundDisconnector.allInstances()->select(tj | tj.target = self)->notEmpty()
+inv attributeMapping_GroundDisconnector_mRID:
+self.mRID = self.var_CIM_IEC61970_Wires_GroundDisconnector_mRID__jointarget_GroundDisconnector
+
+-- ###
+-- # Theta Join Breaker
+-- ##
+context _mjtrace::join_Breaker_XCBR_Breaker
+inv keepMappingPairs(
+	'The mapping in the join of "Breaker" with "XCBR" does change '
+ + 'after translation for ' +
+		_CIM::IEC61970::Wires::Breaker.allInstances()->iterate(
+			left : _CIM::IEC61970::Wires::Breaker, pairsOuter: Sequence(OclAny) = Sequence{} |
+			pairsOuter->union(_substationStandard::LNNodes::LNGroupX::XCBR.allInstances()->iterate(
+				right : _substationStandard::LNNodes::LNGroupX::XCBR, pairs: Sequence(OclAny) = Sequence{} |
+					if ((left.mRID = right.NamePlt.ldNs) = ()) then pairs else pairs->append(Sequence{left, right}) endif
+			))
+		)->size().toString() + ' instance pairs.'):
+_CIM::IEC61970::Wires::Breaker.allInstances()->forAll(left |
+	_substationStandard::LNNodes::LNGroupX::XCBR.allInstances()->forAll(right |
+		(let j = _mjtrace::join_Breaker_XCBR_Breaker.allInstances()->select(j|j.left = left or j.right = right)->asOrderedSet() in (not j->isEmpty() and j->first().target.oclIsUndefined())) or
+		((left.mRID = right.NamePlt.ldNs) = ())
+	)
+)
+inv consistentDeletion_Breaker(
+	'The deletion of a target class instance of type "Breaker" leads to the deletion'
+  + ' of other target class instances of type "Breaker".'
+):
+self.target.oclIsUndefined() implies
+_mjtrace::join_Breaker_XCBR_Breaker.allInstances()->select(other |
+	other.left = self.left
+)->forAll(other |
+	other.target.oclIsUndefined()
+)
+inv attributeMapping_Breaker_mRID(
+	'The new attribute value "' + self.target.mRID.toString() + '" of "Breaker.mRID" '
+  + 'must be the same for all target classes instances, which share the same left source class instance. The value of '
+  + 'the source class attributes "Breaker.mRID" is "' + self.left.mRID.toString() + '".'):
+not self.target.oclIsUndefined() implies self.target.mRID = self.left.var_CIM_IEC61970_Wires_Breaker_mRID
+inv attributeMapping_Breaker_Position(
+	'The value of the calculated attribute "Breaker.Position" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.Position = 
+inv attributeMapping_Breaker_PositionA(
+	'The value of the calculated attribute "Breaker.PositionA" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionA = 
+inv attributeMapping_Breaker_PositionB(
+	'The value of the calculated attribute "Breaker.PositionB" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionB = 
+inv attributeMapping_Breaker_PositionC(
+	'The value of the calculated attribute "Breaker.PositionC" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.PositionC = 
+inv attributeMapping_Breaker_Open(
+	'The value of the calculated attribute "Breaker.Open" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.Open = 
+inv attributeMapping_Breaker_Close(
+	'The value of the calculated attribute "Breaker.Close" is not up to date.'):
+not self.target.oclIsUndefined() implies self.target.Close = 
+
+context _jointarget::Breaker
+inv noNewTargetInstances:
+_mjtrace::join_Breaker_XCBR_Breaker.allInstances()->select(tj | tj.target = self)->notEmpty()
+inv attributeMapping_Breaker_mRID:
+self.mRID = self.var_CIM_IEC61970_Wires_Breaker_mRID__jointarget_Breaker
+
+-- ###
+-- # Theta Join PowerTransformer
+-- ##
+context _mjtrace::join_PowerTransformer_YPTR_PowerTransformer
+inv keepMappingPairs(
+	'The mapping in the join of "PowerTransformer" with "YPTR" does change '
+ + 'after translation for ' +
+		_CIM::IEC61970::Wires::PowerTransformer.allInstances()->iterate(
+			left : _CIM::IEC61970::Wires::PowerTransformer, pairsOuter: Sequence(OclAny) = Sequence{} |
+			pairsOuter->union(_substationStandard::LNNodes::LNGroupY::YPTR.allInstances()->iterate(
+				right : _substationStandard::LNNodes::LNGroupY::YPTR, pairs: Sequence(OclAny) = Sequence{} |
+					if ((left.mRID = right.NamePlt.ldNs) = ()) then pairs else pairs->append(Sequence{left, right}) endif
+			))
+		)->size().toString() + ' instance pairs.'):
+_CIM::IEC61970::Wires::PowerTransformer.allInstances()->forAll(left |
+	_substationStandard::LNNodes::LNGroupY::YPTR.allInstances()->forAll(right |
+		(let j = _mjtrace::join_PowerTransformer_YPTR_PowerTransformer.allInstances()->select(j|j.left = left or j.right = right)->asOrderedSet() in (not j->isEmpty() and j->first().target.oclIsUndefined())) or
+		((left.mRID = right.NamePlt.ldNs) = ())
+	)
+)
+inv consistentDeletion_PowerTransformer(
+	'The deletion of a target class instance of type "PowerTransformer" leads to the deletion'
+  + ' of other target class instances of type "PowerTransformer".'
+):
+self.target.oclIsUndefined() implies
+_mjtrace::join_PowerTransformer_YPTR_PowerTransformer.allInstances()->select(other |
+	other.left = self.left
+)->forAll(other |
+	other.target.oclIsUndefined()
+)
+inv attributeMapping_PowerTransformer_mRID(
+	'The new attribute value "' + self.target.mRID.toString() + '" of "PowerTransformer.mRID" '
+  + 'must be the same for all target classes instances, which share the same left source class instance. The value of '
+  + 'the source class attributes "PowerTransformer.mRID" is "' + self.left.mRID.toString() + '".'):
+not self.target.oclIsUndefined() implies self.target.mRID = self.left.var_CIM_IEC61970_Wires_PowerTransformer_mRID
+
+context _jointarget::PowerTransformer
+inv noNewTargetInstances:
+_mjtrace::join_PowerTransformer_YPTR_PowerTransformer.allInstances()->select(tj | tj.target = self)->notEmpty()
+inv attributeMapping_PowerTransformer_mRID:
+self.mRID = self.var_CIM_IEC61970_Wires_PowerTransformer_mRID__jointarget_PowerTransformer
+
+-- ###
+-- # Theta Join ShuntCapacitorCompensator
+-- ##
+context _mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator
+inv keepMappingPairs(
+	'The mapping in the join of "ShuntCompensator" with "ZCAP" does change '
+ + 'after translation for ' +
+		_CIM::IEC61970::Wires::ShuntCompensator.allInstances()->iterate(
+			left : _CIM::IEC61970::Wires::ShuntCompensator, pairsOuter: Sequence(OclAny) = Sequence{} |
+			pairsOuter->union(_substationStandard::LNNodes::LNGroupZ::ZCAP.allInstances()->iterate(
+				right : _substationStandard::LNNodes::LNGroupZ::ZCAP, pairs: Sequence(OclAny) = Sequence{} |
+					if ((left.mRID = right.NamePlt.ldNs) = ()) then pairs else pairs->append(Sequence{left, right}) endif
+			))
+		)->size().toString() + ' instance pairs.'):
+_CIM::IEC61970::Wires::ShuntCompensator.allInstances()->forAll(left |
+	_substationStandard::LNNodes::LNGroupZ::ZCAP.allInstances()->forAll(right |
+		(let j = _mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator.allInstances()->select(j|j.left = left or j.right = right)->asOrderedSet() in (not j->isEmpty() and j->first().target.oclIsUndefined())) or
+		((left.mRID = right.NamePlt.ldNs) = ())
+	)
+)
+inv consistentDeletion_ShuntCapacitorCompensator(
+	'The deletion of a target class instance of type "ShuntCapacitorCompensator" leads to the deletion'
+  + ' of other target class instances of type "ShuntCapacitorCompensator".'
+):
+self.target.oclIsUndefined() implies
+_mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator.allInstances()->select(other |
+	other.left = self.left
+)->forAll(other |
+	other.target.oclIsUndefined()
+)
+inv consistentDeletion_ShuntReactorCompensator(
+	'The deletion of a target class instance of type "ShuntCapacitorCompensator" leads to the deletion'
+  + ' of other target class instances of type "ShuntReactorCompensator".'
+):
+self.target.oclIsUndefined() implies
+_mjtrace::join_ShuntCompensator_ZREA_ShuntReactorCompensator.allInstances()->select(other |
+	other.left = self.left
+)->forAll(other |
+	other.target.oclIsUndefined()
+)
+inv attributeMapping_ShuntCapacitorCompensator_mRID(
+	'The new attribute value "' + self.target.mRID.toString() + '" of "ShuntCapacitorCompensator.mRID" '
+  + 'must be the same for all target classes instances, which share the same left source class instance. The value of '
+  + 'the source class attributes "ShuntCompensator.mRID" is "' + self.left.mRID.toString() + '".'):
+not self.target.oclIsUndefined() implies self.target.mRID = self.left.var_CIM_IEC61970_Wires_ShuntCompensator_mRID
+
+context _jointarget::ShuntCapacitorCompensator
+inv noNewTargetInstances:
+_mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator.allInstances()->select(tj | tj.target = self)->notEmpty()
+inv attributeMapping_ShuntCapacitorCompensator_mRID:
+self.mRID = self.var_CIM_IEC61970_Wires_ShuntCompensator_mRID__jointarget_ShuntCapacitorCompensator
+
+-- ###
+-- # Theta Join ShuntReactorCompensator
+-- ##
+context _mjtrace::join_ShuntCompensator_ZREA_ShuntReactorCompensator
+inv keepMappingPairs(
+	'The mapping in the join of "ShuntCompensator" with "ZREA" does change '
+ + 'after translation for ' +
+		_CIM::IEC61970::Wires::ShuntCompensator.allInstances()->iterate(
+			left : _CIM::IEC61970::Wires::ShuntCompensator, pairsOuter: Sequence(OclAny) = Sequence{} |
+			pairsOuter->union(_substationStandard::LNNodes::LNGroupZ::ZREA.allInstances()->iterate(
+				right : _substationStandard::LNNodes::LNGroupZ::ZREA, pairs: Sequence(OclAny) = Sequence{} |
+					if ((left.mRID = right.NamePlt.ldNs) = ()) then pairs else pairs->append(Sequence{left, right}) endif
+			))
+		)->size().toString() + ' instance pairs.'):
+_CIM::IEC61970::Wires::ShuntCompensator.allInstances()->forAll(left |
+	_substationStandard::LNNodes::LNGroupZ::ZREA.allInstances()->forAll(right |
+		(let j = _mjtrace::join_ShuntCompensator_ZREA_ShuntReactorCompensator.allInstances()->select(j|j.left = left or j.right = right)->asOrderedSet() in (not j->isEmpty() and j->first().target.oclIsUndefined())) or
+		((left.mRID = right.NamePlt.ldNs) = ())
+	)
+)
+inv consistentDeletion_ShuntCapacitorCompensator(
+	'The deletion of a target class instance of type "ShuntReactorCompensator" leads to the deletion'
+  + ' of other target class instances of type "ShuntCapacitorCompensator".'
+):
+self.target.oclIsUndefined() implies
+_mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator.allInstances()->select(other |
+	other.left = self.left
+)->forAll(other |
+	other.target.oclIsUndefined()
+)
+inv consistentDeletion_ShuntReactorCompensator(
+	'The deletion of a target class instance of type "ShuntReactorCompensator" leads to the deletion'
+  + ' of other target class instances of type "ShuntReactorCompensator".'
+):
+self.target.oclIsUndefined() implies
+_mjtrace::join_ShuntCompensator_ZREA_ShuntReactorCompensator.allInstances()->select(other |
+	other.left = self.left
+)->forAll(other |
+	other.target.oclIsUndefined()
+)
+inv attributeMapping_ShuntReactorCompensator_mRID(
+	'The new attribute value "' + self.target.mRID.toString() + '" of "ShuntReactorCompensator.mRID" '
+  + 'must be the same for all target classes instances, which share the same left source class instance. The value of '
+  + 'the source class attributes "ShuntCompensator.mRID" is "' + self.left.mRID.toString() + '".'):
+not self.target.oclIsUndefined() implies self.target.mRID = self.left.var_CIM_IEC61970_Wires_ShuntCompensator_mRID
+
+context _jointarget::ShuntReactorCompensator
+inv noNewTargetInstances:
+_mjtrace::join_ShuntCompensator_ZREA_ShuntReactorCompensator.allInstances()->select(tj | tj.target = self)->notEmpty()
+inv attributeMapping_ShuntReactorCompensator_mRID:
+self.mRID = self.var_CIM_IEC61970_Wires_ShuntCompensator_mRID__jointarget_ShuntReactorCompensator
+
+
+
+-- keep outgoing reference
+context _jointarget::CSWI
+inv isLinked_Disconnector_SwitchControl:
+(_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::Terminal
+inv isLinked_Disconnector_Terminals:
+(_jointarget::Disconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::LoadBreakSwitch.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::GroundDisconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::TransformerWinding.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::CSWI
+inv isLinked_Disconnector_SwitchControl:
+(_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::CSWI
+inv isLinked_Disconnector_SwitchControl:
+(_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::Terminal
+inv isLinked_LoadBreakSwitch_Terminals:
+(_jointarget::Disconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::LoadBreakSwitch.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::GroundDisconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::TransformerWinding.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::Terminal
+inv isLinked_GroundDisconnector_Terminals:
+(_jointarget::Disconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::LoadBreakSwitch.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::GroundDisconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::TransformerWinding.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::CSWI
+inv isLinked_Breaker_SwitchControl:
+(_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Disconnector.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.SwitchControl->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::Terminal
+inv isLinked_Breaker_Terminals:
+(_jointarget::Disconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::LoadBreakSwitch.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::GroundDisconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::TransformerWinding.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::ATCC
+inv isLinked_PowerTransformer_TransformerControl:
+(_jointarget::PowerTransformer.allInstances()->select(o | o.TransformerControl->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::TransformerWinding
+inv isLinked_PowerTransformer_TransformerWindings:
+(_jointarget::PowerTransformer.allInstances()->select(o | o.TransformerWindings->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::ARCO
+inv isLinked_ShuntCapacitorCompensator_CapControl:
+(_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.CapControl->includes(self) )->notEmpty()
+) or (_jointarget::ShuntReactorCompensator.allInstances()->select(o | o.ReactorControl->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::Terminal
+inv isLinked_ShuntCapacitorCompensator_Terminals:
+(_jointarget::Disconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::LoadBreakSwitch.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::GroundDisconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::TransformerWinding.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::Terminal
+inv isLinked_ShuntCapacitorCompensator_Terminals:
+(_jointarget::Disconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::LoadBreakSwitch.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::GroundDisconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::TransformerWinding.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::ARCO
+inv isLinked_ShuntReactorCompensator_ReactorControl:
+(_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.CapControl->includes(self) )->notEmpty()
+) or (_jointarget::ShuntReactorCompensator.allInstances()->select(o | o.ReactorControl->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::TieFlow
+inv isLinked_Terminal_TieFlow:
+(_jointarget::Terminal.allInstances()->select(o | o.TieFlow->includes(self) )->notEmpty()
+)
+
+-- keep outgoing reference
+context _jointarget::ControlArea
+inv isLinked_TieFlow_ControlArea:
+(_jointarget::TieFlow.allInstances()->select(o | o.ControlArea->includes(self) )->notEmpty()
+)
+inv attributeMapping_TieFlow_ControlArea_mRID:
+self.mRID = self.var_CIM_IEC61970_ControlArea_ControlArea_mRID__jointarget_ControlArea
+context _mjtrace::ref_ControlArea_ControlArea_ControlArea
+
+inv attributeMapping_TieFlow_ControlArea_mRID(
+	'The new attribute value "' + self.target.mRID.toString() + '" of "ControlArea.mRID" '
+  + 'must be the same for all target classes instances, which share the same source class instance. The value of '
+  + 'the source class attributes "ControlArea.mRID" is "' + self.source.mRID.toString() + '".'):
+self.target.mRID = self.source.var_CIM_IEC61970_ControlArea_ControlArea_mRID
+
+-- keep outgoing reference
+context _jointarget::Terminal
+inv isLinked_TransformerWinding_Terminals:
+(_jointarget::Disconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::LoadBreakSwitch.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::GroundDisconnector.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::Breaker.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::ShuntCapacitorCompensator.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+) or (_jointarget::TransformerWinding.allInstances()->select(o | o.Terminals->includes(self) )->notEmpty()
+)
+
+-- ###
+-- # meta variables for attributes
+-- ##
+context _CIM::IEC61970::LoadModel::ConformLoad
+def: var_CIM_IEC61970_LoadModel_ConformLoad_mRID : String = self.mRID
+context _CIM::IEC61970::Wires::PowerTransformer
+def: var_CIM_IEC61970_Wires_PowerTransformer_mRID : String = (let j = _mjtrace::join_PowerTransformer_YPTR_PowerTransformer.allInstances()->select(j|j.left = self)->asOrderedSet() in if not j->isEmpty() and not j->first().target.oclIsUndefined() then j->first().target.mRID else self.mRID endif)
+context _CIM::IEC61970::Wires::Breaker
+def: var_CIM_IEC61970_Wires_Breaker_mRID : String = (let j = _mjtrace::join_Breaker_XCBR_Breaker.allInstances()->select(j|j.left = self)->asOrderedSet() in if not j->isEmpty() and not j->first().target.oclIsUndefined() then j->first().target.mRID else self.mRID endif)
+context _CIM::IEC61970::ControlArea::ControlArea
+def: var_CIM_IEC61970_ControlArea_ControlArea_mRID : String = (let j = _mjtrace::ref_ControlArea_ControlArea_ControlArea.allInstances()->select(j|j.source = self)->asOrderedSet() in if not j->isEmpty() and not j->first().target.oclIsUndefined() then j->first().target.mRID else self.mRID endif)
+context _CIM::IEC61970::Wires::Disconnector
+def: var_CIM_IEC61970_Wires_Disconnector_mRID : String = (let j = _mjtrace::join_Disconnector_XSWI_Disconnector.allInstances()->select(j|j.left = self)->asOrderedSet() in if not j->isEmpty() and not j->first().target.oclIsUndefined() then j->first().target.mRID else self.mRID endif)
+context _CIM::IEC61970::Wires::LoadBreakSwitch
+def: var_CIM_IEC61970_Wires_LoadBreakSwitch_mRID : String = (let j = _mjtrace::join_LoadBreakSwitch_XSWI_LoadBreakSwitch.allInstances()->select(j|j.left = self)->asOrderedSet() in if not j->isEmpty() and not j->first().target.oclIsUndefined() then j->first().target.mRID else self.mRID endif)
+context _CIM::IEC61970::Wires::GroundDisconnector
+def: var_CIM_IEC61970_Wires_GroundDisconnector_mRID : String = (let j = _mjtrace::join_GroundDisconnector_XSWI_GroundDisconnector.allInstances()->select(j|j.left = self)->asOrderedSet() in if not j->isEmpty() and not j->first().target.oclIsUndefined() then j->first().target.mRID else self.mRID endif)
+context _CIM::IEC61970::Wires::ShuntCompensator
+def: var_CIM_IEC61970_Wires_ShuntCompensator_mRID : String = (let j = _mjtrace::join_ShuntCompensator_ZREA_ShuntReactorCompensator.allInstances()->select(j|j.left = self)->asOrderedSet() in if not j->isEmpty() and not j->first().target.oclIsUndefined() then j->first().target.mRID else (let j = _mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator.allInstances()->select(j|j.left = self)->asOrderedSet() in if not j->isEmpty() and not j->first().target.oclIsUndefined() then j->first().target.mRID else self.mRID endif) endif)
+		
+-- ###
+-- # target meta variables for attributes
+-- ##
+context _jointarget::PowerCutNonConformLoad
+def: var_CIM_IEC61970_LoadModel_NonConformLoad_mRID__jointarget_PowerCutNonConformLoad : String = self.mRID
+context _jointarget::ControlArea
+def: var_CIM_IEC61970_ControlArea_ControlArea_mRID__jointarget_ControlArea : String = self.mRID
+context _jointarget::ShuntCapacitorCompensator
+def: var_CIM_IEC61970_Wires_ShuntCompensator_mRID__jointarget_ShuntCapacitorCompensator : String = self.mRID
+context _jointarget::GroundDisconnector
+def: var_CIM_IEC61970_Wires_GroundDisconnector_mRID__jointarget_GroundDisconnector : String = self.mRID
+context _jointarget::PowerTransformer
+def: var_CIM_IEC61970_Wires_PowerTransformer_mRID__jointarget_PowerTransformer : String = self.mRID
+context _jointarget::LoadBreakSwitch
+def: var_CIM_IEC61970_Wires_LoadBreakSwitch_mRID__jointarget_LoadBreakSwitch : String = self.mRID
+context _jointarget::ShuntReactorCompensator
+def: var_CIM_IEC61970_Wires_ShuntCompensator_mRID__jointarget_ShuntReactorCompensator : String = self.mRID
+context _jointarget::ServiceDeliveryPoint
+def: var_CIM_IEC61968_Metering_ServiceDeliveryPoint_ratedPower__jointarget_ServiceDeliveryPoint : String = self.ratedPower
+context _jointarget::Breaker
+def: var_CIM_IEC61970_Wires_Breaker_mRID__jointarget_Breaker : String = self.mRID
+context _jointarget::Disconnector
+def: var_CIM_IEC61970_Wires_Disconnector_mRID__jointarget_Disconnector : String = self.mRID
+context _jointarget::PowerCutConformLoad
+def: var_CIM_IEC61970_LoadModel_ConformLoad_mRID__jointarget_PowerCutConformLoad : String = self.mRID
+
+-- ###
+-- # meta variables for references
+-- ##
+context _CIM::IEC61970::Wires::Disconnector
+def: var_CIM_IEC61970_Wires_Disconnector_Terminals : OrderedSet(_CIM::IEC61970::Core::Terminal) = (let t = _mjtrace::join_Disconnector_XSWI_Disconnector.allInstances()->select(t|t.left = self)->asOrderedSet() in 
+	if not t->isEmpty() then _CIM::IEC61970::Core::Terminal.allInstances()->select(c | 
+ 		let refs = _mjtrace::ref_Terminal_Terminal_Terminals.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   		not refs->isEmpty() and t->first().target.Terminals->includes(refs->first().target)) 
+	else self.Terminals
+ endif)
+context _CIM::IEC61970::Wires::PowerTransformer
+def: var_CIM_IEC61970_Wires_PowerTransformer_TransformerWindings : OrderedSet(_CIM::IEC61970::Wires::TransformerWinding) = (let t = _mjtrace::join_PowerTransformer_YPTR_PowerTransformer.allInstances()->select(t|t.left = self)->asOrderedSet() in 
+	if not t->isEmpty() then _CIM::IEC61970::Wires::TransformerWinding.allInstances()->select(c | 
+ 		let refs = _mjtrace::ref_TransformerWinding_TransformerWinding_TransformerWindings.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   		not refs->isEmpty() and t->first().target.TransformerWindings->includes(refs->first().target)) 
+	else self.TransformerWindings
+ endif)
+context _CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit
+def: var_CIM_IEC61970_ControlArea_ControlAreaGeneratingUnit_ControlArea : _CIM::IEC61970::ControlArea::ControlArea = (let t = _mjtrace::join_ControlAreaGeneratingUnit_ZGEN_GeneratingUnit.allInstances()->select(t|t.left = self)->asOrderedSet() in 
+	if not t->isEmpty()
+	then (let res = _CIM::IEC61970::ControlArea::ControlArea.allInstances()->select(c | 
+ 			let refs = _mjtrace::ref_ControlArea_ControlArea_ControlArea.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   			not refs->isEmpty() and not t->first().target.oclIsUndefined() and t->first().target.ControlArea = refs->first().target
+   		) in if res->isEmpty() then OclInvalid else res->asOrderedSet()->first() endif)
+	else self.ControlArea
+ endif)
+context _substationStandard::LNNodes::LNGroupX::XSWI
+def: var_substationStandard_LNNodes_LNGroupX_XSWI_SwitchControl : _substationStandard::LNNodes::LNGroupC::CSWI = (let t = _mjtrace::join_Disconnector_XSWI_Disconnector.allInstances()->select(t|t.right = self)->asOrderedSet() in 
+	if not t->isEmpty()
+	then (let res = _substationStandard::LNNodes::LNGroupC::CSWI.allInstances()->select(c | 
+ 			let refs = _mjtrace::ref_CSWI_CSWI_SwitchControl.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   			not refs->isEmpty() and not t->first().target.oclIsUndefined() and t->first().target.SwitchControl = refs->first().target
+   		) in if res->isEmpty() then OclInvalid else res->asOrderedSet()->first() endif)
+	else (let t = _mjtrace::join_Disconnector_XSWI_Disconnector.allInstances()->select(t|t.right = self)->asOrderedSet() in 
+		if not t->isEmpty()
+		then (let res = _substationStandard::LNNodes::LNGroupC::CSWI.allInstances()->select(c | 
+	 			let refs = _mjtrace::ref_CSWI_CSWI_SwitchControl.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+	   			not refs->isEmpty() and not t->first().target.oclIsUndefined() and t->first().target.SwitchControl = refs->first().target
+	   		) in if res->isEmpty() then OclInvalid else res->asOrderedSet()->first() endif)
+		else (let t = _mjtrace::join_Disconnector_XSWI_Disconnector.allInstances()->select(t|t.right = self)->asOrderedSet() in 
+			if not t->isEmpty()
+			then (let res = _substationStandard::LNNodes::LNGroupC::CSWI.allInstances()->select(c | 
+		 			let refs = _mjtrace::ref_CSWI_CSWI_SwitchControl.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+		   			not refs->isEmpty() and not t->first().target.oclIsUndefined() and t->first().target.SwitchControl = refs->first().target
+		   		) in if res->isEmpty() then OclInvalid else res->asOrderedSet()->first() endif)
+			else self.SwitchControl
+		 endif)
+	 endif)
+ endif)
+context _CIM::IEC61970::Wires::GroundDisconnector
+def: var_CIM_IEC61970_Wires_GroundDisconnector_Terminals : OrderedSet(_CIM::IEC61970::Core::Terminal) = (let t = _mjtrace::join_GroundDisconnector_XSWI_GroundDisconnector.allInstances()->select(t|t.left = self)->asOrderedSet() in 
+	if not t->isEmpty() then _CIM::IEC61970::Core::Terminal.allInstances()->select(c | 
+ 		let refs = _mjtrace::ref_Terminal_Terminal_Terminals.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   		not refs->isEmpty() and t->first().target.Terminals->includes(refs->first().target)) 
+	else self.Terminals
+ endif)
+context _substationStandard::LNNodes::LNGroupX::XCBR
+def: var_substationStandard_LNNodes_LNGroupX_XCBR_SwitchControl : _substationStandard::LNNodes::LNGroupC::CSWI = (let t = _mjtrace::join_Breaker_XCBR_Breaker.allInstances()->select(t|t.right = self)->asOrderedSet() in 
+	if not t->isEmpty()
+	then (let res = _substationStandard::LNNodes::LNGroupC::CSWI.allInstances()->select(c | 
+ 			let refs = _mjtrace::ref_CSWI_CSWI_SwitchControl.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   			not refs->isEmpty() and not t->first().target.oclIsUndefined() and t->first().target.SwitchControl = refs->first().target
+   		) in if res->isEmpty() then OclInvalid else res->asOrderedSet()->first() endif)
+	else self.SwitchControl
+ endif)
+context _substationStandard::LNNodes::LNGroupY::YPTR
+def: var_substationStandard_LNNodes_LNGroupY_YPTR_TransformerControl : _substationStandard::LNNodes::LNGroupA::ATCC = (let t = _mjtrace::join_PowerTransformer_YPTR_PowerTransformer.allInstances()->select(t|t.right = self)->asOrderedSet() in 
+	if not t->isEmpty()
+	then (let res = _substationStandard::LNNodes::LNGroupA::ATCC.allInstances()->select(c | 
+ 			let refs = _mjtrace::ref_ATCC_ATCC_TransformerControl.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   			not refs->isEmpty() and not t->first().target.oclIsUndefined() and t->first().target.TransformerControl = refs->first().target
+   		) in if res->isEmpty() then OclInvalid else res->asOrderedSet()->first() endif)
+	else self.TransformerControl
+ endif)
+context _CIM::IEC61970::Wires::LoadBreakSwitch
+def: var_CIM_IEC61970_Wires_LoadBreakSwitch_Terminals : OrderedSet(_CIM::IEC61970::Core::Terminal) = (let t = _mjtrace::join_LoadBreakSwitch_XSWI_LoadBreakSwitch.allInstances()->select(t|t.left = self)->asOrderedSet() in 
+	if not t->isEmpty() then _CIM::IEC61970::Core::Terminal.allInstances()->select(c | 
+ 		let refs = _mjtrace::ref_Terminal_Terminal_Terminals.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   		not refs->isEmpty() and t->first().target.Terminals->includes(refs->first().target)) 
+	else self.Terminals
+ endif)
+context _CIM::IEC61970::Wires::Breaker
+def: var_CIM_IEC61970_Wires_Breaker_Terminals : OrderedSet(_CIM::IEC61970::Core::Terminal) = (let t = _mjtrace::join_Breaker_XCBR_Breaker.allInstances()->select(t|t.left = self)->asOrderedSet() in 
+	if not t->isEmpty() then _CIM::IEC61970::Core::Terminal.allInstances()->select(c | 
+ 		let refs = _mjtrace::ref_Terminal_Terminal_Terminals.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   		not refs->isEmpty() and t->first().target.Terminals->includes(refs->first().target)) 
+	else self.Terminals
+ endif)
+context _substationStandard::LNNodes::LNGroupZ::ZCAP
+def: var_substationStandard_LNNodes_LNGroupZ_ZCAP_CapControl : _substationStandard::LNNodes::LNGroupA::ARCO = (let t = _mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator.allInstances()->select(t|t.right = self)->asOrderedSet() in 
+	if not t->isEmpty()
+	then (let res = _substationStandard::LNNodes::LNGroupA::ARCO.allInstances()->select(c | 
+ 			let refs = _mjtrace::ref_ARCO_ARCO_CapControl.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   			not refs->isEmpty() and not t->first().target.oclIsUndefined() and t->first().target.CapControl = refs->first().target
+   		) in if res->isEmpty() then OclInvalid else res->asOrderedSet()->first() endif)
+	else self.CapControl
+ endif)
+context _CIM::IEC61970::Wires::ShuntCompensator
+def: var_CIM_IEC61970_Wires_ShuntCompensator_Terminals : OrderedSet(_CIM::IEC61970::Core::Terminal) = (let t = _mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator.allInstances()->select(t|t.left = self)->asOrderedSet() in 
+	if not t->isEmpty() then _CIM::IEC61970::Core::Terminal.allInstances()->select(c | 
+ 		let refs = _mjtrace::ref_Terminal_Terminal_Terminals.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   		not refs->isEmpty() and t->first().target.Terminals->includes(refs->first().target)) 
+	else (let t = _mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator.allInstances()->select(t|t.left = self)->asOrderedSet() in 
+		if not t->isEmpty() then _CIM::IEC61970::Core::Terminal.allInstances()->select(c | 
+	 		let refs = _mjtrace::ref_Terminal_Terminal_Terminals.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+	   		not refs->isEmpty() and t->first().target.Terminals->includes(refs->first().target)) 
+		else self.Terminals
+	 endif)
+ endif)
+context _substationStandard::LNNodes::LNGroupZ::ZREA
+def: var_substationStandard_LNNodes_LNGroupZ_ZREA_ReactorControl : _substationStandard::LNNodes::LNGroupA::ARCO = (let t = _mjtrace::join_ShuntCompensator_ZREA_ShuntReactorCompensator.allInstances()->select(t|t.right = self)->asOrderedSet() in 
+	if not t->isEmpty()
+	then (let res = _substationStandard::LNNodes::LNGroupA::ARCO.allInstances()->select(c | 
+ 			let refs = _mjtrace::ref_ARCO_ARCO_ReactorControl.allInstances()->select(k | k.source = c)->asOrderedSet() in 
+   			not refs->isEmpty() and not t->first().target.oclIsUndefined() and t->first().target.ReactorControl = refs->first().target
+   		) in if res->isEmpty() then OclInvalid else res->asOrderedSet()->first() endif)
+	else self.ReactorControl
+ endif)
+		
+-- ###
+-- # target meta variables for references
+-- ##

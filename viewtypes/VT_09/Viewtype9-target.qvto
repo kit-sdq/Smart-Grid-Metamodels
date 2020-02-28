@@ -1,0 +1,839 @@
+/* Generated ModelJoin transformation 
+ *
+ */
+transformation M1toM2(
+in __CIM: _CIM, 
+in __substationStandard: _substationStandard, 
+in __COSEM: _COSEM, 
+out __jointarget: _jointarget,
+out __mjtrace: _mjtrace);	
+	
+// source metamodels
+modeltype _CIM uses "http://iec.ch/TC57/2009/CIM-schema-cim14";
+modeltype _substationStandard uses "substationStandard";
+modeltype _COSEM uses "cosem";
+// target metamodel
+modeltype _jointarget uses "ActivePowerPhaseMeasurements";
+// trace metamodel
+modeltype _mjtrace uses "ActivePowerPhaseMeasurements.trace";
+	
+//alway import ecore
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+main() {
+-- ###
+-- # operations for target class PMUActivePowerMeter
+-- ##
+
+-- get all elements of of type MeterAsset and MMXU
+var leftAllPMUActivePowerMeter = __CIM.objectsOfType(_CIM::IEC61968::Metering::MeterAsset);
+var rightAllPMUActivePowerMeter = __substationStandard.objectsOfType(_substationStandard::LNNodes::LNGroupM::MMXU);
+
+-- theta join operation
+rightAllPMUActivePowerMeter->forEach(rightPMUActivePowerMeter) {
+	leftAllPMUActivePowerMeter->map thetaJoin_MeterAsset_MMXU_To_PMUActivePowerMeter(rightPMUActivePowerMeter);
+};
+-- ###
+-- # operations for target class PrivateMeterActivePower
+-- ##
+
+-- get all elements of of type MeterAsset and PhysicalDevice
+var leftAllPrivateMeterActivePower = __CIM.objectsOfType(_CIM::IEC61968::Metering::MeterAsset);
+var rightAllPrivateMeterActivePower = __COSEM.objectsOfType(_COSEM::PhysicalDevice);
+
+-- theta join operation
+rightAllPrivateMeterActivePower->forEach(rightPrivateMeterActivePower) {
+	leftAllPrivateMeterActivePower->map thetaJoin_MeterAsset_PhysicalDevice_To_PrivateMeterActivePower(rightPrivateMeterActivePower);
+};
+
+
+	-- keep outgoing references
+
+
+	var refAllLocation_18f52482_1d46_4fc2_b9e2_9ea9cdcdcecc = __jointarget.objectsOfType(_jointarget::Asset);
+	refAllLocation_18f52482_1d46_4fc2_b9e2_9ea9cdcdcecc->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61968::Assets::Asset)->collect(Location)->selectByKind(_CIM::IEC61968::Common::Location)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_Location(refElem.resolveone(_jointarget::Location));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_Location(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::Location).map trace_keepOutgoing_Location(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllPosition_b6936b53_70d0_4244_9fac_b8487524d739 = __jointarget.objectsOfType(_jointarget::Location);
+	refAllPosition_b6936b53_70d0_4244_9fac_b8487524d739->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61968::Common::Location)->collect(Position)->selectByKind(_CIM::IEC61968::Common::PositionPoint)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_Position(refElem.resolveone(_jointarget::PositionPoint));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_Position(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::PositionPoint).map trace_keepOutgoing_Position(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllPowerSystemResources_9ff0aaa5_8986_4242_95e4_5bee0da138c4 = __jointarget.objectsOfType(_jointarget::Location);
+	refAllPowerSystemResources_9ff0aaa5_8986_4242_95e4_5bee0da138c4->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61968::Common::Location)->collect(PowerSystemResources)->selectByKind(_CIM::IEC61970::Core::PowerSystemResource)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_PowerSystemResources(refElem.resolveone(_jointarget::PowerSystemResource));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_PowerSystemResources(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::PowerSystemResource).map trace_keepOutgoing_PowerSystemResources(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTerminals_c2d722a6_02d8_47b7_afb8_c81a45a37c73 = __jointarget.objectsOfType(_jointarget::ConductingEquipment);
+	refAllTerminals_c2d722a6_02d8_47b7_afb8_c81a45a37c73->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Core::ConductingEquipment)->collect(Terminals)->selectByKind(_CIM::IEC61970::Core::Terminal)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_Terminals(refElem.resolveone(_jointarget::Terminal));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_Terminals(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::Terminal).map trace_keepOutgoing_Terminals(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTieFlow_0d2f6163_0917_4afe_8505_3a8f5beb546b = __jointarget.objectsOfType(_jointarget::Terminal);
+	refAllTieFlow_0d2f6163_0917_4afe_8505_3a8f5beb546b->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Core::Terminal)->collect(TieFlow)->selectByKind(_CIM::IEC61970::ControlArea::TieFlow)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_TieFlow(refElem.resolveone(_jointarget::TieFlow));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_TieFlow(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::TieFlow).map trace_keepOutgoing_TieFlow(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllControlArea_b0a44dda_cdfe_45d3_93e8_90a8f5939f2c = __jointarget.objectsOfType(_jointarget::TieFlow);
+	refAllControlArea_b0a44dda_cdfe_45d3_93e8_90a8f5939f2c->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::ControlArea::TieFlow)->collect(ControlArea)->selectByKind(_CIM::IEC61970::ControlArea::ControlArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ControlArea(refElem.resolveone(_jointarget::ControlArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ControlArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ControlArea).map trace_keepOutgoing_ControlArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllServiceDeliveryPoint_dfeeab3d_5c86_4580_b6a7_233891c82108 = __jointarget.objectsOfType(_jointarget::EndDeviceAsset);
+	refAllServiceDeliveryPoint_dfeeab3d_5c86_4580_b6a7_233891c82108->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61968::Metering::EndDeviceAsset)->collect(ServiceDeliveryPoint)->selectByKind(_CIM::IEC61968::Metering::ServiceDeliveryPoint)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ServiceDeliveryPoint(refElem.resolveone(_jointarget::ServiceDeliveryPoint));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ServiceDeliveryPoint(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ServiceDeliveryPoint).map trace_keepOutgoing_ServiceDeliveryPoint(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllEnergyConsumer_8fa112db_e65f_4d9a_a4c4_f3e2c0de7a84 = __jointarget.objectsOfType(_jointarget::ServiceDeliveryPoint);
+	refAllEnergyConsumer_8fa112db_e65f_4d9a_a4c4_f3e2c0de7a84->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61968::Metering::ServiceDeliveryPoint)->collect(EnergyConsumer)->selectByKind(_CIM::IEC61970::Wires::EnergyConsumer)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_EnergyConsumer(refElem.resolveone(_jointarget::EnergyConsumer));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_EnergyConsumer(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::EnergyConsumer).map trace_keepOutgoing_EnergyConsumer(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllLoadGroup_93d2dda6_68d8_4103_bb40_9ba885629a95 = __jointarget.objectsOfType(_jointarget::ConformLoad);
+	refAllLoadGroup_93d2dda6_68d8_4103_bb40_9ba885629a95->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::ConformLoad)->collect(LoadGroup)->selectByKind(_CIM::IEC61970::LoadModel::ConformLoadGroup)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_LoadGroup(refElem.resolveone(_jointarget::ConformLoadGroup));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_LoadGroup(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ConformLoadGroup).map trace_keepOutgoing_LoadGroup(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllSubLoadArea_ad39fc09_a050_40e7_b755_7215b77030ad = __jointarget.objectsOfType(_jointarget::LoadGroup);
+	refAllSubLoadArea_ad39fc09_a050_40e7_b755_7215b77030ad->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::LoadGroup)->collect(SubLoadArea)->selectByKind(_CIM::IEC61970::LoadModel::SubLoadArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_SubLoadArea(refElem.resolveone(_jointarget::SubLoadArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_SubLoadArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::SubLoadArea).map trace_keepOutgoing_SubLoadArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllLoadArea_8f04943f_9608_43ab_aae4_ef5e09b705d4 = __jointarget.objectsOfType(_jointarget::SubLoadArea);
+	refAllLoadArea_8f04943f_9608_43ab_aae4_ef5e09b705d4->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::SubLoadArea)->collect(LoadArea)->selectByKind(_CIM::IEC61970::LoadModel::LoadArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_LoadArea(refElem.resolveone(_jointarget::LoadArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_LoadArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::LoadArea).map trace_keepOutgoing_LoadArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllControlArea_3d9d53cf_b3ac_427f_9cb6_dbbb2f830944 = __jointarget.objectsOfType(_jointarget::LoadArea);
+	refAllControlArea_3d9d53cf_b3ac_427f_9cb6_dbbb2f830944->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::EnergyArea)->collect(ControlArea)->selectByKind(_CIM::IEC61970::ControlArea::ControlArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ControlArea(refElem.resolveone(_jointarget::ControlArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ControlArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ControlArea).map trace_keepOutgoing_ControlArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllLoadGroup_a8fdd2e8_5cbd_4c36_a400_1f7bab3d77a4 = __jointarget.objectsOfType(_jointarget::NonConformLoad);
+	refAllLoadGroup_a8fdd2e8_5cbd_4c36_a400_1f7bab3d77a4->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::NonConformLoad)->collect(LoadGroup)->selectByKind(_CIM::IEC61970::LoadModel::NonConformLoadGroup)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_LoadGroup(refElem.resolveone(_jointarget::NonConformLoadGroup));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_LoadGroup(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::NonConformLoadGroup).map trace_keepOutgoing_LoadGroup(refElem);
+		};
+	};
+
+
+
+	-- keep attributes
+	var keepAttPMUActivePowerMeter_40cb201b_44c9_403a_b7cc_df103cdec82f = __jointarget.objectsOfType(_jointarget::PMUActivePowerMeter);
+			keepAttPMUActivePowerMeter_40cb201b_44c9_403a_b7cc_df103cdec82f->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttPrivateMeterActivePower_3ac6d75f_1638_45f3_8574_a4dfe03794df = __jointarget.objectsOfType(_jointarget::PrivateMeterActivePower);
+			keepAttPrivateMeterActivePower_3ac6d75f_1638_45f3_8574_a4dfe03794df->forEach(elem) {
+				var sourceClass = elem.invresolveone(_COSEM::PhysicalDevice);
+				elem.map update_attribute_ID(sourceClass.ID)	
+				};
+	var keepAttPositionPoint_f2df8282_32d2_46d1_86eb_7fc2ead16ed1 = __jointarget.objectsOfType(_jointarget::PositionPoint);
+			keepAttPositionPoint_f2df8282_32d2_46d1_86eb_7fc2ead16ed1->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61968::Common::PositionPoint);
+				elem.map update_attribute_xPosition(sourceClass.xPosition)	
+				};
+			keepAttPositionPoint_f2df8282_32d2_46d1_86eb_7fc2ead16ed1->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61968::Common::PositionPoint);
+				elem.map update_attribute_yPosition(sourceClass.yPosition)	
+				};
+			keepAttPositionPoint_f2df8282_32d2_46d1_86eb_7fc2ead16ed1->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61968::Common::PositionPoint);
+				elem.map update_attribute_zPosition(sourceClass.zPosition)	
+				};
+	var keepAttControlArea_7c3cb923_628a_4a00_b11d_4c531c608109 = __jointarget.objectsOfType(_jointarget::ControlArea);
+			keepAttControlArea_7c3cb923_628a_4a00_b11d_4c531c608109->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttEnergyConsumer_f140876a_5b24_45dd_b9b0_626d99fcc665 = __jointarget.objectsOfType(_jointarget::EnergyConsumer);
+			keepAttEnergyConsumer_f140876a_5b24_45dd_b9b0_626d99fcc665->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+
+
+
+	-- keep calculated
+	var keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321 = __jointarget.objectsOfType(_jointarget::PMUActivePowerMeter);
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerAMag(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerAAng(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerBMag(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerBAng(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerCMag(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerCAng(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerNeutMag(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerNeutAng(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerNetMag(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerNetAng(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerResMag(leftElement, rightElement)	
+	};
+keepAttPMUActivePowerMeter_adebdd2f_8bad_49e4_b905_1268da950321->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupM::MMXU);
+	elem.map update_attribute_ActivePowerResAng(leftElement, rightElement)	
+	};
+	var keepAttPrivateMeterActivePower_e19d8de4_873d_47cd_85e2_af046d61af6a = __jointarget.objectsOfType(_jointarget::PrivateMeterActivePower);
+keepAttPrivateMeterActivePower_e19d8de4_873d_47cd_85e2_af046d61af6a->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_COSEM::PhysicalDevice);
+	elem.map update_attribute_ActivePowerImportA(leftElement, rightElement)	
+	};
+keepAttPrivateMeterActivePower_e19d8de4_873d_47cd_85e2_af046d61af6a->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_COSEM::PhysicalDevice);
+	elem.map update_attribute_ActivePowerImportB(leftElement, rightElement)	
+	};
+keepAttPrivateMeterActivePower_e19d8de4_873d_47cd_85e2_af046d61af6a->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_COSEM::PhysicalDevice);
+	elem.map update_attribute_ActivePowerImportC(leftElement, rightElement)	
+	};
+keepAttPrivateMeterActivePower_e19d8de4_873d_47cd_85e2_af046d61af6a->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_COSEM::PhysicalDevice);
+	elem.map update_attribute_ActivePowerExportA(leftElement, rightElement)	
+	};
+keepAttPrivateMeterActivePower_e19d8de4_873d_47cd_85e2_af046d61af6a->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_COSEM::PhysicalDevice);
+	elem.map update_attribute_ActivePowerExportB(leftElement, rightElement)	
+	};
+keepAttPrivateMeterActivePower_e19d8de4_873d_47cd_85e2_af046d61af6a->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61968::Metering::MeterAsset);
+	var rightElement =  elem.invresolveone(_COSEM::PhysicalDevice);
+	elem.map update_attribute_ActivePowerExportC(leftElement, rightElement)	
+	};
+
+
+
+	-- keep aggregates
+
+	}
+	
+-- ##
+-- # Natural Join Mappings
+-- ##
+
+-- ##
+-- # Left Outer Join Mappings
+-- ##
+	
+-- ##
+-- # Theta Join Mappings
+-- ##
+
+-- mapping for PMUActivePowerMeter
+mapping _CIM::IEC61968::Metering::MeterAsset::thetaJoin_MeterAsset_MMXU_To_PMUActivePowerMeter(rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) : _jointarget::PMUActivePowerMeter 
+when {
+		self.mRID = rightElement.NamePlt.IdNs
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_MMXU(result);
+			result.map thetaJoin_trace_MMXU(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _substationStandard::LNNodes::LNGroupM::MMXU::thetaJoin_update_MMXU(rightElement : _jointarget::PMUActivePowerMeter) : _jointarget::PMUActivePowerMeter {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::PMUActivePowerMeter::thetaJoin_trace_MMXU(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) : _mjtrace::join_MeterAsset_MMXU_PMUActivePowerMeter {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- mapping for PrivateMeterActivePower
+mapping _CIM::IEC61968::Metering::MeterAsset::thetaJoin_MeterAsset_PhysicalDevice_To_PrivateMeterActivePower(rightElement : _COSEM::PhysicalDevice) : _jointarget::PrivateMeterActivePower 
+when {
+		self.mRID = rightElement.ID
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_PhysicalDevice(result);
+			result.map thetaJoin_trace_PhysicalDevice(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _COSEM::PhysicalDevice::thetaJoin_update_PhysicalDevice(rightElement : _jointarget::PrivateMeterActivePower) : _jointarget::PrivateMeterActivePower {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::PrivateMeterActivePower::thetaJoin_trace_PhysicalDevice(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _COSEM::PhysicalDevice) : _mjtrace::join_MeterAsset_PhysicalDevice_PrivateMeterActivePower {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- ##
+-- # Keep outgoing Mappings
+-- ##
+-- mappings for Asset
+
+-- set the links for "Location" if instances already exist
+mapping inout _jointarget::Asset::update_keepOutgoing_Location(elem : _jointarget::Location) {
+	self.Location:=elem;
+}
+
+-- set the links for "Location" if instances have to be created
+mapping inout _jointarget::Asset::update_keepOutgoing_and_create_Location(elem : _CIM::IEC61968::Common::Location) {
+	self.Location:=elem.map Location_Location_to_Location();
+}
+
+-- create instances of the type of "Location"
+mapping _CIM::IEC61968::Common::Location::Location_Location_to_Location() : _jointarget::Location {
+}
+
+mapping _jointarget::Location::trace_keepOutgoing_Location(source : _CIM::IEC61968::Common::Location) : _mjtrace::ref_Location_Location_Location {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for Location
+
+-- set the links for "Position" if instances already exist
+mapping inout _jointarget::Location::update_keepOutgoing_Position(elem : _jointarget::PositionPoint) {
+	self.Position:=elem;
+}
+
+-- set the links for "Position" if instances have to be created
+mapping inout _jointarget::Location::update_keepOutgoing_and_create_Position(elem : _CIM::IEC61968::Common::PositionPoint) {
+	self.Position:=elem.map Position_PositionPoint_to_PositionPoint();
+}
+
+-- create instances of the type of "Position"
+mapping _CIM::IEC61968::Common::PositionPoint::Position_PositionPoint_to_PositionPoint() : _jointarget::PositionPoint {
+}
+
+mapping _jointarget::PositionPoint::trace_keepOutgoing_Position(source : _CIM::IEC61968::Common::PositionPoint) : _mjtrace::ref_PositionPoint_PositionPoint_Position {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for Location
+
+-- set the links for "PowerSystemResources" if instances already exist
+mapping inout _jointarget::Location::update_keepOutgoing_PowerSystemResources(elem : _jointarget::PowerSystemResource) {
+	self.PowerSystemResources+=elem;
+}
+
+-- set the links for "PowerSystemResources" if instances have to be created
+mapping inout _jointarget::Location::update_keepOutgoing_and_create_PowerSystemResources(elem : _CIM::IEC61970::Core::PowerSystemResource) {
+	self.PowerSystemResources+=elem.map PowerSystemResources_PowerSystemResource_to_PowerSystemResource();
+}
+
+-- create instances of the type of "PowerSystemResources"
+mapping _CIM::IEC61970::Core::PowerSystemResource::PowerSystemResources_PowerSystemResource_to_PowerSystemResource() : _jointarget::PowerSystemResource {
+}
+
+mapping _jointarget::PowerSystemResource::trace_keepOutgoing_PowerSystemResources(source : _CIM::IEC61970::Core::PowerSystemResource) : _mjtrace::ref_PowerSystemResource_PowerSystemResource_PowerSystemResources {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for ConductingEquipment
+
+-- set the links for "Terminals" if instances already exist
+mapping inout _jointarget::ConductingEquipment::update_keepOutgoing_Terminals(elem : _jointarget::Terminal) {
+	self.Terminals+=elem;
+}
+
+-- set the links for "Terminals" if instances have to be created
+mapping inout _jointarget::ConductingEquipment::update_keepOutgoing_and_create_Terminals(elem : _CIM::IEC61970::Core::Terminal) {
+	self.Terminals+=elem.map Terminals_Terminal_to_Terminal();
+}
+
+-- create instances of the type of "Terminals"
+mapping _CIM::IEC61970::Core::Terminal::Terminals_Terminal_to_Terminal() : _jointarget::Terminal {
+}
+
+mapping _jointarget::Terminal::trace_keepOutgoing_Terminals(source : _CIM::IEC61970::Core::Terminal) : _mjtrace::ref_Terminal_Terminal_Terminals {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for Terminal
+
+-- set the links for "TieFlow" if instances already exist
+mapping inout _jointarget::Terminal::update_keepOutgoing_TieFlow(elem : _jointarget::TieFlow) {
+	self.TieFlow+=elem;
+}
+
+-- set the links for "TieFlow" if instances have to be created
+mapping inout _jointarget::Terminal::update_keepOutgoing_and_create_TieFlow(elem : _CIM::IEC61970::ControlArea::TieFlow) {
+	self.TieFlow+=elem.map TieFlow_TieFlow_to_TieFlow();
+}
+
+-- create instances of the type of "TieFlow"
+mapping _CIM::IEC61970::ControlArea::TieFlow::TieFlow_TieFlow_to_TieFlow() : _jointarget::TieFlow {
+}
+
+mapping _jointarget::TieFlow::trace_keepOutgoing_TieFlow(source : _CIM::IEC61970::ControlArea::TieFlow) : _mjtrace::ref_TieFlow_TieFlow_TieFlow {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for TieFlow
+
+-- set the links for "ControlArea" if instances already exist
+mapping inout _jointarget::TieFlow::update_keepOutgoing_ControlArea(elem : _jointarget::ControlArea) {
+	self.ControlArea:=elem;
+}
+
+-- set the links for "ControlArea" if instances have to be created
+mapping inout _jointarget::TieFlow::update_keepOutgoing_and_create_ControlArea(elem : _CIM::IEC61970::ControlArea::ControlArea) {
+	self.ControlArea:=elem.map ControlArea_ControlArea_to_ControlArea();
+}
+
+-- create instances of the type of "ControlArea"
+mapping _CIM::IEC61970::ControlArea::ControlArea::ControlArea_ControlArea_to_ControlArea() : _jointarget::ControlArea {
+}
+
+mapping _jointarget::ControlArea::trace_keepOutgoing_ControlArea(source : _CIM::IEC61970::ControlArea::ControlArea) : _mjtrace::ref_ControlArea_ControlArea_ControlArea {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for EndDeviceAsset
+
+-- set the links for "ServiceDeliveryPoint" if instances already exist
+mapping inout _jointarget::EndDeviceAsset::update_keepOutgoing_ServiceDeliveryPoint(elem : _jointarget::ServiceDeliveryPoint) {
+	self.ServiceDeliveryPoint:=elem;
+}
+
+-- set the links for "ServiceDeliveryPoint" if instances have to be created
+mapping inout _jointarget::EndDeviceAsset::update_keepOutgoing_and_create_ServiceDeliveryPoint(elem : _CIM::IEC61968::Metering::ServiceDeliveryPoint) {
+	self.ServiceDeliveryPoint:=elem.map ServiceDeliveryPoint_ServiceDeliveryPoint_to_ServiceDeliveryPoint();
+}
+
+-- create instances of the type of "ServiceDeliveryPoint"
+mapping _CIM::IEC61968::Metering::ServiceDeliveryPoint::ServiceDeliveryPoint_ServiceDeliveryPoint_to_ServiceDeliveryPoint() : _jointarget::ServiceDeliveryPoint {
+}
+
+mapping _jointarget::ServiceDeliveryPoint::trace_keepOutgoing_ServiceDeliveryPoint(source : _CIM::IEC61968::Metering::ServiceDeliveryPoint) : _mjtrace::ref_ServiceDeliveryPoint_ServiceDeliveryPoint_ServiceDeliveryPoint {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for ServiceDeliveryPoint
+
+-- set the links for "EnergyConsumer" if instances already exist
+mapping inout _jointarget::ServiceDeliveryPoint::update_keepOutgoing_EnergyConsumer(elem : _jointarget::EnergyConsumer) {
+	self.EnergyConsumer:=elem;
+}
+
+-- set the links for "EnergyConsumer" if instances have to be created
+mapping inout _jointarget::ServiceDeliveryPoint::update_keepOutgoing_and_create_EnergyConsumer(elem : _CIM::IEC61970::Wires::EnergyConsumer) {
+	self.EnergyConsumer:=elem.map EnergyConsumer_EnergyConsumer_to_EnergyConsumer();
+}
+
+-- create instances of the type of "EnergyConsumer"
+mapping _CIM::IEC61970::Wires::EnergyConsumer::EnergyConsumer_EnergyConsumer_to_EnergyConsumer() : _jointarget::EnergyConsumer {
+}
+
+mapping _jointarget::EnergyConsumer::trace_keepOutgoing_EnergyConsumer(source : _CIM::IEC61970::Wires::EnergyConsumer) : _mjtrace::ref_EnergyConsumer_EnergyConsumer_EnergyConsumer {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for ConformLoad
+
+-- set the links for "LoadGroup" if instances already exist
+mapping inout _jointarget::ConformLoad::update_keepOutgoing_LoadGroup(elem : _jointarget::ConformLoadGroup) {
+	self.LoadGroup:=elem;
+}
+
+-- set the links for "LoadGroup" if instances have to be created
+mapping inout _jointarget::ConformLoad::update_keepOutgoing_and_create_LoadGroup(elem : _CIM::IEC61970::LoadModel::ConformLoadGroup) {
+	self.LoadGroup:=elem.map LoadGroup_ConformLoadGroup_to_ConformLoadGroup();
+}
+
+-- create instances of the type of "LoadGroup"
+mapping _CIM::IEC61970::LoadModel::ConformLoadGroup::LoadGroup_ConformLoadGroup_to_ConformLoadGroup() : _jointarget::ConformLoadGroup {
+}
+
+mapping _jointarget::ConformLoadGroup::trace_keepOutgoing_LoadGroup(source : _CIM::IEC61970::LoadModel::ConformLoadGroup) : _mjtrace::ref_ConformLoadGroup_ConformLoadGroup_LoadGroup {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for LoadGroup
+
+-- set the links for "SubLoadArea" if instances already exist
+mapping inout _jointarget::LoadGroup::update_keepOutgoing_SubLoadArea(elem : _jointarget::SubLoadArea) {
+	self.SubLoadArea:=elem;
+}
+
+-- set the links for "SubLoadArea" if instances have to be created
+mapping inout _jointarget::LoadGroup::update_keepOutgoing_and_create_SubLoadArea(elem : _CIM::IEC61970::LoadModel::SubLoadArea) {
+	self.SubLoadArea:=elem.map SubLoadArea_SubLoadArea_to_SubLoadArea();
+}
+
+-- create instances of the type of "SubLoadArea"
+mapping _CIM::IEC61970::LoadModel::SubLoadArea::SubLoadArea_SubLoadArea_to_SubLoadArea() : _jointarget::SubLoadArea {
+}
+
+mapping _jointarget::SubLoadArea::trace_keepOutgoing_SubLoadArea(source : _CIM::IEC61970::LoadModel::SubLoadArea) : _mjtrace::ref_SubLoadArea_SubLoadArea_SubLoadArea {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for SubLoadArea
+
+-- set the links for "LoadArea" if instances already exist
+mapping inout _jointarget::SubLoadArea::update_keepOutgoing_LoadArea(elem : _jointarget::LoadArea) {
+	self.LoadArea:=elem;
+}
+
+-- set the links for "LoadArea" if instances have to be created
+mapping inout _jointarget::SubLoadArea::update_keepOutgoing_and_create_LoadArea(elem : _CIM::IEC61970::LoadModel::LoadArea) {
+	self.LoadArea:=elem.map LoadArea_LoadArea_to_LoadArea();
+}
+
+-- create instances of the type of "LoadArea"
+mapping _CIM::IEC61970::LoadModel::LoadArea::LoadArea_LoadArea_to_LoadArea() : _jointarget::LoadArea {
+}
+
+mapping _jointarget::LoadArea::trace_keepOutgoing_LoadArea(source : _CIM::IEC61970::LoadModel::LoadArea) : _mjtrace::ref_LoadArea_LoadArea_LoadArea {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for LoadArea
+
+-- set the links for "ControlArea" if instances already exist
+mapping inout _jointarget::LoadArea::update_keepOutgoing_ControlArea(elem : _jointarget::ControlArea) {
+	self.ControlArea:=elem;
+}
+
+-- set the links for "ControlArea" if instances have to be created
+mapping inout _jointarget::LoadArea::update_keepOutgoing_and_create_ControlArea(elem : _CIM::IEC61970::ControlArea::ControlArea) {
+	self.ControlArea:=elem.map ControlArea_ControlArea_to_ControlArea();
+}
+
+-- create instances of the type of "ControlArea"
+/*mapping _CIM::IEC61970::ControlArea::ControlArea::ControlArea_ControlArea_to_ControlArea() : _jointarget::ControlArea {
+}
+
+mapping _jointarget::ControlArea::trace_keepOutgoing_ControlArea(source : _CIM::IEC61970::ControlArea::ControlArea) : _mjtrace::ref_ControlArea_ControlArea_ControlArea {
+	result.source := source;
+	result.target := self;
+}*/
+
+-- mappings for NonConformLoad
+
+-- set the links for "LoadGroup" if instances already exist
+mapping inout _jointarget::NonConformLoad::update_keepOutgoing_LoadGroup(elem : _jointarget::NonConformLoadGroup) {
+	self.LoadGroup:=elem;
+}
+
+-- set the links for "LoadGroup" if instances have to be created
+mapping inout _jointarget::NonConformLoad::update_keepOutgoing_and_create_LoadGroup(elem : _CIM::IEC61970::LoadModel::NonConformLoadGroup) {
+	self.LoadGroup:=elem.map LoadGroup_NonConformLoadGroup_to_NonConformLoadGroup();
+}
+
+-- create instances of the type of "LoadGroup"
+mapping _CIM::IEC61970::LoadModel::NonConformLoadGroup::LoadGroup_NonConformLoadGroup_to_NonConformLoadGroup() : _jointarget::NonConformLoadGroup {
+}
+
+mapping _jointarget::NonConformLoadGroup::trace_keepOutgoing_LoadGroup(source : _CIM::IEC61970::LoadModel::NonConformLoadGroup) : _mjtrace::ref_NonConformLoadGroup_NonConformLoadGroup_LoadGroup {
+	result.source := source;
+	result.target := self;
+}
+
+
+-- ##
+-- # Keep incoming Mappings
+-- ##
+-- ##
+-- # Keep attribute Mappings
+-- ##
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::PrivateMeterActivePower::update_attribute_ID(attValue : String) {
+	self.ID:=attValue;
+}
+mapping inout _jointarget::PositionPoint::update_attribute_xPosition(attValue : String) {
+	self.xPosition:=attValue;
+}
+mapping inout _jointarget::PositionPoint::update_attribute_yPosition(attValue : String) {
+	self.yPosition:=attValue;
+}
+mapping inout _jointarget::PositionPoint::update_attribute_zPosition(attValue : String) {
+	self.zPosition:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::EnergyConsumer::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::ConformLoad::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::NonConformLoad::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+
+-- ##
+-- # Keep calculated Mappings
+-- ##
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerAMag(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerAMag:=rightElement.W.phsA.cVal.mag.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerAAng(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerAAng:=rightElement.W.phsA.cVal.ang.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerBMag(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerBMag:=rightElement.W.phsB.cVal.mag.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerBAng(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerBAng:=rightElement.W.phsB.cVal.ang.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerCMag(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerCMag:=rightElement.W.phsC.cVal.mag.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerCAng(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerCAng:=rightElement.W.phsC.cVal.ang.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerNeutMag(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerNeutMag:=rightElement.W.neut.cVal.mag.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerNeutAng(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerNeutAng:=rightElement.W.neut.cVal.ang.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerNetMag(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerNetMag:=rightElement.W.net.cVal.mag.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerNetAng(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerNetAng:=rightElement.W.net.cVal.ang.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerResMag(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerResMag:=rightElement.W.res.cVal.mag.f;
+}
+mapping inout _jointarget::PMUActivePowerMeter::update_attribute_ActivePowerResAng(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _substationStandard::LNNodes::LNGroupM::MMXU) {
+	self.ActivePowerResAng:=rightElement.W.res.cVal.ang.f;
+}
+mapping inout _jointarget::PrivateMeterActivePower::update_attribute_ActivePowerImportA(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _COSEM::PhysicalDevice) {
+	self.ActivePowerImportA:=rightElement.ElectricityValues.ActivePowermL1;
+}
+mapping inout _jointarget::PrivateMeterActivePower::update_attribute_ActivePowerImportB(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _COSEM::PhysicalDevice) {
+	self.ActivePowerImportB:=rightElement.ElectricityValues.ActivePowermL2;
+}
+mapping inout _jointarget::PrivateMeterActivePower::update_attribute_ActivePowerImportC(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _COSEM::PhysicalDevice) {
+	self.ActivePowerImportC:=rightElement.ElectricityValues.ActivePowermL3;
+}
+mapping inout _jointarget::PrivateMeterActivePower::update_attribute_ActivePowerExportA(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _COSEM::PhysicalDevice) {
+	self.ActivePowerExportA:=rightElement.ElectricityValues.ActivePowerpL1;
+}
+mapping inout _jointarget::PrivateMeterActivePower::update_attribute_ActivePowerExportB(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _COSEM::PhysicalDevice) {
+	self.ActivePowerExportB:=rightElement.ElectricityValues.ActivePowerpL2;
+}
+mapping inout _jointarget::PrivateMeterActivePower::update_attribute_ActivePowerExportC(leftElement : _CIM::IEC61968::Metering::MeterAsset, rightElement : _COSEM::PhysicalDevice) {
+	self.ActivePowerExportC:=rightElement.ElectricityValues.ActivePowerpL3;
+}
+
+
+
+-- ##
+-- # Keep aggregate Mappings
+-- ##

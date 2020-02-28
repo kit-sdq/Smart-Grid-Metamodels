@@ -1,0 +1,33 @@
+import "platform:/resource/CIM/src-gen/Viewtype2_1-target.ecore"
+target "BalancingViewtype3"
+
+
+theta join Viewtype2_1_target.ControlArea with Viewtype2_1_target.ControlArea where "true" as jointarget.ControlArea {
+	keep attributes Viewtype2_1_target.ControlArea.mRID
+	keep aggregate sum(Viewtype2_1_target.ControlAreaGeneratingUnit.NuclearPowerProd) over Viewtype2_1_target.ControlArea.ControlAreaGeneratingUnit as ControlArea.NuclearPowerProd
+	keep aggregate sum(Viewtype2_1_target.ControlAreaGeneratingUnit.WindPowerProd) over Viewtype2_1_target.ControlArea.ControlAreaGeneratingUnit as ControlArea.WindPowerProd
+	keep aggregate sum(Viewtype2_1_target.ControlAreaGeneratingUnit.HydroPowerProd) over Viewtype2_1_target.ControlArea.ControlAreaGeneratingUnit as ControlArea.HydroPowerProd
+	keep aggregate sum(Viewtype2_1_target.ControlAreaGeneratingUnit.FossilPowerProd) over Viewtype2_1_target.ControlArea.ControlAreaGeneratingUnit as ControlArea.FossilPowerProd
+	keep aggregate sum(Viewtype2_1_target.ControlAreaGeneratingUnit.AllPowerProd) over Viewtype2_1_target.ControlArea.ControlAreaGeneratingUnit as ControlArea.AllPowerProd
+	keep outgoing Viewtype2_1_target.ControlArea.EnergyArea as type jointarget.EnergyArea {
+		keep outgoing Viewtype2_1_target.EnergyArea.ControlArea as type jointarget.ControlArea
+		keep subtype Viewtype2_1_target.LoadArea as type jointarget.LoadArea {
+			keep outgoing Viewtype2_1_target.LoadArea.SubLoadAreas as type jointarget.SubLoadArea {
+				keep aggregate sum(Viewtype2_1_target.ConformLoadGroup.PowerExport) over Viewtype2_1_target.SubLoadArea.LoadGroups as SubLoadArea.ConformPowerExport
+				keep aggregate sum(Viewtype2_1_target.NonConformLoadGroup.PowerExport) over Viewtype2_1_target.SubLoadArea.LoadGroups as SubLoadArea.NonConformPowerExport
+				keep aggregate sum(Viewtype2_1_target.ConformLoadGroup.PowerImport) over Viewtype2_1_target.SubLoadArea.LoadGroups as SubLoadArea.ConformPowerImport
+				keep aggregate sum(Viewtype2_1_target.NonConformLoadGroup.PowerImport) over Viewtype2_1_target.SubLoadArea.LoadGroups as SubLoadArea.NonConformPowerImport
+				keep outgoing Viewtype2_1_target.SubLoadArea.LoadArea as type jointarget.LoadArea
+				keep outgoing Viewtype2_1_target.SubLoadArea.LoadGroups as type jointarget.LoadGroup {
+					keep outgoing Viewtype2_1_target.LoadGroup.SubLoadArea as type jointarget.SubLoadArea
+					keep subtype Viewtype2_1_target.ConformLoadGroup as type jointarget.ConformLoadGroup {
+						keep aggregate sum(Viewtype2_1_target.ConformLoad.EstimatedLoad) over Viewtype2_1_target.ConformLoadGroup.EnergyConsumers as ConformLoadGroup.estimatedLoad
+					}
+					keep subtype Viewtype2_1_target.NonConformLoadGroup as type jointarget.NonConformLoadGroup {
+						keep aggregate sum(Viewtype2_1_target.NonConformLoad.EstimatedLoad) over Viewtype2_1_target.NonConformLoadGroup.EnergyConsumers as NonConformLoadGroup.estimatedLoad
+					}
+				}
+			}
+		}
+	}
+}

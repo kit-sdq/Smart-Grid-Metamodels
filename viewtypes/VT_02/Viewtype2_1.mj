@@ -1,0 +1,46 @@
+import "platform:/resource/CIM/src-gen/Viewtype2-target.ecore"
+target "BalancingViewtype2"
+
+theta join Viewtype2_target.ControlArea with Viewtype2_target.ControlArea where "true" as jointarget.ControlArea {
+	keep attributes Viewtype2_target.ControlArea.mRID
+	keep outgoing Viewtype2_target.ControlArea.ControlAreaGeneratingUnit as type jointarget.ControlAreaGeneratingUnit {
+		keep aggregate sum(Viewtype2_target.NuclearGeneratingUnit.NuclearPowerProd) over  Viewtype2_target.ControlAreaGeneratingUnit.GeneratingUnit as ControlAreaGeneratingUnit.NuclearPowerProd
+		keep aggregate sum(Viewtype2_target.WindGeneratingUnit.WindPowerProd) over  Viewtype2_target.ControlAreaGeneratingUnit.GeneratingUnit as ControlAreaGeneratingUnit.WindPowerProd
+		keep aggregate sum(Viewtype2_target.HydroGeneratingUnit.HydroPowerProd) over  Viewtype2_target.ControlAreaGeneratingUnit.GeneratingUnit as ControlAreaGeneratingUnit.HydroPowerProd
+		keep aggregate sum(Viewtype2_target.ThermalGeneratingUnit.FossilPowerProd) over  Viewtype2_target.ControlAreaGeneratingUnit.GeneratingUnit as ControlAreaGeneratingUnit.FossilPowerProd
+		keep aggregate sum(Viewtype2_target.GeneratingUnit.AllPowerProd) over  Viewtype2_target.ControlAreaGeneratingUnit.GeneratingUnit as ControlAreaGeneratingUnit.AllPowerProd	
+	}
+	keep outgoing Viewtype2_target.ControlArea.EnergyArea as type jointarget.EnergyArea {
+		keep outgoing Viewtype2_target.EnergyArea.ControlArea as type jointarget.ControlArea
+		keep subtype Viewtype2_target.LoadArea as type jointarget.LoadArea {
+			keep outgoing Viewtype2_target.LoadArea.SubLoadAreas as type jointarget.SubLoadArea {
+				keep outgoing Viewtype2_target.SubLoadArea.LoadArea as type jointarget.LoadArea
+				keep outgoing Viewtype2_target.SubLoadArea.LoadGroups as type jointarget.LoadGroup {
+					keep outgoing Viewtype2_target.LoadGroup.SubLoadArea as type jointarget.SubLoadArea
+					keep subtype Viewtype2_target.ConformLoadGroup as type jointarget.ConformLoadGroup {
+						keep aggregate sum(Viewtype2_target.Meter.PowerImport) over Viewtype2_target.ConformLoadGroup.EnergyConsumers as ConformLoadGroup.PowerImport
+						keep aggregate sum(Viewtype2_target.Meter.PowerExport) over Viewtype2_target.ConformLoadGroup.EnergyConsumers as ConformLoadGroup.PowerExport
+						keep outgoing Viewtype2_target.ConformLoadGroup.EnergyConsumers as type jointarget.ConformLoad {
+							keep aggregate sum(Viewtype2_target.ServiceDeliveryPoint.estimatedLoad) over Viewtype2_target.EnergyConsumer.ServiceDeliveryPoints as ConformLoad.EstimatedLoad
+						}
+					}
+					keep subtype Viewtype2_target.NonConformLoadGroup as type jointarget.NonConformLoadGroup {
+						keep aggregate sum(Viewtype2_target.Meter.PowerImport) over Viewtype2_target.NonConformLoadGroup.EnergyConsumers as NonConformLoadGroup.PowerImport
+						keep aggregate sum(Viewtype2_target.Meter.PowerExport) over Viewtype2_target.NonConformLoadGroup.EnergyConsumers as NonConformLoadGroup.PowerExport
+						keep outgoing Viewtype2_target.NonConformLoadGroup.EnergyConsumers as type jointarget.NonConformLoad {
+							keep aggregate sum(Viewtype2_target.ServiceDeliveryPoint.estimatedLoad) over Viewtype2_target.EnergyConsumer.ServiceDeliveryPoints as NonConformLoad.EstimatedLoad
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+

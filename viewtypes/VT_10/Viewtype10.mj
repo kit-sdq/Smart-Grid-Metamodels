@@ -1,0 +1,61 @@
+import "platform:/resource/CIM/model/61850.ecore"
+import "platform:/resource/CIM/model/schema.ecore"
+import "platform:/resource/CIM/model/COSEM.ecore"
+target "ControlEquipmentView"
+
+theta join CIM.IEC61970.Wires.Switch with substationStandard.LNNodes.LNGroupX.XSWI where "CIM.IEC61970.Wires.Switch.mRID = substationStandard.LNNodes.LNGroupX.XSWI.NamePlt.IdNs" as jointarget.Switch {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep outgoing substationStandard.LNNodes.LNGroupX.XSWI.SwitchControl as type jointarget.CSWI {
+			keep calculated attribute "substationStandard.LNNodes.LNGroupC.CSWI.Pos.ctlVal" as Switch.Position:String
+			keep calculated attribute "substationStandard.LNNodes.LNGroupC.CSWI.PosA.ctlVal" as Switch.PositionA:String
+			keep calculated attribute "substationStandard.LNNodes.LNGroupC.CSWI.PosB.ctlVal" as Switch.PositionB:String
+			keep calculated attribute "substationStandard.LNNodes.LNGroupC.CSWI.PosC.ctlVal" as Switch.PositionC:String
+			keep calculated attribute "substationStandard.LNNodes.LNGroupC.CSWI.OpOpn.general" as Switch.Open:Integer
+			keep calculated attribute "substationStandard.LNNodes.LNGroupC.CSWI.OpCls.general" as Switch.Close:Integer
+	}
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal {
+		keep outgoing CIM.IEC61970.Core.Terminal.TieFlow as type jointarget.TieFlow {
+			keep outgoing CIM.IEC61970.ControlArea.TieFlow.ControlArea as type jointarget.ControlArea{
+				keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+			}
+		}
+	}
+}
+
+theta join CIM.IEC61970.Wires.Breaker with substationStandard.LNNodes.LNGroupX.XCBR where "CIM.IEC61970.Wires.Breaker.mRID = substationStandard.LNNodes.LNGroupX.XCBR.NamePlt.IdNs" as jointarget.Breaker {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep outgoing substationStandard.LNNodes.LNGroupX.XCBR.SwitchControl as type jointarget.CSWI
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal
+}
+
+theta join CIM.IEC61970.Wires.PowerTransformer with substationStandard.LNNodes.LNGroupY.YPTR where "CIM.IEC61970.Wires.PowerTransformer.mRID = substationStandard.LNNodes.LNGroupY.YPTR.NamePlt.IdNs" as jointarget.PowerTransformer {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep outgoing substationStandard.LNNodes.LNGroupY.YPTR.TransformerControl as type jointarget.ATCC {
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.TapChg.ctlVal" as ATCC.TapChange:Integer
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.TapPos.ctlVal" as ATCC.TapPosChange:Integer
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.LTCBlk.ctlVal" as ATCC.LTCBlk:Integer
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.LTCDragRs.ctlVal" as ATCC.LTCDragRs:Integer
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.VRed1.ctlVal" as ATCC.VRed1:Integer
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.VRed2.ctlVal" as ATCC.VRed2:Integer
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.CtlV.mag.f" as ATCC.Voltage:Double
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.LodA.mag.f" as ATCC.Current:Double
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.CircA.mag.f" as ATCC.CircularCurrent:Double
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ATCC.PhAng.mag.f" as ATCC.Phaseangle:Double
+	}
+	keep outgoing CIM.IEC61970.Wires.PowerTransformer.TransformerWindings as type jointarget.TransformerWinding {
+		keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal
+	}
+}
+
+theta join CIM.IEC61970.Wires.ShuntCompensator with substationStandard.LNNodes.LNGroupZ.ZCAP where "CIM.IEC61970.Wires.ShuntCompensator.mRID = substationStandard.LNNodes.LNGroupZ.ZCAP.NamePlt.IdNs" as jointarget.ShuntCapacitorCompensator {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZCAP.CapDS.ctlVal" as ShuntCapacitorCompensator.CapControl:Integer
+	keep outgoing substationStandard.LNNodes.LNGroupZ.ZCAP.CapControl as type jointarget.ARCO {
+		keep calculated attribute "substationStandard.LNNodes.LNGroupA.ARCO.TapChg.ctlVal" as ARCO.TapChange:Integer
+	}
+	keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal
+}
+
+
+
+

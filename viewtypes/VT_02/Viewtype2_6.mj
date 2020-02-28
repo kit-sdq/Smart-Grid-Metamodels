@@ -1,0 +1,17 @@
+import "platform:/resource/CIM/src-gen/Viewtype2_5-target.ecore"
+target "BalancingViewtype7"
+
+theta join Viewtype2_5_target.ControlArea with Viewtype2_5_target.ControlArea where "true" as jointarget.ControlArea {
+	keep attributes Viewtype2_5_target.ControlArea.mRID,
+					Viewtype2_5_target.ControlArea.NuclearPowerProd,
+					Viewtype2_5_target.ControlArea.WindPowerProd,
+					Viewtype2_5_target.ControlArea.HydroPowerProd,
+					Viewtype2_5_target.ControlArea.FossilPowerProd,
+					Viewtype2_5_target.ControlArea.SolarPowerProd,
+					Viewtype2_5_target.ControlArea.PowerExport,
+					Viewtype2_5_target.ControlArea.PowerImport
+	keep calculated attribute "Viewtype2_5_target.ControlArea.AllPowerProd + Viewtype2_5_target.ControlArea.PowerExport - Viewtype2_5_target.ControlArea.PowerImport" as ControlArea.Difference:Double
+	keep calculated attribute "Viewtype2_5_target.ControlArea.AllPowerProd + Viewtype2_5_target.ControlArea.PowerExport" as ControlArea.AllPowerProd:Double
+	keep calculated attribute "'10000'" as ControlArea.GeneratorEstimation:Double
+	keep aggregate sum(Viewtype2_5_target.LoadArea.estimatedLoad) over Viewtype2_5_target.ControlArea.EnergyArea as ControlArea.estimatedLoad
+}

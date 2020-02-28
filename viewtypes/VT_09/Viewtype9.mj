@@ -1,0 +1,75 @@
+import "platform:/resource/CIM/model/61850.ecore"
+import "platform:/resource/CIM/model/schema.ecore"
+import "platform:/resource/CIM/model/COSEM.ecore"
+target "ActivePowerPhaseMeasurements"
+
+theta join CIM.IEC61968.Metering.MeterAsset with substationStandard.LNNodes.LNGroupM.MMXU where "CIM.IEC61968.Metering.MeterAsset.mRID = substationStandard.LNNodes.LNGroupM.MMXU.NamePlt.IdNs" as jointarget.PMUActivePowerMeter {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.phsA.cVal.mag.f" as PMUActivePowerMeter.ActivePowerAMag:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.phsA.cVal.ang.f" as PMUActivePowerMeter.ActivePowerAAng:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.phsB.cVal.mag.f" as PMUActivePowerMeter.ActivePowerBMag:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.phsB.cVal.ang.f" as PMUActivePowerMeter.ActivePowerBAng:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.phsC.cVal.mag.f" as PMUActivePowerMeter.ActivePowerCMag:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.phsC.cVal.ang.f" as PMUActivePowerMeter.ActivePowerCAng:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.neut.cVal.mag.f" as PMUActivePowerMeter.ActivePowerNeutMag:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.neut.cVal.ang.f" as PMUActivePowerMeter.ActivePowerNeutAng:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.net.cVal.mag.f" as PMUActivePowerMeter.ActivePowerNetMag:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.net.cVal.ang.f" as PMUActivePowerMeter.ActivePowerNetAng:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.res.cVal.mag.f" as PMUActivePowerMeter.ActivePowerResMag:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupM.MMXU.W.res.cVal.ang.f" as PMUActivePowerMeter.ActivePowerResAng:Double
+	keep supertype CIM.IEC61968.Assets.Asset as type jointarget.Asset {
+		keep outgoing CIM.IEC61968.Assets.Asset.Location as type jointarget.Location {
+			keep outgoing CIM.IEC61968.Common.Location.Position as type jointarget.PositionPoint {
+				keep  attributes CIM.IEC61968.Common.PositionPoint.xPosition,
+				CIM.IEC61968.Common.PositionPoint.yPosition,
+				CIM.IEC61968.Common.PositionPoint.zPosition	
+			}
+			keep outgoing CIM.IEC61968.Common.Location.PowerSystemResources as type jointarget.PowerSystemResource {
+				keep subtype CIM.IEC61970.Core.ConductingEquipment as type jointarget.ConductingEquipment {
+					keep outgoing CIM.IEC61970.Core.ConductingEquipment.Terminals as type jointarget.Terminal {
+						keep outgoing CIM.IEC61970.Core.Terminal.TieFlow as type jointarget.TieFlow {
+							keep outgoing CIM.IEC61970.ControlArea.TieFlow.ControlArea as type jointarget.ControlArea {
+								keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+theta join CIM.IEC61968.Metering.MeterAsset with COSEM.PhysicalDevice where "CIM.IEC61968.Metering.MeterAsset.mRID = COSEM.PhysicalDevice.ID" as jointarget.PrivateMeterActivePower {
+	keep attributes COSEM.PhysicalDevice.ID
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ActivePowermL1" as PrivateMeterActivePower.ActivePowerImportA:Double
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ActivePowermL2" as PrivateMeterActivePower.ActivePowerImportB:Double
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ActivePowermL3" as PrivateMeterActivePower.ActivePowerImportC:Double
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ActivePowerpL1" as PrivateMeterActivePower.ActivePowerExportA:Double
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ActivePowerpL2" as PrivateMeterActivePower.ActivePowerExportB:Double
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ActivePowerpL3" as PrivateMeterActivePower.ActivePowerExportC:Double
+	keep supertype CIM.IEC61968.Metering.EndDeviceAsset as type jointarget.EndDeviceAsset { 
+		keep outgoing CIM.IEC61968.Metering.EndDeviceAsset.ServiceDeliveryPoint as type jointarget.ServiceDeliveryPoint {
+			keep outgoing CIM.IEC61968.Metering.ServiceDeliveryPoint.EnergyConsumer as type jointarget.EnergyConsumer {
+				keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+				keep subtype CIM.IEC61970.LoadModel.ConformLoad as type jointarget.ConformLoad {
+					keep outgoing CIM.IEC61970.LoadModel.ConformLoad.LoadGroup as type jointarget.ConformLoadGroup {
+						keep supertype CIM.IEC61970.LoadModel.LoadGroup as type jointarget.LoadGroup {
+							keep outgoing CIM.IEC61970.LoadModel.LoadGroup.SubLoadArea as type jointarget.SubLoadArea {
+								keep outgoing CIM.IEC61970.LoadModel.SubLoadArea.LoadArea as type jointarget.LoadArea {
+									keep outgoing CIM.IEC61970.LoadModel.EnergyArea.ControlArea as type jointarget.ControlArea
+								}
+							}
+						}
+					}
+				}
+				keep subtype CIM.IEC61970.LoadModel.NonConformLoad as type jointarget.NonConformLoad {
+					keep outgoing CIM.IEC61970.LoadModel.NonConformLoad.LoadGroup as type jointarget.NonConformLoadGroup {
+						keep supertype CIM.IEC61970.LoadModel.LoadGroup as type jointarget.LoadGroup
+					}
+				}
+			}
+		}
+	}
+}
+
+

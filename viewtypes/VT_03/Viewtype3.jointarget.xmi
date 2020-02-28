@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jt:root xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jt="GeneratorsOverviewView"
+    xsi:schemaLocation="GeneratorsOverviewView Viewtype3-target.ecore">
+  <ControlArea
+      mRID="AmprionControlArea"/>
+  <ControlAreaGeneratingUnit
+      ControlArea="//@ControlArea.0"/>
+  <RegularTimePoint
+      value1="30.0"
+      value2="15.0"/>
+  <GenUnitOpSchedule
+      TimePoints="//@RegularTimePoint.0"
+      endTime="19:00"
+      timeStep="2.0"/>
+  <PlannedOutage/>
+  <IrregularTimePoint
+      value1="30.0"
+      value2="30.0"/>
+  <OutageSchedule
+      TimePoints="//@IrregularTimePoint.0"
+      PlannedOutage="//@PlannedOutage.0"
+      startTime="15:00"/>
+  <GeneratingUnit
+      OutageSchedule="//@OutageSchedule.0"
+      GenUnitOpSchedule="//@GenUnitOpSchedule.0"
+      ControlAreaGeneratingUnit="//@ControlAreaGeneratingUnit.0"
+      mRID="_4205852"
+      allocSpinResP="4536.0"
+      startupCost="342.0"
+      startupTime="5.0"
+      minimumOffTime="30.0"
+      controlDeadband="20.0"
+      GnSt="starting"
+      freeCapacity="356.0"
+      Type="Controlable"/>
+</jt:root>

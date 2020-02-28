@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="jointarget" nsURI="loadShedding_GeneratorControl" nsPrefix="jt">
+  <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.sourceModels" references="../model/schema.ecore#/ ../model/COSEM.ecore#/ ../model/61850.ecore#/"/>
+  <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.traceModel" references="Viewtype4-trace.ecore#/"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GeneratingUnit">
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.left" references="../model/schema.ecore#//IEC61970/ControlArea/ControlAreaGeneratingUnit"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.right" references="../model/61850.ecore#//LNNodes/LNGroupZ/ZGEN"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.jointrace" references="Viewtype4-trace.ecore#//join_ControlAreaGeneratingUnit_ZGEN_GeneratingUnit"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+      <details key="order" value="1"/>
+      <details key="operator" value="thetajoin"/>
+      <details key="condition" value="CIM.IEC61970.ControlArea.ControlAreaGeneratingUnit.UUID = substationStandard.LNNodes.LNGroupZ.ZGEN.NamePlt.IdNs"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ControlArea" eType="#//ControlArea">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="The parent control area for the generating unit specifications."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="The parent control area for the generating unit specifications."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepoutgoing"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.oftype" references="../model/schema.ecore#//IEC61970/ControlArea/ControlArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reference" references="../model/schema.ecore#//IEC61970/ControlArea/ControlAreaGeneratingUnit/ControlArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/ControlArea/ControlAreaGeneratingUnit"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_ControlArea_ControlArea_ControlArea"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepcalculated"/>
+        <details key="formula" value="CIM.IEC61970.ControlArea.ControlAreaGeneratingUnit.GeneratingUnit.mRID"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="DemandedPower" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepcalculated"/>
+        <details key="formula" value="substationStandard.LNNodes.LNGroupZ.ZGEN.DmdPwr.setMag.f"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ControlState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepcalculated"/>
+        <details key="formula" value="substationStandard.LNNodes.LNGroupZ.ZGEN.GnCtl.ctlVal"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PowerCutConformLoad">
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.left" references="../model/schema.ecore#//IEC61970/LoadModel/ConformLoad"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.right" references="../model/schema.ecore#//IEC61970/LoadModel/ConformLoad"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.jointrace" references="Viewtype4-trace.ecore#//join_ConformLoad_ConformLoad_PowerCutConformLoad"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+      <details key="order" value="2"/>
+      <details key="operator" value="thetajoin"/>
+      <details key="condition" value="true"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="LoadGroup" eType="#//ConformLoadGroup">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="Group of this ConformLoad."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="Group of this ConformLoad."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepoutgoing"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.oftype" references="../model/schema.ecore#//IEC61970/LoadModel/ConformLoadGroup"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reference" references="../model/schema.ecore#//IEC61970/LoadModel/ConformLoad/LoadGroup"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/ConformLoad"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_ConformLoadGroup_ConformLoadGroup_LoadGroup"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ServiceDeliveryPoints"
+        upperBound="-1" eType="#//ServiceDeliveryPoint">
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepoutgoing"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.oftype" references="../model/schema.ecore#//IEC61968/Metering/ServiceDeliveryPoint"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reference" references="../model/schema.ecore#//IEC61970/Wires/EnergyConsumer/ServiceDeliveryPoints"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/ConformLoad"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_ServiceDeliveryPoint_ServiceDeliveryPoint_ServiceDeliveryPoints"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mRID" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepattributes"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/ConformLoad"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.attribute" references="../model/schema.ecore#//IEC61970/Core/IdentifiedObject/mRID"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.context" references="#//PowerCutConformLoad"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="LoadShedding" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepcalculated"/>
+        <details key="formula" value="'0'"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PowerCutNonConformLoad">
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.left" references="../model/schema.ecore#//IEC61970/LoadModel/NonConformLoad"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.right" references="../model/schema.ecore#//IEC61970/LoadModel/NonConformLoad"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.jointrace" references="Viewtype4-trace.ecore#//join_NonConformLoad_NonConformLoad_PowerCutNonConformLoad"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+      <details key="order" value="3"/>
+      <details key="operator" value="thetajoin"/>
+      <details key="condition" value="true"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="LoadGroup" eType="#//NonConformLoadGroup">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="Group of this ConformLoad."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="Group of this ConformLoad."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepoutgoing"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.oftype" references="../model/schema.ecore#//IEC61970/LoadModel/NonConformLoadGroup"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reference" references="../model/schema.ecore#//IEC61970/LoadModel/NonConformLoad/LoadGroup"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/NonConformLoad"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_NonConformLoadGroup_NonConformLoadGroup_LoadGroup"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ServiceDeliveryPoints"
+        upperBound="-1" eType="#//ServiceDeliveryPoint">
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepoutgoing"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.oftype" references="../model/schema.ecore#//IEC61968/Metering/ServiceDeliveryPoint"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reference" references="../model/schema.ecore#//IEC61970/Wires/EnergyConsumer/ServiceDeliveryPoints"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/NonConformLoad"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mRID" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepattributes"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/NonConformLoad"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.attribute" references="../model/schema.ecore#//IEC61970/Core/IdentifiedObject/mRID"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.context" references="#//PowerCutNonConformLoad"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="LoadShedding" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepcalculated"/>
+        <details key="formula" value="'0'"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlArea">
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/ControlArea/ControlArea"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+      <details key="operator" value="keepoutgoing"/>
+      <details key="order" value="8"/>
+    </eAnnotations>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_ControlArea_ControlArea_ControlArea"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mRID" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepattributes"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/ControlArea/ControlArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.attribute" references="../model/schema.ecore#//IEC61970/Core/IdentifiedObject/mRID"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.context" references="#//ControlArea"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ImportFrom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepcalculated"/>
+        <details key="formula" value="'ID1'"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ExportTo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepcalculated"/>
+        <details key="formula" value="'ID2'"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConformLoadGroup">
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/ConformLoadGroup"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+      <details key="operator" value="keepoutgoing"/>
+      <details key="order" value="5"/>
+    </eAnnotations>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_ConformLoadGroup_ConformLoadGroup_LoadGroup"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SubLoadArea" eType="#//SubLoadArea">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="The SubLoadArea where the Loadgroup belongs."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="The SubLoadArea where the Loadgroup belongs."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepoutgoing"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.oftype" references="../model/schema.ecore#//IEC61970/LoadModel/SubLoadArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reference" references="../model/schema.ecore#//IEC61970/LoadModel/LoadGroup/SubLoadArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/ConformLoadGroup"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_SubLoadArea_SubLoadArea_SubLoadArea"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubLoadArea">
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/SubLoadArea"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+      <details key="operator" value="keepoutgoing"/>
+      <details key="order" value="11"/>
+    </eAnnotations>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_SubLoadArea_SubLoadArea_SubLoadArea"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="LoadArea" eType="#//LoadArea">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="The LoadArea where the SubLoadArea belongs."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="The LoadArea where the SubLoadArea belongs."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepoutgoing"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.oftype" references="../model/schema.ecore#//IEC61970/LoadModel/LoadArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reference" references="../model/schema.ecore#//IEC61970/LoadModel/SubLoadArea/LoadArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/SubLoadArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_LoadArea_LoadArea_LoadArea"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LoadArea">
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/LoadArea"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+      <details key="operator" value="keepoutgoing"/>
+      <details key="order" value="7"/>
+    </eAnnotations>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_LoadArea_LoadArea_LoadArea"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ControlArea" eType="#//ControlArea">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="The control area specification that is used for the load forecast."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="The control area specification that is used for the load forecast."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepoutgoing"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.oftype" references="../model/schema.ecore#//IEC61970/ControlArea/ControlArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reference" references="../model/schema.ecore#//IEC61970/LoadModel/EnergyArea/ControlArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/LoadArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceDeliveryPoint">
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61968/Metering/ServiceDeliveryPoint"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+      <details key="operator" value="keepoutgoing"/>
+      <details key="order" value="12"/>
+    </eAnnotations>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_ServiceDeliveryPoint_ServiceDeliveryPoint_ServiceDeliveryPoints"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ratedPower" lowerBound="1"
+        eType="ecore:EDataType ../model/schema.ecore#//IEC61970/Domain/ActivePower">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="Power that this service delivery point is configured to deliver."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="Power that this service delivery point is configured to deliver."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepattributes"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61968/Metering/ServiceDeliveryPoint"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.attribute" references="../model/schema.ecore#//IEC61968/Metering/ServiceDeliveryPoint/ratedPower"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.context" references="#//ServiceDeliveryPoint"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NonConformLoadGroup">
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/NonConformLoadGroup"/>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+      <details key="operator" value="keepoutgoing"/>
+      <details key="order" value="10"/>
+    </eAnnotations>
+    <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace" references="Viewtype4-trace.ecore#//ref_NonConformLoadGroup_NonConformLoadGroup_LoadGroup"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SubLoadArea" eType="#//SubLoadArea">
+      <eAnnotations source="http://iec.ch/TC57/2009/CIM-schema-cim14">
+        <details key="Documentation" value="The SubLoadArea where the Loadgroup belongs."/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="Documentation" value="The SubLoadArea where the Loadgroup belongs."/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.createdBy">
+        <details key="operator" value="keepoutgoing"/>
+      </eAnnotations>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.oftype" references="../model/schema.ecore#//IEC61970/LoadModel/SubLoadArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reference" references="../model/schema.ecore#//IEC61970/LoadModel/LoadGroup/SubLoadArea"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace" references="../model/schema.ecore#//IEC61970/LoadModel/NonConformLoadGroup"/>
+      <eAnnotations source="edu.kit.ipd.sdq.mdsd.mj.classTrace.reftrace"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>

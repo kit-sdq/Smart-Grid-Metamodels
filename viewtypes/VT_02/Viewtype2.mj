@@ -1,0 +1,74 @@
+import "platform:/resource/CIM/model/61850.ecore"
+import "platform:/resource/CIM/model/schema.ecore"
+import "platform:/resource/CIM/model/COSEM.ecore"
+target "BalancingViewtype1"
+
+theta join CIM.IEC61968.Metering.MeterAsset with COSEM.PhysicalDevice where "CIM.IEC61968.Metering.MeterAsset.mRID = COSEM.PhysicalDevice.ID" as jointarget.Meter {
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ApparentPowermAll" as Meter.PowerImport:Double
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ApparentPowerpAll" as Meter.PowerExport:Double
+	keep outgoing CIM.IEC61968.Metering.EndDeviceAsset.ServiceDeliveryPoint as type jointarget.ServiceDeliveryPoint {
+		keep attributes CIM.IEC61968.Metering.ServiceDeliveryPoint.estimatedLoad
+		keep outgoing CIM.IEC61968.Metering.ServiceDeliveryPoint.EndDeviceAssets as type jointarget.MeterAsset	
+		keep outgoing CIM.IEC61968.Metering.ServiceDeliveryPoint.EnergyConsumer as type jointarget.EnergyConsumer {
+			keep outgoing CIM.IEC61970.Wires.EnergyConsumer.ServiceDeliveryPoints as type jointarget.ServiceDeliveryPoint
+			keep subtype CIM.IEC61970.LoadModel.ConformLoad as type jointarget.ConformLoad {
+				keep outgoing CIM.IEC61970.LoadModel.ConformLoad.LoadGroup as type jointarget.ConformLoadGroup {
+					keep outgoing CIM.IEC61970.LoadModel.ConformLoadGroup.EnergyConsumers as type jointarget.ConformLoad
+					keep supertype CIM.IEC61970.LoadModel.LoadGroup as type jointarget.LoadGroup {
+						keep outgoing CIM.IEC61970.LoadModel.LoadGroup.SubLoadArea as type jointarget.SubLoadArea {
+							keep outgoing CIM.IEC61970.LoadModel.SubLoadArea.LoadGroups as type jointarget.LoadGroup
+							keep outgoing CIM.IEC61970.LoadModel.SubLoadArea.LoadArea as type jointarget.LoadArea {
+								keep outgoing CIM.IEC61970.LoadModel.LoadArea.SubLoadAreas as type jointarget.SubLoadArea
+								keep supertype CIM.IEC61970.LoadModel.EnergyArea as type jointarget.EnergyArea {
+									keep outgoing CIM.IEC61970.LoadModel.EnergyArea.ControlArea as type jointarget.ControlArea {
+										keep outgoing CIM.IEC61970.ControlArea.ControlArea.EnergyArea as type jointarget.EnergyArea
+									}	
+								}
+							}
+						}
+					}
+				}
+			}
+			keep subtype CIM.IEC61970.LoadModel.NonConformLoad as type jointarget.NonConformLoad {
+				keep outgoing CIM.IEC61970.LoadModel.NonConformLoad.LoadGroup as type jointarget.NonConformLoadGroup {
+					keep outgoing CIM.IEC61970.LoadModel.NonConformLoadGroup.EnergyConsumers as type jointarget.ConformLoad
+					keep supertype CIM.IEC61970.LoadModel.LoadGroup as type jointarget.LoadGroup
+				}
+			}
+		}
+	}
+}
+
+
+theta join CIM.IEC61970.Generation.Production.GeneratingUnit with substationStandard.LNNodes.LNGroupZ.ZGEN where "substationStandard.LNNodes.LNGroupZ.ZGEN.NamePlt.IdNs = CIM.IEC61970.Generation.Production.GeneratingUnit.mRID" as jointarget.GeneratingUnit {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.PwrRtg.setMag.f" as GeneratingUnit.AllPowerProd:Double
+	keep outgoing CIM.IEC61970.Generation.Production.GeneratingUnit.ControlAreaGeneratingUnit as type jointarget.ControlAreaGeneratingUnit {
+		keep outgoing CIM.IEC61970.ControlArea.ControlAreaGeneratingUnit.GeneratingUnit as type jointarget.GeneratingUnit
+		keep outgoing CIM.IEC61970.ControlArea.ControlAreaGeneratingUnit.ControlArea as type jointarget.ControlArea {
+			keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+			keep outgoing CIM.IEC61970.ControlArea.ControlArea.ControlAreaGeneratingUnit as type jointarget.ControlAreaGeneratingUnit
+		}
+	}
+}
+
+theta join CIM.IEC61970.Generation.Production.NuclearGeneratingUnit with substationStandard.LNNodes.LNGroupZ.ZGEN where "substationStandard.LNNodes.LNGroupZ.ZGEN.NamePlt.IdNs = CIM.IEC61970.Generation.Production.NuclearGeneratingUnit.mRID" as jointarget.NuclearGeneratingUnit {
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.PwrRtg.setMag.f" as NuclearGeneratingUnit.NuclearPowerProd:Double
+	keep supertype CIM.IEC61970.Generation.Production.GeneratingUnit as type jointarget.GeneratingUnit
+}
+
+theta join CIM.IEC61970.Generation.Production.WindGeneratingUnit with substationStandard.LNNodes.LNGroupZ.ZGEN where "substationStandard.LNNodes.LNGroupZ.ZGEN.NamePlt.IdNs = CIM.IEC61970.Generation.Production.WindGeneratingUnit.mRID" as jointarget.WindGeneratingUnit {
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.PwrRtg.setMag.f" as WindGeneratingUnit.WindPowerProd:Double
+	keep supertype CIM.IEC61970.Generation.Production.GeneratingUnit as type jointarget.GeneratingUnit
+}
+
+theta join CIM.IEC61970.Generation.Production.HydroGeneratingUnit with substationStandard.LNNodes.LNGroupZ.ZGEN where "61850.substationStandard.LNNodes.LNGroupZ.ZGEN.NamePlt.IdNs = CIM.IEC61970.Generation.Production.HydroGeneratingUnit.mRID" as jointarget.HydroGeneratingUnit {
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.PwrRtg.setMag.f" as HydroGeneratingUnit.HydroPowerProd:Double
+	keep supertype CIM.IEC61970.Generation.Production.GeneratingUnit as type jointarget.GeneratingUnit
+}
+
+theta join CIM.IEC61970.Generation.Production.ThermalGeneratingUnit with substationStandard.LNNodes.LNGroupZ.ZGEN where "substationStandard.LNNodes.LNGroupZ.ZGEN.NamePlt.IdNs = CIM.IEC61970.Generation.Production.ThermalGeneratingUnit.mRID" as jointarget.ThermalGeneratingUnit {
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.PwrRtg.setMag.f" as ThermalGeneratingUnit.FossilPowerProd:Double
+	keep supertype CIM.IEC61970.Generation.Production.GeneratingUnit as type jointarget.GeneratingUnit
+}
+

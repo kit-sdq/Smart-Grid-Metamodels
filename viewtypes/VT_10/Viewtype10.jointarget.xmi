@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jt:root xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jt="ControlEquipmentView"
+    xsi:schemaLocation="ControlEquipmentView Viewtype10-target.ecore">
+  <ARCO TapChange="3"/>
+  <TransformerWinding
+      Terminals="//@Terminal.0"/>
+  <ATCC TapChange="3"
+      TapPosChange="2"
+      Voltage="40.0"
+      Current="54.0"
+      CircularCurrent="23.0"
+      Phaseangle="90.0"/>
+  <ControlArea
+      mRID="TennetControlArea"/>
+  <TieFlow ControlArea="//@ControlArea.0"/>
+  <TieFlow ControlArea="//@ControlArea.0"/>
+  <TieFlow ControlArea="//@ControlArea.0"/>
+  <TieFlow ControlArea="//@ControlArea.0"/>
+  <CSWI/>
+  <CSWI/>
+  <ShuntCapacitorCompensator
+      CapControl="//@ARCO.0"
+      Terminals="//@Terminal.3"
+      mRID="_237423"/>
+  <PowerTransformer
+      TransformerControl="//@ATCC.0"
+      TransformerWindings="//@TransformerWinding.0"/>
+  <Breaker SwitchControl="//@CSWI.0"
+      Terminals="//@Terminal.1"
+      mRID="_5437892"/>
+  <Switch SwitchControl="//@CSWI.1"
+      Position="0"
+      PositionA="0"
+      PositionB="0"
+      PositionC="0"
+      Terminals="//@Terminal.2"
+      mRID="_583872"/>
+  <Terminal
+      TieFlow="//@TieFlow.0"/>
+  <Terminal
+      TieFlow="//@TieFlow.1"/>
+  <Terminal
+      TieFlow="//@TieFlow.2"/>
+  <Terminal
+      TieFlow="//@TieFlow.3"/>
+</jt:root>

@@ -1,0 +1,805 @@
+/* Generated ModelJoin transformation 
+ *
+ */
+transformation M1toM2(
+in __CIM: _CIM, 
+in __substationStandard: _substationStandard, 
+out __jointarget: _jointarget,
+out __mjtrace: _mjtrace);	
+	
+// source metamodels
+modeltype _CIM uses "http://iec.ch/TC57/2009/CIM-schema-cim14";
+modeltype _substationStandard uses "substationStandard";
+// target metamodel
+modeltype _jointarget uses "ControlEquipmentView";
+// trace metamodel
+modeltype _mjtrace uses "ControlEquipmentView.trace";
+	
+//alway import ecore
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+main() {
+-- ###
+-- # operations for target class Switch
+-- ##
+
+-- get all elements of of type Switch and XSWI
+var leftAllSwitch = __CIM.objectsOfType(_CIM::IEC61970::Wires::Switch);
+var rightAllSwitch = __substationStandard.objectsOfType(_substationStandard::LNNodes::LNGroupX::XSWI);
+
+-- theta join operation
+rightAllSwitch->forEach(rightSwitch) {
+	leftAllSwitch->map thetaJoin_Switch_XSWI_To_Switch(rightSwitch);
+};
+-- ###
+-- # operations for target class Breaker
+-- ##
+
+-- get all elements of of type Breaker and XCBR
+var leftAllBreaker = __CIM.objectsOfType(_CIM::IEC61970::Wires::Breaker);
+var rightAllBreaker = __substationStandard.objectsOfType(_substationStandard::LNNodes::LNGroupX::XCBR);
+
+-- theta join operation
+rightAllBreaker->forEach(rightBreaker) {
+	leftAllBreaker->map thetaJoin_Breaker_XCBR_To_Breaker(rightBreaker);
+};
+-- ###
+-- # operations for target class PowerTransformer
+-- ##
+
+-- get all elements of of type PowerTransformer and YPTR
+var leftAllPowerTransformer = __CIM.objectsOfType(_CIM::IEC61970::Wires::PowerTransformer);
+var rightAllPowerTransformer = __substationStandard.objectsOfType(_substationStandard::LNNodes::LNGroupY::YPTR);
+
+-- theta join operation
+rightAllPowerTransformer->forEach(rightPowerTransformer) {
+	leftAllPowerTransformer->map thetaJoin_PowerTransformer_YPTR_To_PowerTransformer(rightPowerTransformer);
+};
+-- ###
+-- # operations for target class ShuntCapacitorCompensator
+-- ##
+
+-- get all elements of of type ShuntCompensator and ZCAP
+var leftAllShuntCapacitorCompensator = __CIM.objectsOfType(_CIM::IEC61970::Wires::ShuntCompensator);
+var rightAllShuntCapacitorCompensator = __substationStandard.objectsOfType(_substationStandard::LNNodes::LNGroupZ::ZCAP);
+
+-- theta join operation
+rightAllShuntCapacitorCompensator->forEach(rightShuntCapacitorCompensator) {
+	leftAllShuntCapacitorCompensator->map thetaJoin_ShuntCompensator_ZCAP_To_ShuntCapacitorCompensator(rightShuntCapacitorCompensator);
+};
+
+
+	-- keep outgoing references
+
+
+	var refAllSwitchControl_98d86240_a6a8_40f4_b89b_7b878523fcab = __jointarget.objectsOfType(_jointarget::Switch);
+	refAllSwitchControl_98d86240_a6a8_40f4_b89b_7b878523fcab->forEach(elem) {
+		elem.invresolve()->selectByKind(_substationStandard::LNNodes::LNGroupX::XSWI)->collect(SwitchControl)->selectByKind(_substationStandard::LNNodes::LNGroupC::CSWI)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_SwitchControl(refElem.resolveone(_jointarget::CSWI));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_SwitchControl(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::CSWI).map trace_keepOutgoing_SwitchControl(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTerminals_4b5738e8_4224_4a7c_86ef_ce5e62569083 = __jointarget.objectsOfType(_jointarget::Switch);
+	refAllTerminals_4b5738e8_4224_4a7c_86ef_ce5e62569083->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Core::ConductingEquipment)->collect(Terminals)->selectByKind(_CIM::IEC61970::Core::Terminal)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_Terminals(refElem.resolveone(_jointarget::Terminal));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_Terminals(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::Terminal).map trace_keepOutgoing_Terminals(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllSwitchControl_6a44681b_901e_4568_bd99_c415449a4296 = __jointarget.objectsOfType(_jointarget::Breaker);
+	refAllSwitchControl_6a44681b_901e_4568_bd99_c415449a4296->forEach(elem) {
+		elem.invresolve()->selectByKind(_substationStandard::LNNodes::LNGroupX::XCBR)->collect(SwitchControl)->selectByKind(_substationStandard::LNNodes::LNGroupC::CSWI)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_SwitchControl(refElem.resolveone(_jointarget::CSWI));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_SwitchControl(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::CSWI).map trace_keepOutgoing_SwitchControl(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTerminals_940c45e9_b2cb_45f1_b2de_0003aad01c51 = __jointarget.objectsOfType(_jointarget::Breaker);
+	refAllTerminals_940c45e9_b2cb_45f1_b2de_0003aad01c51->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Core::ConductingEquipment)->collect(Terminals)->selectByKind(_CIM::IEC61970::Core::Terminal)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_Terminals(refElem.resolveone(_jointarget::Terminal));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_Terminals(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::Terminal).map trace_keepOutgoing_Terminals(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTransformerControl_1c79b657_f2c3_49e6_b250_ed33f477fa8d = __jointarget.objectsOfType(_jointarget::PowerTransformer);
+	refAllTransformerControl_1c79b657_f2c3_49e6_b250_ed33f477fa8d->forEach(elem) {
+		elem.invresolve()->selectByKind(_substationStandard::LNNodes::LNGroupY::YPTR)->collect(TransformerControl)->selectByKind(_substationStandard::LNNodes::LNGroupA::ATCC)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_TransformerControl(refElem.resolveone(_jointarget::ATCC));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_TransformerControl(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ATCC).map trace_keepOutgoing_TransformerControl(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTransformerWindings_328925a6_f15e_4197_a5f8_ca6898a420f1 = __jointarget.objectsOfType(_jointarget::PowerTransformer);
+	refAllTransformerWindings_328925a6_f15e_4197_a5f8_ca6898a420f1->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Wires::PowerTransformer)->collect(TransformerWindings)->selectByKind(_CIM::IEC61970::Wires::TransformerWinding)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_TransformerWindings(refElem.resolveone(_jointarget::TransformerWinding));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_TransformerWindings(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::TransformerWinding).map trace_keepOutgoing_TransformerWindings(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllCapControl_377fe74a_3bde_494e_8f5c_39f2dd931838 = __jointarget.objectsOfType(_jointarget::ShuntCapacitorCompensator);
+	refAllCapControl_377fe74a_3bde_494e_8f5c_39f2dd931838->forEach(elem) {
+		elem.invresolve()->selectByKind(_substationStandard::LNNodes::LNGroupZ::ZCAP)->collect(CapControl)->selectByKind(_substationStandard::LNNodes::LNGroupA::ARCO)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_CapControl(refElem.resolveone(_jointarget::ARCO));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_CapControl(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ARCO).map trace_keepOutgoing_CapControl(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTerminals_9b0221ed_66b6_4592_9148_cee63d903294 = __jointarget.objectsOfType(_jointarget::ShuntCapacitorCompensator);
+	refAllTerminals_9b0221ed_66b6_4592_9148_cee63d903294->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Core::ConductingEquipment)->collect(Terminals)->selectByKind(_CIM::IEC61970::Core::Terminal)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_Terminals(refElem.resolveone(_jointarget::Terminal));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_Terminals(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::Terminal).map trace_keepOutgoing_Terminals(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllControlArea_223eb3a1_2b03_43f0_adb0_fe08cc58e97c = __jointarget.objectsOfType(_jointarget::TieFlow);
+	refAllControlArea_223eb3a1_2b03_43f0_adb0_fe08cc58e97c->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::ControlArea::TieFlow)->collect(ControlArea)->selectByKind(_CIM::IEC61970::ControlArea::ControlArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ControlArea(refElem.resolveone(_jointarget::ControlArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ControlArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ControlArea).map trace_keepOutgoing_ControlArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTerminals_a7afd5e1_59f8_40ab_8847_437ead51c42d = __jointarget.objectsOfType(_jointarget::TransformerWinding);
+	refAllTerminals_a7afd5e1_59f8_40ab_8847_437ead51c42d->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Core::ConductingEquipment)->collect(Terminals)->selectByKind(_CIM::IEC61970::Core::Terminal)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_Terminals(refElem.resolveone(_jointarget::Terminal));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_Terminals(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::Terminal).map trace_keepOutgoing_Terminals(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTieFlow_bb173520_07b6_4b87_bf6f_fb327f8282bf = __jointarget.objectsOfType(_jointarget::Terminal);
+	refAllTieFlow_bb173520_07b6_4b87_bf6f_fb327f8282bf->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Core::Terminal)->collect(TieFlow)->selectByKind(_CIM::IEC61970::ControlArea::TieFlow)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_TieFlow(refElem.resolveone(_jointarget::TieFlow));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_TieFlow(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::TieFlow).map trace_keepOutgoing_TieFlow(refElem);
+		};
+	};
+
+
+
+	-- keep attributes
+	var keepAttSwitch_5a1eda23_0e66_4ae3_8aa3_597199475eaa = __jointarget.objectsOfType(_jointarget::Switch);
+			keepAttSwitch_5a1eda23_0e66_4ae3_8aa3_597199475eaa->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttBreaker_5e016528_10a2_44fa_be6c_980390125c4c = __jointarget.objectsOfType(_jointarget::Breaker);
+			keepAttBreaker_5e016528_10a2_44fa_be6c_980390125c4c->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttPowerTransformer_11822d41_a774_4e36_a6fc_59ccee0578df = __jointarget.objectsOfType(_jointarget::PowerTransformer);
+			keepAttPowerTransformer_11822d41_a774_4e36_a6fc_59ccee0578df->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttShuntCapacitorCompensator_be6c6b87_eb3f_411a_b3e9_14927b70cc12 = __jointarget.objectsOfType(_jointarget::ShuntCapacitorCompensator);
+			keepAttShuntCapacitorCompensator_be6c6b87_eb3f_411a_b3e9_14927b70cc12->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttControlArea_43c900d2_2a96_4438_adea_805a26846acc = __jointarget.objectsOfType(_jointarget::ControlArea);
+			keepAttControlArea_43c900d2_2a96_4438_adea_805a26846acc->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+
+
+
+	-- keep calculated
+	var keepAttSwitch_861053dd_5e9a_418a_af75_27be4febd6dd = __jointarget.objectsOfType(_jointarget::Switch);
+keepAttSwitch_861053dd_5e9a_418a_af75_27be4febd6dd->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::Wires::Switch);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupX::XSWI);
+	elem.map update_attribute_Position(leftElement, rightElement)	
+	};
+keepAttSwitch_861053dd_5e9a_418a_af75_27be4febd6dd->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::Wires::Switch);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupX::XSWI);
+	elem.map update_attribute_PositionA(leftElement, rightElement)	
+	};
+keepAttSwitch_861053dd_5e9a_418a_af75_27be4febd6dd->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::Wires::Switch);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupX::XSWI);
+	elem.map update_attribute_PositionB(leftElement, rightElement)	
+	};
+keepAttSwitch_861053dd_5e9a_418a_af75_27be4febd6dd->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::Wires::Switch);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupX::XSWI);
+	elem.map update_attribute_PositionC(leftElement, rightElement)	
+	};
+keepAttSwitch_861053dd_5e9a_418a_af75_27be4febd6dd->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::Wires::Switch);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupX::XSWI);
+	elem.map update_attribute_Open(leftElement, rightElement)	
+	};
+keepAttSwitch_861053dd_5e9a_418a_af75_27be4febd6dd->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::Wires::Switch);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupX::XSWI);
+	elem.map update_attribute_Close(leftElement, rightElement)	
+	};
+	var keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d = __jointarget.objectsOfType(_jointarget::ATCC);
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_TapChange(sourceClass)	
+	};
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_TapPosChange(sourceClass)	
+	};
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_LTCBlk(sourceClass)	
+	};
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_LTCDragRs(sourceClass)	
+	};
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_VRed1(sourceClass)	
+	};
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_VRed2(sourceClass)	
+	};
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_Voltage(sourceClass)	
+	};
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_Current(sourceClass)	
+	};
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_CircularCurrent(sourceClass)	
+	};
+keepAttATCC_4fe68724_4cea_4d19_b3bb_a953f307095d->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ATCC);
+	elem.map update_attribute_Phaseangle(sourceClass)	
+	};
+	var keepAttARCO_4e4953c7_2798_409b_afa4_0552804ef31c = __jointarget.objectsOfType(_jointarget::ARCO);
+keepAttARCO_4e4953c7_2798_409b_afa4_0552804ef31c->forEach(elem) {
+	var sourceClass = elem.invresolveone(_substationStandard::LNNodes::LNGroupA::ARCO);
+	elem.map update_attribute_TapChange(sourceClass)	
+	};
+
+
+
+	-- keep aggregates
+
+	}
+	
+-- ##
+-- # Natural Join Mappings
+-- ##
+
+-- ##
+-- # Left Outer Join Mappings
+-- ##
+	
+-- ##
+-- # Theta Join Mappings
+-- ##
+
+-- mapping for Switch
+mapping _CIM::IEC61970::Wires::Switch::thetaJoin_Switch_XSWI_To_Switch(rightElement : _substationStandard::LNNodes::LNGroupX::XSWI) : _jointarget::Switch 
+when {
+		self.mRID = rightElement.NamePlt.IdNs
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_XSWI(result);
+			result.map thetaJoin_trace_XSWI(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _substationStandard::LNNodes::LNGroupX::XSWI::thetaJoin_update_XSWI(rightElement : _jointarget::Switch) : _jointarget::Switch {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::Switch::thetaJoin_trace_XSWI(leftElement : _CIM::IEC61970::Wires::Switch, rightElement : _substationStandard::LNNodes::LNGroupX::XSWI) : _mjtrace::join_Switch_XSWI_Switch {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- mapping for Breaker
+mapping _CIM::IEC61970::Wires::Breaker::thetaJoin_Breaker_XCBR_To_Breaker(rightElement : _substationStandard::LNNodes::LNGroupX::XCBR) : _jointarget::Breaker 
+when {
+		self.mRID = rightElement.NamePlt.IdNs
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_XCBR(result);
+			result.map thetaJoin_trace_XCBR(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _substationStandard::LNNodes::LNGroupX::XCBR::thetaJoin_update_XCBR(rightElement : _jointarget::Breaker) : _jointarget::Breaker {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::Breaker::thetaJoin_trace_XCBR(leftElement : _CIM::IEC61970::Wires::Breaker, rightElement : _substationStandard::LNNodes::LNGroupX::XCBR) : _mjtrace::join_Breaker_XCBR_Breaker {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- mapping for PowerTransformer
+mapping _CIM::IEC61970::Wires::PowerTransformer::thetaJoin_PowerTransformer_YPTR_To_PowerTransformer(rightElement : _substationStandard::LNNodes::LNGroupY::YPTR) : _jointarget::PowerTransformer 
+when {
+		self.mRID = rightElement.NamePlt.IdNs
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_YPTR(result);
+			result.map thetaJoin_trace_YPTR(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _substationStandard::LNNodes::LNGroupY::YPTR::thetaJoin_update_YPTR(rightElement : _jointarget::PowerTransformer) : _jointarget::PowerTransformer {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::PowerTransformer::thetaJoin_trace_YPTR(leftElement : _CIM::IEC61970::Wires::PowerTransformer, rightElement : _substationStandard::LNNodes::LNGroupY::YPTR) : _mjtrace::join_PowerTransformer_YPTR_PowerTransformer {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- mapping for ShuntCapacitorCompensator
+mapping _CIM::IEC61970::Wires::ShuntCompensator::thetaJoin_ShuntCompensator_ZCAP_To_ShuntCapacitorCompensator(rightElement : _substationStandard::LNNodes::LNGroupZ::ZCAP) : _jointarget::ShuntCapacitorCompensator 
+when {
+		self.mRID = rightElement.NamePlt.IdNs
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_ZCAP(result);
+			result.map thetaJoin_trace_ZCAP(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _substationStandard::LNNodes::LNGroupZ::ZCAP::thetaJoin_update_ZCAP(rightElement : _jointarget::ShuntCapacitorCompensator) : _jointarget::ShuntCapacitorCompensator {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::ShuntCapacitorCompensator::thetaJoin_trace_ZCAP(leftElement : _CIM::IEC61970::Wires::ShuntCompensator, rightElement : _substationStandard::LNNodes::LNGroupZ::ZCAP) : _mjtrace::join_ShuntCompensator_ZCAP_ShuntCapacitorCompensator {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- ##
+-- # Keep outgoing Mappings
+-- ##
+-- mappings for Switch
+
+-- set the links for "SwitchControl" if instances already exist
+mapping inout _jointarget::Switch::update_keepOutgoing_SwitchControl(elem : _jointarget::CSWI) {
+	self.SwitchControl:=elem;
+}
+
+-- set the links for "SwitchControl" if instances have to be created
+mapping inout _jointarget::Switch::update_keepOutgoing_and_create_SwitchControl(elem : _substationStandard::LNNodes::LNGroupC::CSWI) {
+	self.SwitchControl:=elem.map SwitchControl_CSWI_to_CSWI();
+}
+
+-- create instances of the type of "SwitchControl"
+mapping _substationStandard::LNNodes::LNGroupC::CSWI::SwitchControl_CSWI_to_CSWI() : _jointarget::CSWI {
+}
+
+mapping _jointarget::CSWI::trace_keepOutgoing_SwitchControl(source : _substationStandard::LNNodes::LNGroupC::CSWI) : _mjtrace::ref_CSWI_CSWI_SwitchControl {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for Switch
+
+-- set the links for "Terminals" if instances already exist
+mapping inout _jointarget::Switch::update_keepOutgoing_Terminals(elem : _jointarget::Terminal) {
+	self.Terminals+=elem;
+}
+
+-- set the links for "Terminals" if instances have to be created
+mapping inout _jointarget::Switch::update_keepOutgoing_and_create_Terminals(elem : _CIM::IEC61970::Core::Terminal) {
+	self.Terminals+=elem.map Terminals_Terminal_to_Terminal();
+}
+
+-- create instances of the type of "Terminals"
+mapping _CIM::IEC61970::Core::Terminal::Terminals_Terminal_to_Terminal() : _jointarget::Terminal {
+}
+
+mapping _jointarget::Terminal::trace_keepOutgoing_Terminals(source : _CIM::IEC61970::Core::Terminal) : _mjtrace::ref_Terminal_Terminal_Terminals {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for Breaker
+
+-- set the links for "SwitchControl" if instances already exist
+mapping inout _jointarget::Breaker::update_keepOutgoing_SwitchControl(elem : _jointarget::CSWI) {
+	self.SwitchControl:=elem;
+}
+
+-- set the links for "SwitchControl" if instances have to be created
+mapping inout _jointarget::Breaker::update_keepOutgoing_and_create_SwitchControl(elem : _substationStandard::LNNodes::LNGroupC::CSWI) {
+	self.SwitchControl:=elem.map SwitchControl_CSWI_to_CSWI();
+}
+
+-- create instances of the type of "SwitchControl"
+/*mapping _substationStandard::LNNodes::LNGroupC::CSWI::SwitchControl_CSWI_to_CSWI() : _jointarget::CSWI {
+}
+
+mapping _jointarget::CSWI::trace_keepOutgoing_SwitchControl(source : _substationStandard::LNNodes::LNGroupC::CSWI) : _mjtrace::ref_CSWI_CSWI_SwitchControl {
+	result.source := source;
+	result.target := self;
+}*/
+
+-- mappings for Breaker
+
+-- set the links for "Terminals" if instances already exist
+mapping inout _jointarget::Breaker::update_keepOutgoing_Terminals(elem : _jointarget::Terminal) {
+	self.Terminals+=elem;
+}
+
+-- set the links for "Terminals" if instances have to be created
+mapping inout _jointarget::Breaker::update_keepOutgoing_and_create_Terminals(elem : _CIM::IEC61970::Core::Terminal) {
+	self.Terminals+=elem.map Terminals_Terminal_to_Terminal();
+}
+
+-- create instances of the type of "Terminals"
+/*mapping _CIM::IEC61970::Core::Terminal::Terminals_Terminal_to_Terminal() : _jointarget::Terminal {
+}
+
+mapping _jointarget::Terminal::trace_keepOutgoing_Terminals(source : _CIM::IEC61970::Core::Terminal) : _mjtrace::ref_Terminal_Terminal_Terminals {
+	result.source := source;
+	result.target := self;
+}
+*/
+-- mappings for PowerTransformer
+
+-- set the links for "TransformerControl" if instances already exist
+mapping inout _jointarget::PowerTransformer::update_keepOutgoing_TransformerControl(elem : _jointarget::ATCC) {
+	self.TransformerControl:=elem;
+}
+
+-- set the links for "TransformerControl" if instances have to be created
+mapping inout _jointarget::PowerTransformer::update_keepOutgoing_and_create_TransformerControl(elem : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.TransformerControl:=elem.map TransformerControl_ATCC_to_ATCC();
+}
+
+-- create instances of the type of "TransformerControl"
+mapping _substationStandard::LNNodes::LNGroupA::ATCC::TransformerControl_ATCC_to_ATCC() : _jointarget::ATCC {
+}
+
+mapping _jointarget::ATCC::trace_keepOutgoing_TransformerControl(source : _substationStandard::LNNodes::LNGroupA::ATCC) : _mjtrace::ref_ATCC_ATCC_TransformerControl {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for PowerTransformer
+
+-- set the links for "TransformerWindings" if instances already exist
+mapping inout _jointarget::PowerTransformer::update_keepOutgoing_TransformerWindings(elem : _jointarget::TransformerWinding) {
+	self.TransformerWindings+=elem;
+}
+
+-- set the links for "TransformerWindings" if instances have to be created
+mapping inout _jointarget::PowerTransformer::update_keepOutgoing_and_create_TransformerWindings(elem : _CIM::IEC61970::Wires::TransformerWinding) {
+	self.TransformerWindings+=elem.map TransformerWindings_TransformerWinding_to_TransformerWinding();
+}
+
+-- create instances of the type of "TransformerWindings"
+mapping _CIM::IEC61970::Wires::TransformerWinding::TransformerWindings_TransformerWinding_to_TransformerWinding() : _jointarget::TransformerWinding {
+}
+
+mapping _jointarget::TransformerWinding::trace_keepOutgoing_TransformerWindings(source : _CIM::IEC61970::Wires::TransformerWinding) : _mjtrace::ref_TransformerWinding_TransformerWinding_TransformerWindings {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for ShuntCapacitorCompensator
+
+-- set the links for "CapControl" if instances already exist
+mapping inout _jointarget::ShuntCapacitorCompensator::update_keepOutgoing_CapControl(elem : _jointarget::ARCO) {
+	self.CapControl:=elem;
+}
+
+-- set the links for "CapControl" if instances have to be created
+mapping inout _jointarget::ShuntCapacitorCompensator::update_keepOutgoing_and_create_CapControl(elem : _substationStandard::LNNodes::LNGroupA::ARCO) {
+	self.CapControl:=elem.map CapControl_ARCO_to_ARCO();
+}
+
+-- create instances of the type of "CapControl"
+mapping _substationStandard::LNNodes::LNGroupA::ARCO::CapControl_ARCO_to_ARCO() : _jointarget::ARCO {
+}
+
+mapping _jointarget::ARCO::trace_keepOutgoing_CapControl(source : _substationStandard::LNNodes::LNGroupA::ARCO) : _mjtrace::ref_ARCO_ARCO_CapControl {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for ShuntCapacitorCompensator
+
+-- set the links for "Terminals" if instances already exist
+mapping inout _jointarget::ShuntCapacitorCompensator::update_keepOutgoing_Terminals(elem : _jointarget::Terminal) {
+	self.Terminals+=elem;
+}
+
+-- set the links for "Terminals" if instances have to be created
+mapping inout _jointarget::ShuntCapacitorCompensator::update_keepOutgoing_and_create_Terminals(elem : _CIM::IEC61970::Core::Terminal) {
+	self.Terminals+=elem.map Terminals_Terminal_to_Terminal();
+}
+
+-- create instances of the type of "Terminals"
+/*mapping _CIM::IEC61970::Core::Terminal::Terminals_Terminal_to_Terminal() : _jointarget::Terminal {
+}
+
+mapping _jointarget::Terminal::trace_keepOutgoing_Terminals(source : _CIM::IEC61970::Core::Terminal) : _mjtrace::ref_Terminal_Terminal_Terminals {
+	result.source := source;
+	result.target := self;
+}*/
+
+-- mappings for Terminal
+
+-- set the links for "TieFlow" if instances already exist
+mapping inout _jointarget::Terminal::update_keepOutgoing_TieFlow(elem : _jointarget::TieFlow) {
+	self.TieFlow+=elem;
+}
+
+-- set the links for "TieFlow" if instances have to be created
+mapping inout _jointarget::Terminal::update_keepOutgoing_and_create_TieFlow(elem : _CIM::IEC61970::ControlArea::TieFlow) {
+	self.TieFlow+=elem.map TieFlow_TieFlow_to_TieFlow();
+}
+
+-- create instances of the type of "TieFlow"
+mapping _CIM::IEC61970::ControlArea::TieFlow::TieFlow_TieFlow_to_TieFlow() : _jointarget::TieFlow {
+}
+
+mapping _jointarget::TieFlow::trace_keepOutgoing_TieFlow(source : _CIM::IEC61970::ControlArea::TieFlow) : _mjtrace::ref_TieFlow_TieFlow_TieFlow {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for TieFlow
+
+-- set the links for "ControlArea" if instances already exist
+mapping inout _jointarget::TieFlow::update_keepOutgoing_ControlArea(elem : _jointarget::ControlArea) {
+	self.ControlArea:=elem;
+}
+
+-- set the links for "ControlArea" if instances have to be created
+mapping inout _jointarget::TieFlow::update_keepOutgoing_and_create_ControlArea(elem : _CIM::IEC61970::ControlArea::ControlArea) {
+	self.ControlArea:=elem.map ControlArea_ControlArea_to_ControlArea();
+}
+
+-- create instances of the type of "ControlArea"
+mapping _CIM::IEC61970::ControlArea::ControlArea::ControlArea_ControlArea_to_ControlArea() : _jointarget::ControlArea {
+}
+
+mapping _jointarget::ControlArea::trace_keepOutgoing_ControlArea(source : _CIM::IEC61970::ControlArea::ControlArea) : _mjtrace::ref_ControlArea_ControlArea_ControlArea {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for TransformerWinding
+
+-- set the links for "Terminals" if instances already exist
+mapping inout _jointarget::TransformerWinding::update_keepOutgoing_Terminals(elem : _jointarget::Terminal) {
+	self.Terminals+=elem;
+}
+
+-- set the links for "Terminals" if instances have to be created
+mapping inout _jointarget::TransformerWinding::update_keepOutgoing_and_create_Terminals(elem : _CIM::IEC61970::Core::Terminal) {
+	self.Terminals+=elem.map Terminals_Terminal_to_Terminal();
+}
+
+-- create instances of the type of "Terminals"
+/*mapping _CIM::IEC61970::Core::Terminal::Terminals_Terminal_to_Terminal() : _jointarget::Terminal {
+}
+
+mapping _jointarget::Terminal::trace_keepOutgoing_Terminals(source : _CIM::IEC61970::Core::Terminal) : _mjtrace::ref_Terminal_Terminal_Terminals {
+	result.source := source;
+	result.target := self;
+}*/
+
+
+-- ##
+-- # Keep incoming Mappings
+-- ##
+-- ##
+-- # Keep attribute Mappings
+-- ##
+mapping inout _jointarget::Switch::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::Breaker::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::PowerTransformer::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::ShuntCapacitorCompensator::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+
+-- ##
+-- # Keep calculated Mappings
+-- ##
+mapping inout _jointarget::Switch::update_attribute_Position(leftElement : _CIM::IEC61970::Wires::Switch, rightElement : _substationStandard::LNNodes::LNGroupX::XSWI) {
+	self.Position:=rightElement.SwitchControl.Pos.ctlVal.oclAsType(String);
+}
+mapping inout _jointarget::Switch::update_attribute_PositionA(leftElement : _CIM::IEC61970::Wires::Switch, rightElement : _substationStandard::LNNodes::LNGroupX::XSWI) {
+	self.PositionA:=rightElement.SwitchControl.PosA.ctlVal.oclAsType(String);
+}
+mapping inout _jointarget::Switch::update_attribute_PositionB(leftElement : _CIM::IEC61970::Wires::Switch, rightElement : _substationStandard::LNNodes::LNGroupX::XSWI) {
+	self.PositionB:=rightElement.SwitchControl.PosB.ctlVal.oclAsType(String);
+}
+mapping inout _jointarget::Switch::update_attribute_PositionC(leftElement : _CIM::IEC61970::Wires::Switch, rightElement : _substationStandard::LNNodes::LNGroupX::XSWI) {
+	self.PositionC:=rightElement.SwitchControl.PosC.ctlVal.oclAsType(String);
+}
+mapping inout _jointarget::Switch::update_attribute_Open(leftElement : _CIM::IEC61970::Wires::Switch, rightElement : _substationStandard::LNNodes::LNGroupX::XSWI) {
+	self.Open:=rightElement.SwitchControl.OpOpn.general.oclAsType(Integer);
+}
+mapping inout _jointarget::Switch::update_attribute_Close(leftElement : _CIM::IEC61970::Wires::Switch, rightElement : _substationStandard::LNNodes::LNGroupX::XSWI) {
+	self.Close:=rightElement.SwitchControl.OpCls.general.oclAsType(Integer);
+}
+mapping inout _jointarget::ATCC::update_attribute_TapChange(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.TapChange:=sourceElement.TapChg.ctlVal.oclAsType(Integer);
+}		
+mapping inout _jointarget::ATCC::update_attribute_TapPosChange(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.TapPosChange:=sourceElement.TapPos.ctlVal;
+}		
+mapping inout _jointarget::ATCC::update_attribute_LTCBlk(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.LTCBlk:=sourceElement.LTCBlk.ctlVal.oclAsType(Integer);
+}		
+mapping inout _jointarget::ATCC::update_attribute_LTCDragRs(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.LTCDragRs:=sourceElement.LTCDragRs.ctlVal.oclAsType(Integer);
+}		
+mapping inout _jointarget::ATCC::update_attribute_VRed1(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.VRed1:=sourceElement.VRed1.ctlVal.oclAsType(Integer);
+}		
+mapping inout _jointarget::ATCC::update_attribute_VRed2(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.VRed2:=sourceElement.VRed2.ctlVal.oclAsType(Integer);
+}		
+mapping inout _jointarget::ATCC::update_attribute_Voltage(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.Voltage:=sourceElement.CtlV.mag.f;
+}		
+mapping inout _jointarget::ATCC::update_attribute_Current(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.Current:=sourceElement.LodA.mag.f;
+}		
+mapping inout _jointarget::ATCC::update_attribute_CircularCurrent(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.CircularCurrent:=sourceElement.CircA.mag.f;
+}		
+mapping inout _jointarget::ATCC::update_attribute_Phaseangle(sourceElement : _substationStandard::LNNodes::LNGroupA::ATCC) {
+	self.Phaseangle:=sourceElement.PhAng.mag.f;
+}		
+mapping inout _jointarget::ARCO::update_attribute_TapChange(sourceElement : _substationStandard::LNNodes::LNGroupA::ARCO) {
+	self.TapChange:=sourceElement.TapChg.ctlVal.oclAsType(Integer);
+}		
+
+
+
+-- ##
+-- # Keep aggregate Mappings
+-- ##

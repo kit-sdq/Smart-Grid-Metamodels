@@ -1,0 +1,39 @@
+import "platform:/resource/CIM/model/61850.ecore"
+import "platform:/resource/CIM/model/schema.ecore"
+import "platform:/resource/CIM/model/COSEM.ecore"
+target "ControlAreaOverview"
+
+theta join CIM.IEC61970.ControlArea.ControlArea with CIM.IEC61970.ControlArea.ControlArea where "true" as jointarget.ControlArea {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep outgoing CIM.IEC61970.ControlArea.ControlArea.EnergyArea as type jointarget.EnergyArea {
+		keep subtype CIM.IEC61970.LoadModel.LoadArea as type jointarget.LoadArea {
+			keep outgoing CIM.IEC61970.LoadModel.LoadArea.SubLoadAreas as type jointarget.SubLoadArea {
+				keep outgoing CIM.IEC61970.LoadModel.SubLoadArea.LoadGroups as type jointarget.LoadGroup {
+					keep subtype CIM.IEC61970.LoadModel.ConformLoadGroup as type jointarget.ConformLoadGroup {
+						keep outgoing CIM.IEC61970.LoadModel.ConformLoadGroup.EnergyConsumers as type jointarget.ConformLoad {
+							keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+						}
+					}
+					keep subtype CIM.IEC61970.LoadModel.NonConformLoadGroup as type jointarget.NonConformLoadGroup {
+						keep outgoing CIM.IEC61970.LoadModel.NonConformLoadGroup.EnergyConsumers as type jointarget.NonConformLoad {
+							keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+						}
+						
+					}
+				}
+			}
+		}
+	}
+	keep outgoing CIM.IEC61970.ControlArea.ControlArea.ControlAreaGeneratingUnit as type jointarget.ControlAreaGeneratingUnit {
+		keep outgoing CIM.IEC61970.ControlArea.ControlAreaGeneratingUnit.GeneratingUnit as type jointarget.GeneratingUnit {
+			keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+		}
+	}
+	keep outgoing CIM.IEC61970.ControlArea.ControlArea.TieFlow as type jointarget.TieFlow {
+		keep outgoing CIM.IEC61970.ControlArea.TieFlow.Terminal as type jointarget.Terminal {
+			keep outgoing CIM.IEC61970.Core.Terminal.ConductingEquipment as type jointarget.ConductingEquipment {
+				keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+			}
+		}
+	}
+}

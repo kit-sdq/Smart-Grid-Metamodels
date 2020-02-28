@@ -1,0 +1,41 @@
+import "platform:/resource/CIM/model/61850.ecore"
+import "platform:/resource/CIM/model/schema.ecore"
+import "platform:/resource/CIM/model/COSEM.ecore"
+target "loadShedding_GeneratorControl"
+
+theta join CIM.IEC61970.ControlArea.ControlAreaGeneratingUnit with substationStandard.LNNodes.LNGroupZ.ZGEN where "CIM.IEC61970.ControlArea.ControlAreaGeneratingUnit.UUID = substationStandard.LNNodes.LNGroupZ.ZGEN.NamePlt.IdNs" as jointarget.GeneratingUnit {
+	keep calculated attribute "CIM.IEC61970.ControlArea.ControlAreaGeneratingUnit.GeneratingUnit.mRID" as GeneratingUnit.ID:String
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.DmdPwr.setMag.f" as GeneratingUnit.DemandedPower:Double
+	keep calculated attribute "substationStandard.LNNodes.LNGroupZ.ZGEN.GnCtl.ctlVal" as GeneratingUnit.ControlState:String
+	keep outgoing CIM.IEC61970.ControlArea.ControlAreaGeneratingUnit.ControlArea as type jointarget.ControlArea {
+		keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+		keep calculated attribute "'ID1'" as ControlArea.ImportFrom:String
+		keep calculated attribute "'ID2'" as ControlArea.ExportTo:String
+	}
+}
+
+theta join CIM.IEC61970.LoadModel.ConformLoad with CIM.IEC61970.LoadModel.ConformLoad where "true" as jointarget.PowerCutConformLoad {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep calculated attribute "'0'" as PowerCutConformLoad.LoadShedding:String
+	keep outgoing CIM.IEC61970.LoadModel.ConformLoad.LoadGroup as type jointarget.ConformLoadGroup {
+		keep outgoing CIM.IEC61970.LoadModel.LoadGroup.SubLoadArea as type jointarget.SubLoadArea {
+			keep outgoing CIM.IEC61970.LoadModel.SubLoadArea.LoadArea as type jointarget.LoadArea {
+				keep outgoing CIM.IEC61970.LoadModel.EnergyArea.ControlArea as type jointarget.ControlArea
+			}
+		}
+	}
+	keep outgoing CIM.IEC61970.Wires.EnergyConsumer.ServiceDeliveryPoints as type jointarget.ServiceDeliveryPoint {
+		keep attributes CIM.IEC61968.Metering.ServiceDeliveryPoint.ratedPower
+	}
+}
+
+theta join CIM.IEC61970.LoadModel.NonConformLoad with CIM.IEC61970.LoadModel.NonConformLoad where "true" as jointarget.PowerCutNonConformLoad {
+	keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+	keep calculated attribute "'0'" as PowerCutNonConformLoad.LoadShedding:String
+	keep outgoing CIM.IEC61970.LoadModel.NonConformLoad.LoadGroup as type jointarget.NonConformLoadGroup {
+		keep outgoing CIM.IEC61970.LoadModel.LoadGroup.SubLoadArea as type jointarget.SubLoadArea
+	}
+	keep outgoing CIM.IEC61970.Wires.EnergyConsumer.ServiceDeliveryPoints as type jointarget.ServiceDeliveryPoint
+}
+
+

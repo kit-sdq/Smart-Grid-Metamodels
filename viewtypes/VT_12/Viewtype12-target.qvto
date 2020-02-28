@@ -1,0 +1,518 @@
+/* Generated ModelJoin transformation 
+ *
+ */
+transformation M1toM2(
+in __CIM: _CIM, 
+out __jointarget: _jointarget,
+out __mjtrace: _mjtrace);	
+	
+// source metamodels
+modeltype _CIM uses "http://iec.ch/TC57/2009/CIM-schema-cim14";
+// target metamodel
+modeltype _jointarget uses "ControlAreaOverview";
+// trace metamodel
+modeltype _mjtrace uses "ControlAreaOverview.trace";
+	
+//alway import ecore
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+main() {
+-- ###
+-- # operations for target class ControlArea
+-- ##
+
+-- get all elements of of type ControlArea and ControlArea
+var leftAllControlArea = __CIM.objectsOfType(_CIM::IEC61970::ControlArea::ControlArea);
+var rightAllControlArea = __CIM.objectsOfType(_CIM::IEC61970::ControlArea::ControlArea);
+
+-- theta join operation
+rightAllControlArea->forEach(rightControlArea) {
+	leftAllControlArea->map thetaJoin_ControlArea_ControlArea_To_ControlArea(rightControlArea);
+};
+
+
+	-- keep outgoing references
+
+
+	var refAllEnergyArea_2584876f_bf16_41aa_9f9d_7112d0722357 = __jointarget.objectsOfType(_jointarget::ControlArea);
+	refAllEnergyArea_2584876f_bf16_41aa_9f9d_7112d0722357->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::ControlArea::ControlArea)->collect(EnergyArea)->selectByKind(_CIM::IEC61970::LoadModel::EnergyArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_EnergyArea(refElem.resolveone(_jointarget::EnergyArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_EnergyArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::EnergyArea).map trace_keepOutgoing_EnergyArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllControlAreaGeneratingUnit_8280b156_822c_40c1_9447_3d3fdcf121f6 = __jointarget.objectsOfType(_jointarget::ControlArea);
+	refAllControlAreaGeneratingUnit_8280b156_822c_40c1_9447_3d3fdcf121f6->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::ControlArea::ControlArea)->collect(ControlAreaGeneratingUnit)->selectByKind(_CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ControlAreaGeneratingUnit(refElem.resolveone(_jointarget::ControlAreaGeneratingUnit));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ControlAreaGeneratingUnit(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ControlAreaGeneratingUnit).map trace_keepOutgoing_ControlAreaGeneratingUnit(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTieFlow_24e57171_4379_48c6_a15e_abc7bf4fb5b3 = __jointarget.objectsOfType(_jointarget::ControlArea);
+	refAllTieFlow_24e57171_4379_48c6_a15e_abc7bf4fb5b3->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::ControlArea::ControlArea)->collect(TieFlow)->selectByKind(_CIM::IEC61970::ControlArea::TieFlow)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_TieFlow(refElem.resolveone(_jointarget::TieFlow));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_TieFlow(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::TieFlow).map trace_keepOutgoing_TieFlow(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllSubLoadAreas_84fed79b_425c_4a88_a759_7ae08f3e9646 = __jointarget.objectsOfType(_jointarget::LoadArea);
+	refAllSubLoadAreas_84fed79b_425c_4a88_a759_7ae08f3e9646->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::LoadArea)->collect(SubLoadAreas)->selectByKind(_CIM::IEC61970::LoadModel::SubLoadArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_SubLoadAreas(refElem.resolveone(_jointarget::SubLoadArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_SubLoadAreas(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::SubLoadArea).map trace_keepOutgoing_SubLoadAreas(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllLoadGroups_855fdd23_853e_4a33_b462_cdeeea6ca1b3 = __jointarget.objectsOfType(_jointarget::SubLoadArea);
+	refAllLoadGroups_855fdd23_853e_4a33_b462_cdeeea6ca1b3->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::SubLoadArea)->collect(LoadGroups)->selectByKind(_CIM::IEC61970::LoadModel::LoadGroup)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_LoadGroups(refElem.resolveone(_jointarget::LoadGroup));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_LoadGroups(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::LoadGroup).map trace_keepOutgoing_LoadGroups(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllEnergyConsumers_c7e815ea_7203_43dc_8ada_96e1c39efac6 = __jointarget.objectsOfType(_jointarget::ConformLoadGroup);
+	refAllEnergyConsumers_c7e815ea_7203_43dc_8ada_96e1c39efac6->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::ConformLoadGroup)->collect(EnergyConsumers)->selectByKind(_CIM::IEC61970::LoadModel::ConformLoad)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_EnergyConsumers(refElem.resolveone(_jointarget::ConformLoad));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_EnergyConsumers(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ConformLoad).map trace_keepOutgoing_EnergyConsumers(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllEnergyConsumers_aad7705b_f343_424c_a633_4366ff6bd25f = __jointarget.objectsOfType(_jointarget::NonConformLoadGroup);
+	refAllEnergyConsumers_aad7705b_f343_424c_a633_4366ff6bd25f->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::NonConformLoadGroup)->collect(EnergyConsumers)->selectByKind(_CIM::IEC61970::LoadModel::NonConformLoad)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_EnergyConsumers(refElem.resolveone(_jointarget::NonConformLoad));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_EnergyConsumers(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::NonConformLoad).map trace_keepOutgoing_EnergyConsumers(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllGeneratingUnit_884b0c46_c6c6_4992_8c6c_4a6243efe708 = __jointarget.objectsOfType(_jointarget::ControlAreaGeneratingUnit);
+	refAllGeneratingUnit_884b0c46_c6c6_4992_8c6c_4a6243efe708->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit)->collect(GeneratingUnit)->selectByKind(_CIM::IEC61970::Generation::Production::GeneratingUnit)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_GeneratingUnit(refElem.resolveone(_jointarget::GeneratingUnit));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_GeneratingUnit(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::GeneratingUnit).map trace_keepOutgoing_GeneratingUnit(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllTerminal_20a17de5_fc66_431e_986b_a653a322f624 = __jointarget.objectsOfType(_jointarget::TieFlow);
+	refAllTerminal_20a17de5_fc66_431e_986b_a653a322f624->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::ControlArea::TieFlow)->collect(Terminal)->selectByKind(_CIM::IEC61970::Core::Terminal)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_Terminal(refElem.resolveone(_jointarget::Terminal));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_Terminal(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::Terminal).map trace_keepOutgoing_Terminal(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllConductingEquipment_fa958543_5a91_423d_ac63_774439760538 = __jointarget.objectsOfType(_jointarget::Terminal);
+	refAllConductingEquipment_fa958543_5a91_423d_ac63_774439760538->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Core::Terminal)->collect(ConductingEquipment)->selectByKind(_CIM::IEC61970::Core::ConductingEquipment)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ConductingEquipment(refElem.resolveone(_jointarget::ConductingEquipment));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ConductingEquipment(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ConductingEquipment).map trace_keepOutgoing_ConductingEquipment(refElem);
+		};
+	};
+
+
+
+	-- keep attributes
+	var keepAttControlArea_5041de14_d1ed_4676_9b04_8917a0b7083c = __jointarget.objectsOfType(_jointarget::ControlArea);
+			keepAttControlArea_5041de14_d1ed_4676_9b04_8917a0b7083c->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttConformLoad_1bf8edc8_ac54_4968_8c6b_03a9fd010f4f = __jointarget.objectsOfType(_jointarget::ConformLoad);
+			keepAttConformLoad_1bf8edc8_ac54_4968_8c6b_03a9fd010f4f->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttNonConformLoad_0ae52ce8_b351_4ffb_a32f_53bc87f6d4be = __jointarget.objectsOfType(_jointarget::NonConformLoad);
+			keepAttNonConformLoad_0ae52ce8_b351_4ffb_a32f_53bc87f6d4be->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttGeneratingUnit_d831bd15_7d25_4bce_b23f_25ecf631ef4c = __jointarget.objectsOfType(_jointarget::GeneratingUnit);
+			keepAttGeneratingUnit_d831bd15_7d25_4bce_b23f_25ecf631ef4c->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttConductingEquipment_94c7d2cf_7554_405d_bbe1_184c92fcdf22 = __jointarget.objectsOfType(_jointarget::ConductingEquipment);
+			keepAttConductingEquipment_94c7d2cf_7554_405d_bbe1_184c92fcdf22->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+
+
+
+	-- keep calculated
+
+
+
+	-- keep aggregates
+
+	}
+	
+-- ##
+-- # Natural Join Mappings
+-- ##
+
+-- ##
+-- # Left Outer Join Mappings
+-- ##
+	
+-- ##
+-- # Theta Join Mappings
+-- ##
+
+-- mapping for ControlArea
+mapping _CIM::IEC61970::ControlArea::ControlArea::thetaJoin_ControlArea_ControlArea_To_ControlArea(rightElement : _CIM::IEC61970::ControlArea::ControlArea) : _jointarget::ControlArea 
+when {
+		true
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_ControlArea(result);
+			result.map thetaJoin_trace_ControlArea(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _CIM::IEC61970::ControlArea::ControlArea::thetaJoin_update_ControlArea(rightElement : _jointarget::ControlArea) : _jointarget::ControlArea {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::ControlArea::thetaJoin_trace_ControlArea(leftElement : _CIM::IEC61970::ControlArea::ControlArea, rightElement : _CIM::IEC61970::ControlArea::ControlArea) : _mjtrace::join_ControlArea_ControlArea_ControlArea {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- ##
+-- # Keep outgoing Mappings
+-- ##
+-- mappings for ControlArea
+
+-- set the links for "EnergyArea" if instances already exist
+mapping inout _jointarget::ControlArea::update_keepOutgoing_EnergyArea(elem : _jointarget::EnergyArea) {
+	self.EnergyArea:=elem;
+}
+
+-- set the links for "EnergyArea" if instances have to be created
+mapping inout _jointarget::ControlArea::update_keepOutgoing_and_create_EnergyArea(elem : _CIM::IEC61970::LoadModel::EnergyArea) {
+	self.EnergyArea:=elem.map EnergyArea_EnergyArea_to_EnergyArea();
+}
+
+-- create instances of the type of "EnergyArea"
+mapping _CIM::IEC61970::LoadModel::EnergyArea::EnergyArea_EnergyArea_to_EnergyArea() : _jointarget::EnergyArea {
+}
+
+mapping _jointarget::EnergyArea::trace_keepOutgoing_EnergyArea(source : _CIM::IEC61970::LoadModel::EnergyArea) : _mjtrace::ref_EnergyArea_EnergyArea_EnergyArea {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for ControlArea
+
+-- set the links for "ControlAreaGeneratingUnit" if instances already exist
+mapping inout _jointarget::ControlArea::update_keepOutgoing_ControlAreaGeneratingUnit(elem : _jointarget::ControlAreaGeneratingUnit) {
+	self.ControlAreaGeneratingUnit+=elem;
+}
+
+-- set the links for "ControlAreaGeneratingUnit" if instances have to be created
+mapping inout _jointarget::ControlArea::update_keepOutgoing_and_create_ControlAreaGeneratingUnit(elem : _CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit) {
+	self.ControlAreaGeneratingUnit+=elem.map ControlAreaGeneratingUnit_ControlAreaGeneratingUnit_to_ControlAreaGeneratingUnit();
+}
+
+-- create instances of the type of "ControlAreaGeneratingUnit"
+mapping _CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit::ControlAreaGeneratingUnit_ControlAreaGeneratingUnit_to_ControlAreaGeneratingUnit() : _jointarget::ControlAreaGeneratingUnit {
+}
+
+mapping _jointarget::ControlAreaGeneratingUnit::trace_keepOutgoing_ControlAreaGeneratingUnit(source : _CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit) : _mjtrace::ref_ControlAreaGeneratingUnit_ControlAreaGeneratingUnit_ControlAreaGeneratingUnit {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for ControlArea
+
+-- set the links for "TieFlow" if instances already exist
+mapping inout _jointarget::ControlArea::update_keepOutgoing_TieFlow(elem : _jointarget::TieFlow) {
+	self.TieFlow+=elem;
+}
+
+-- set the links for "TieFlow" if instances have to be created
+mapping inout _jointarget::ControlArea::update_keepOutgoing_and_create_TieFlow(elem : _CIM::IEC61970::ControlArea::TieFlow) {
+	self.TieFlow+=elem.map TieFlow_TieFlow_to_TieFlow();
+}
+
+-- create instances of the type of "TieFlow"
+mapping _CIM::IEC61970::ControlArea::TieFlow::TieFlow_TieFlow_to_TieFlow() : _jointarget::TieFlow {
+}
+
+mapping _jointarget::TieFlow::trace_keepOutgoing_TieFlow(source : _CIM::IEC61970::ControlArea::TieFlow) : _mjtrace::ref_TieFlow_TieFlow_TieFlow {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for LoadArea
+
+-- set the links for "SubLoadAreas" if instances already exist
+mapping inout _jointarget::LoadArea::update_keepOutgoing_SubLoadAreas(elem : _jointarget::SubLoadArea) {
+	self.SubLoadAreas+=elem;
+}
+
+-- set the links for "SubLoadAreas" if instances have to be created
+mapping inout _jointarget::LoadArea::update_keepOutgoing_and_create_SubLoadAreas(elem : _CIM::IEC61970::LoadModel::SubLoadArea) {
+	self.SubLoadAreas+=elem.map SubLoadAreas_SubLoadArea_to_SubLoadArea();
+}
+
+-- create instances of the type of "SubLoadAreas"
+mapping _CIM::IEC61970::LoadModel::SubLoadArea::SubLoadAreas_SubLoadArea_to_SubLoadArea() : _jointarget::SubLoadArea {
+}
+
+mapping _jointarget::SubLoadArea::trace_keepOutgoing_SubLoadAreas(source : _CIM::IEC61970::LoadModel::SubLoadArea) : _mjtrace::ref_SubLoadArea_SubLoadArea_SubLoadAreas {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for SubLoadArea
+
+-- set the links for "LoadGroups" if instances already exist
+mapping inout _jointarget::SubLoadArea::update_keepOutgoing_LoadGroups(elem : _jointarget::LoadGroup) {
+	self.LoadGroups+=elem;
+}
+
+-- set the links for "LoadGroups" if instances have to be created
+mapping inout _jointarget::SubLoadArea::update_keepOutgoing_and_create_LoadGroups(elem : _CIM::IEC61970::LoadModel::LoadGroup) {
+	self.LoadGroups+=elem.map LoadGroups_LoadGroup_to_LoadGroup();
+}
+
+-- create instances of the type of "LoadGroups"
+mapping _CIM::IEC61970::LoadModel::LoadGroup::LoadGroups_LoadGroup_to_LoadGroup() : _jointarget::LoadGroup {
+}
+
+mapping _jointarget::LoadGroup::trace_keepOutgoing_LoadGroups(source : _CIM::IEC61970::LoadModel::LoadGroup) : _mjtrace::ref_LoadGroup_LoadGroup_LoadGroups {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for ConformLoadGroup
+
+-- set the links for "EnergyConsumers" if instances already exist
+mapping inout _jointarget::ConformLoadGroup::update_keepOutgoing_EnergyConsumers(elem : _jointarget::ConformLoad) {
+	self.EnergyConsumers+=elem;
+}
+
+-- set the links for "EnergyConsumers" if instances have to be created
+mapping inout _jointarget::ConformLoadGroup::update_keepOutgoing_and_create_EnergyConsumers(elem : _CIM::IEC61970::LoadModel::ConformLoad) {
+	self.EnergyConsumers+=elem.map EnergyConsumers_ConformLoad_to_ConformLoad();
+}
+
+-- create instances of the type of "EnergyConsumers"
+mapping _CIM::IEC61970::LoadModel::ConformLoad::EnergyConsumers_ConformLoad_to_ConformLoad() : _jointarget::ConformLoad {
+}
+
+mapping _jointarget::ConformLoad::trace_keepOutgoing_EnergyConsumers(source : _CIM::IEC61970::LoadModel::ConformLoad) : _mjtrace::ref_ConformLoad_ConformLoad_EnergyConsumers {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for NonConformLoadGroup
+
+-- set the links for "EnergyConsumers" if instances already exist
+mapping inout _jointarget::NonConformLoadGroup::update_keepOutgoing_EnergyConsumers(elem : _jointarget::NonConformLoad) {
+	self.EnergyConsumers+=elem;
+}
+
+-- set the links for "EnergyConsumers" if instances have to be created
+mapping inout _jointarget::NonConformLoadGroup::update_keepOutgoing_and_create_EnergyConsumers(elem : _CIM::IEC61970::LoadModel::NonConformLoad) {
+	self.EnergyConsumers+=elem.map EnergyConsumers_NonConformLoad_to_NonConformLoad();
+}
+
+-- create instances of the type of "EnergyConsumers"
+mapping _CIM::IEC61970::LoadModel::NonConformLoad::EnergyConsumers_NonConformLoad_to_NonConformLoad() : _jointarget::NonConformLoad {
+}
+
+mapping _jointarget::NonConformLoad::trace_keepOutgoing_EnergyConsumers(source : _CIM::IEC61970::LoadModel::NonConformLoad) : _mjtrace::ref_NonConformLoad_NonConformLoad_EnergyConsumers {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for ControlAreaGeneratingUnit
+
+-- set the links for "GeneratingUnit" if instances already exist
+mapping inout _jointarget::ControlAreaGeneratingUnit::update_keepOutgoing_GeneratingUnit(elem : _jointarget::GeneratingUnit) {
+	self.GeneratingUnit:=elem;
+}
+
+-- set the links for "GeneratingUnit" if instances have to be created
+mapping inout _jointarget::ControlAreaGeneratingUnit::update_keepOutgoing_and_create_GeneratingUnit(elem : _CIM::IEC61970::Generation::Production::GeneratingUnit) {
+	self.GeneratingUnit:=elem.map GeneratingUnit_GeneratingUnit_to_GeneratingUnit();
+}
+
+-- create instances of the type of "GeneratingUnit"
+mapping _CIM::IEC61970::Generation::Production::GeneratingUnit::GeneratingUnit_GeneratingUnit_to_GeneratingUnit() : _jointarget::GeneratingUnit {
+}
+
+mapping _jointarget::GeneratingUnit::trace_keepOutgoing_GeneratingUnit(source : _CIM::IEC61970::Generation::Production::GeneratingUnit) : _mjtrace::ref_GeneratingUnit_GeneratingUnit_GeneratingUnit {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for TieFlow
+
+-- set the links for "Terminal" if instances already exist
+mapping inout _jointarget::TieFlow::update_keepOutgoing_Terminal(elem : _jointarget::Terminal) {
+	self.Terminal:=elem;
+}
+
+-- set the links for "Terminal" if instances have to be created
+mapping inout _jointarget::TieFlow::update_keepOutgoing_and_create_Terminal(elem : _CIM::IEC61970::Core::Terminal) {
+	self.Terminal:=elem.map Terminal_Terminal_to_Terminal();
+}
+
+-- create instances of the type of "Terminal"
+mapping _CIM::IEC61970::Core::Terminal::Terminal_Terminal_to_Terminal() : _jointarget::Terminal {
+}
+
+mapping _jointarget::Terminal::trace_keepOutgoing_Terminal(source : _CIM::IEC61970::Core::Terminal) : _mjtrace::ref_Terminal_Terminal_Terminal {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for Terminal
+
+-- set the links for "ConductingEquipment" if instances already exist
+mapping inout _jointarget::Terminal::update_keepOutgoing_ConductingEquipment(elem : _jointarget::ConductingEquipment) {
+	self.ConductingEquipment:=elem;
+}
+
+-- set the links for "ConductingEquipment" if instances have to be created
+mapping inout _jointarget::Terminal::update_keepOutgoing_and_create_ConductingEquipment(elem : _CIM::IEC61970::Core::ConductingEquipment) {
+	self.ConductingEquipment:=elem.map ConductingEquipment_ConductingEquipment_to_ConductingEquipment();
+}
+
+-- create instances of the type of "ConductingEquipment"
+mapping _CIM::IEC61970::Core::ConductingEquipment::ConductingEquipment_ConductingEquipment_to_ConductingEquipment() : _jointarget::ConductingEquipment {
+}
+
+mapping _jointarget::ConductingEquipment::trace_keepOutgoing_ConductingEquipment(source : _CIM::IEC61970::Core::ConductingEquipment) : _mjtrace::ref_ConductingEquipment_ConductingEquipment_ConductingEquipment {
+	result.source := source;
+	result.target := self;
+}
+
+
+-- ##
+-- # Keep incoming Mappings
+-- ##
+-- ##
+-- # Keep attribute Mappings
+-- ##
+mapping inout _jointarget::ControlArea::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::ConformLoad::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::NonConformLoad::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::GeneratingUnit::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::ConductingEquipment::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+
+-- ##
+-- # Keep calculated Mappings
+-- ##
+
+
+
+-- ##
+-- # Keep aggregate Mappings
+-- ##

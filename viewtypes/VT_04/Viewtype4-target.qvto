@@ -1,0 +1,613 @@
+/* Generated ModelJoin transformation 
+ *
+ */
+transformation M1toM2(
+in __CIM: _CIM, 
+in __substationStandard: _substationStandard, 
+out __jointarget: _jointarget,
+out __mjtrace: _mjtrace);	
+	
+// source metamodels
+modeltype _CIM uses "http://iec.ch/TC57/2009/CIM-schema-cim14";
+modeltype _substationStandard uses "substationStandard";
+// target metamodel
+modeltype _jointarget uses "loadShedding_GeneratorControl";
+// trace metamodel
+modeltype _mjtrace uses "loadShedding_GeneratorControl.trace";
+	
+//alway import ecore
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+main() {
+-- ###
+-- # operations for target class GeneratingUnit
+-- ##
+
+-- get all elements of of type ControlAreaGeneratingUnit and ZGEN
+var leftAllGeneratingUnit = __CIM.objectsOfType(_CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit);
+var rightAllGeneratingUnit = __substationStandard.objectsOfType(_substationStandard::LNNodes::LNGroupZ::ZGEN);
+
+-- theta join operation
+rightAllGeneratingUnit->forEach(rightGeneratingUnit) {
+	leftAllGeneratingUnit->map thetaJoin_ControlAreaGeneratingUnit_ZGEN_To_GeneratingUnit(rightGeneratingUnit);
+};
+-- ###
+-- # operations for target class PowerCutConformLoad
+-- ##
+
+-- get all elements of of type ConformLoad and ConformLoad
+var leftAllPowerCutConformLoad = __CIM.objectsOfType(_CIM::IEC61970::LoadModel::ConformLoad);
+var rightAllPowerCutConformLoad = __CIM.objectsOfType(_CIM::IEC61970::LoadModel::ConformLoad);
+
+-- theta join operation
+rightAllPowerCutConformLoad->forEach(rightPowerCutConformLoad) {
+	leftAllPowerCutConformLoad->map thetaJoin_ConformLoad_ConformLoad_To_PowerCutConformLoad(rightPowerCutConformLoad);
+};
+-- ###
+-- # operations for target class PowerCutNonConformLoad
+-- ##
+
+-- get all elements of of type NonConformLoad and NonConformLoad
+var leftAllPowerCutNonConformLoad = __CIM.objectsOfType(_CIM::IEC61970::LoadModel::NonConformLoad);
+var rightAllPowerCutNonConformLoad = __CIM.objectsOfType(_CIM::IEC61970::LoadModel::NonConformLoad);
+
+-- theta join operation
+rightAllPowerCutNonConformLoad->forEach(rightPowerCutNonConformLoad) {
+	leftAllPowerCutNonConformLoad->map thetaJoin_NonConformLoad_NonConformLoad_To_PowerCutNonConformLoad(rightPowerCutNonConformLoad);
+};
+
+
+	-- keep outgoing references
+
+
+	var refAllControlArea_0b3a428a_9468_40b6_ba40_23ce8a1e15a0 = __jointarget.objectsOfType(_jointarget::GeneratingUnit);
+	refAllControlArea_0b3a428a_9468_40b6_ba40_23ce8a1e15a0->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit)->collect(ControlArea)->selectByKind(_CIM::IEC61970::ControlArea::ControlArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ControlArea(refElem.resolveone(_jointarget::ControlArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ControlArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ControlArea).map trace_keepOutgoing_ControlArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllLoadGroup_0ab6241c_e8a5_4084_8a8d_e62d8ee6fbed = __jointarget.objectsOfType(_jointarget::PowerCutConformLoad);
+	refAllLoadGroup_0ab6241c_e8a5_4084_8a8d_e62d8ee6fbed->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::ConformLoad)->collect(LoadGroup)->selectByKind(_CIM::IEC61970::LoadModel::ConformLoadGroup)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_LoadGroup(refElem.resolveone(_jointarget::ConformLoadGroup));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_LoadGroup(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ConformLoadGroup).map trace_keepOutgoing_LoadGroup(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllServiceDeliveryPoints_d4873783_7a3e_4462_9e44_c0104d22c5fe = __jointarget.objectsOfType(_jointarget::PowerCutConformLoad);
+	refAllServiceDeliveryPoints_d4873783_7a3e_4462_9e44_c0104d22c5fe->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Wires::EnergyConsumer)->collect(ServiceDeliveryPoints)->selectByKind(_CIM::IEC61968::Metering::ServiceDeliveryPoint)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ServiceDeliveryPoints(refElem.resolveone(_jointarget::ServiceDeliveryPoint));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ServiceDeliveryPoints(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ServiceDeliveryPoint).map trace_keepOutgoing_ServiceDeliveryPoints(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllLoadGroup_61ff1359_9002_4746_9493_02008cf9d0cc = __jointarget.objectsOfType(_jointarget::PowerCutNonConformLoad);
+	refAllLoadGroup_61ff1359_9002_4746_9493_02008cf9d0cc->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::NonConformLoad)->collect(LoadGroup)->selectByKind(_CIM::IEC61970::LoadModel::NonConformLoadGroup)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_LoadGroup(refElem.resolveone(_jointarget::NonConformLoadGroup));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_LoadGroup(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::NonConformLoadGroup).map trace_keepOutgoing_LoadGroup(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllServiceDeliveryPoints_8c242ad5_a700_453b_86f2_0121fc8edb44 = __jointarget.objectsOfType(_jointarget::PowerCutNonConformLoad);
+	refAllServiceDeliveryPoints_8c242ad5_a700_453b_86f2_0121fc8edb44->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::Wires::EnergyConsumer)->collect(ServiceDeliveryPoints)->selectByKind(_CIM::IEC61968::Metering::ServiceDeliveryPoint)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ServiceDeliveryPoints(refElem.resolveone(_jointarget::ServiceDeliveryPoint));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ServiceDeliveryPoints(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ServiceDeliveryPoint).map trace_keepOutgoing_ServiceDeliveryPoints(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllSubLoadArea_7885a958_815e_4506_8cd4_8fe737a6731d = __jointarget.objectsOfType(_jointarget::ConformLoadGroup);
+	refAllSubLoadArea_7885a958_815e_4506_8cd4_8fe737a6731d->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::LoadGroup)->collect(SubLoadArea)->selectByKind(_CIM::IEC61970::LoadModel::SubLoadArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_SubLoadArea(refElem.resolveone(_jointarget::SubLoadArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_SubLoadArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::SubLoadArea).map trace_keepOutgoing_SubLoadArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllControlArea_20f6dfd6_053f_42df_88aa_c3bea5390efd = __jointarget.objectsOfType(_jointarget::LoadArea);
+	refAllControlArea_20f6dfd6_053f_42df_88aa_c3bea5390efd->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::EnergyArea)->collect(ControlArea)->selectByKind(_CIM::IEC61970::ControlArea::ControlArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_ControlArea(refElem.resolveone(_jointarget::ControlArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_ControlArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::ControlArea).map trace_keepOutgoing_ControlArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllSubLoadArea_1a27963b_c59e_441d_a635_7b383a7aad28 = __jointarget.objectsOfType(_jointarget::NonConformLoadGroup);
+	refAllSubLoadArea_1a27963b_c59e_441d_a635_7b383a7aad28->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::LoadGroup)->collect(SubLoadArea)->selectByKind(_CIM::IEC61970::LoadModel::SubLoadArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_SubLoadArea(refElem.resolveone(_jointarget::SubLoadArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_SubLoadArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::SubLoadArea).map trace_keepOutgoing_SubLoadArea(refElem);
+		};
+	};
+	-- keep outgoing references
+
+
+	var refAllLoadArea_525e4f36_ca23_43ee_b370_3998da66a960 = __jointarget.objectsOfType(_jointarget::SubLoadArea);
+	refAllLoadArea_525e4f36_ca23_43ee_b370_3998da66a960->forEach(elem) {
+		elem.invresolve()->selectByKind(_CIM::IEC61970::LoadModel::SubLoadArea)->collect(LoadArea)->selectByKind(_CIM::IEC61970::LoadModel::LoadArea)->forEach(refElem) {
+			-- if source object at the end of the reference has already been mapped, update the reference with the mapped element
+			if (refElem.resolve()->notEmpty()) then {
+				elem.map update_keepOutgoing_LoadArea(refElem.resolveone(_jointarget::LoadArea));
+			-- if it has not been mapped yet, create new element and update reference
+			} else {
+				elem.map update_keepOutgoing_and_create_LoadArea(refElem);
+			}endif;
+			refElem.resolveone(_jointarget::LoadArea).map trace_keepOutgoing_LoadArea(refElem);
+		};
+	};
+
+
+
+	-- keep attributes
+	var keepAttPowerCutConformLoad_fad0a649_415b_464b_8538_5b8cb061a48a = __jointarget.objectsOfType(_jointarget::PowerCutConformLoad);
+			keepAttPowerCutConformLoad_fad0a649_415b_464b_8538_5b8cb061a48a->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttPowerCutNonConformLoad_9f63167d_affa_4c92_851d_a323c1cd8ee1 = __jointarget.objectsOfType(_jointarget::PowerCutNonConformLoad);
+			keepAttPowerCutNonConformLoad_9f63167d_affa_4c92_851d_a323c1cd8ee1->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttControlArea_89810681_823b_43dc_9bc7_b474c311b4ab = __jointarget.objectsOfType(_jointarget::ControlArea);
+			keepAttControlArea_89810681_823b_43dc_9bc7_b474c311b4ab->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+	var keepAttServiceDeliveryPoint_a959445d_b582_433d_8b9c_8a180a45850a = __jointarget.objectsOfType(_jointarget::ServiceDeliveryPoint);
+			keepAttServiceDeliveryPoint_a959445d_b582_433d_8b9c_8a180a45850a->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61968::Metering::ServiceDeliveryPoint);
+				elem.map update_attribute_ratedPower(sourceClass.ratedPower)	
+				};
+
+
+
+	-- keep calculated
+	var keepAttGeneratingUnit_acbb95d5_cc15_4c59_8a0b_9ba1c9633182 = __jointarget.objectsOfType(_jointarget::GeneratingUnit);
+keepAttGeneratingUnit_acbb95d5_cc15_4c59_8a0b_9ba1c9633182->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupZ::ZGEN);
+	elem.map update_attribute_ID(leftElement, rightElement)	
+	};
+keepAttGeneratingUnit_acbb95d5_cc15_4c59_8a0b_9ba1c9633182->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupZ::ZGEN);
+	elem.map update_attribute_DemandedPower(leftElement, rightElement)	
+	};
+keepAttGeneratingUnit_acbb95d5_cc15_4c59_8a0b_9ba1c9633182->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit);
+	var rightElement =  elem.invresolveone(_substationStandard::LNNodes::LNGroupZ::ZGEN);
+	elem.map update_attribute_ControlState(leftElement, rightElement)	
+	};
+	var keepAttPowerCutConformLoad_7834b221_a533_4a02_a282_5deb7716b277 = __jointarget.objectsOfType(_jointarget::PowerCutConformLoad);
+keepAttPowerCutConformLoad_7834b221_a533_4a02_a282_5deb7716b277->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::LoadModel::ConformLoad);
+	var rightElement =  elem.invresolveone(_CIM::IEC61970::LoadModel::ConformLoad);
+	elem.map update_attribute_LoadShedding(leftElement, rightElement)	
+	};
+	var keepAttPowerCutNonConformLoad_5530951c_4e4b_4ab2_9012_9e9a78dcc031 = __jointarget.objectsOfType(_jointarget::PowerCutNonConformLoad);
+keepAttPowerCutNonConformLoad_5530951c_4e4b_4ab2_9012_9e9a78dcc031->forEach(elem) {
+	var leftElement = elem.invresolveone(_CIM::IEC61970::LoadModel::NonConformLoad);
+	var rightElement =  elem.invresolveone(_CIM::IEC61970::LoadModel::NonConformLoad);
+	elem.map update_attribute_LoadShedding(leftElement, rightElement)	
+	};
+	var keepAttControlArea_40aa4a1c_c148_42da_8bde_f4953d1416e5 = __jointarget.objectsOfType(_jointarget::ControlArea);
+keepAttControlArea_40aa4a1c_c148_42da_8bde_f4953d1416e5->forEach(elem) {
+	var sourceClass = elem.invresolveone(_CIM::IEC61970::ControlArea::ControlArea);
+	elem.map update_attribute_ImportFrom(sourceClass)	
+	};
+keepAttControlArea_40aa4a1c_c148_42da_8bde_f4953d1416e5->forEach(elem) {
+	var sourceClass = elem.invresolveone(_CIM::IEC61970::ControlArea::ControlArea);
+	elem.map update_attribute_ExportTo(sourceClass)	
+	};
+
+
+
+	-- keep aggregates
+
+	}
+	
+-- ##
+-- # Natural Join Mappings
+-- ##
+
+-- ##
+-- # Left Outer Join Mappings
+-- ##
+	
+-- ##
+-- # Theta Join Mappings
+-- ##
+
+-- mapping for GeneratingUnit
+mapping _CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit::thetaJoin_ControlAreaGeneratingUnit_ZGEN_To_GeneratingUnit(rightElement : _substationStandard::LNNodes::LNGroupZ::ZGEN) : _jointarget::GeneratingUnit 
+when {
+		self.UUID = rightElement.NamePlt.IdNs
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_ZGEN(result);
+			result.map thetaJoin_trace_ZGEN(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _substationStandard::LNNodes::LNGroupZ::ZGEN::thetaJoin_update_ZGEN(rightElement : _jointarget::GeneratingUnit) : _jointarget::GeneratingUnit {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::GeneratingUnit::thetaJoin_trace_ZGEN(leftElement : _CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit, rightElement : _substationStandard::LNNodes::LNGroupZ::ZGEN) : _mjtrace::join_ControlAreaGeneratingUnit_ZGEN_GeneratingUnit {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- mapping for PowerCutConformLoad
+mapping _CIM::IEC61970::LoadModel::ConformLoad::thetaJoin_ConformLoad_ConformLoad_To_PowerCutConformLoad(rightElement : _CIM::IEC61970::LoadModel::ConformLoad) : _jointarget::PowerCutConformLoad 
+when {
+		true
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_ConformLoad(result);
+			result.map thetaJoin_trace_ConformLoad(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _CIM::IEC61970::LoadModel::ConformLoad::thetaJoin_update_ConformLoad(rightElement : _jointarget::PowerCutConformLoad) : _jointarget::PowerCutConformLoad {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::PowerCutConformLoad::thetaJoin_trace_ConformLoad(leftElement : _CIM::IEC61970::LoadModel::ConformLoad, rightElement : _CIM::IEC61970::LoadModel::ConformLoad) : _mjtrace::join_ConformLoad_ConformLoad_PowerCutConformLoad {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- mapping for PowerCutNonConformLoad
+mapping _CIM::IEC61970::LoadModel::NonConformLoad::thetaJoin_NonConformLoad_NonConformLoad_To_PowerCutNonConformLoad(rightElement : _CIM::IEC61970::LoadModel::NonConformLoad) : _jointarget::PowerCutNonConformLoad 
+when {
+		true
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_NonConformLoad(result);
+			result.map thetaJoin_trace_NonConformLoad(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _CIM::IEC61970::LoadModel::NonConformLoad::thetaJoin_update_NonConformLoad(rightElement : _jointarget::PowerCutNonConformLoad) : _jointarget::PowerCutNonConformLoad {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::PowerCutNonConformLoad::thetaJoin_trace_NonConformLoad(leftElement : _CIM::IEC61970::LoadModel::NonConformLoad, rightElement : _CIM::IEC61970::LoadModel::NonConformLoad) : _mjtrace::join_NonConformLoad_NonConformLoad_PowerCutNonConformLoad {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- ##
+-- # Keep outgoing Mappings
+-- ##
+-- mappings for GeneratingUnit
+
+-- set the links for "ControlArea" if instances already exist
+mapping inout _jointarget::GeneratingUnit::update_keepOutgoing_ControlArea(elem : _jointarget::ControlArea) {
+	self.ControlArea:=elem;
+}
+
+-- set the links for "ControlArea" if instances have to be created
+mapping inout _jointarget::GeneratingUnit::update_keepOutgoing_and_create_ControlArea(elem : _CIM::IEC61970::ControlArea::ControlArea) {
+	self.ControlArea:=elem.map ControlArea_ControlArea_to_ControlArea();
+}
+
+-- create instances of the type of "ControlArea"
+mapping _CIM::IEC61970::ControlArea::ControlArea::ControlArea_ControlArea_to_ControlArea() : _jointarget::ControlArea {
+}
+
+mapping _jointarget::ControlArea::trace_keepOutgoing_ControlArea(source : _CIM::IEC61970::ControlArea::ControlArea) : _mjtrace::ref_ControlArea_ControlArea_ControlArea {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for PowerCutConformLoad
+
+-- set the links for "LoadGroup" if instances already exist
+mapping inout _jointarget::PowerCutConformLoad::update_keepOutgoing_LoadGroup(elem : _jointarget::ConformLoadGroup) {
+	self.LoadGroup:=elem;
+}
+
+-- set the links for "LoadGroup" if instances have to be created
+mapping inout _jointarget::PowerCutConformLoad::update_keepOutgoing_and_create_LoadGroup(elem : _CIM::IEC61970::LoadModel::ConformLoadGroup) {
+	self.LoadGroup:=elem.map LoadGroup_ConformLoadGroup_to_ConformLoadGroup();
+}
+
+-- create instances of the type of "LoadGroup"
+mapping _CIM::IEC61970::LoadModel::ConformLoadGroup::LoadGroup_ConformLoadGroup_to_ConformLoadGroup() : _jointarget::ConformLoadGroup {
+}
+
+mapping _jointarget::ConformLoadGroup::trace_keepOutgoing_LoadGroup(source : _CIM::IEC61970::LoadModel::ConformLoadGroup) : _mjtrace::ref_ConformLoadGroup_ConformLoadGroup_LoadGroup {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for PowerCutConformLoad
+
+-- set the links for "ServiceDeliveryPoints" if instances already exist
+mapping inout _jointarget::PowerCutConformLoad::update_keepOutgoing_ServiceDeliveryPoints(elem : _jointarget::ServiceDeliveryPoint) {
+	self.ServiceDeliveryPoints+=elem;
+}
+
+-- set the links for "ServiceDeliveryPoints" if instances have to be created
+mapping inout _jointarget::PowerCutConformLoad::update_keepOutgoing_and_create_ServiceDeliveryPoints(elem : _CIM::IEC61968::Metering::ServiceDeliveryPoint) {
+	self.ServiceDeliveryPoints+=elem.map ServiceDeliveryPoints_ServiceDeliveryPoint_to_ServiceDeliveryPoint();
+}
+
+-- create instances of the type of "ServiceDeliveryPoints"
+mapping _CIM::IEC61968::Metering::ServiceDeliveryPoint::ServiceDeliveryPoints_ServiceDeliveryPoint_to_ServiceDeliveryPoint() : _jointarget::ServiceDeliveryPoint {
+}
+
+mapping _jointarget::ServiceDeliveryPoint::trace_keepOutgoing_ServiceDeliveryPoints(source : _CIM::IEC61968::Metering::ServiceDeliveryPoint) : _mjtrace::ref_ServiceDeliveryPoint_ServiceDeliveryPoint_ServiceDeliveryPoints {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for PowerCutNonConformLoad
+
+-- set the links for "LoadGroup" if instances already exist
+mapping inout _jointarget::PowerCutNonConformLoad::update_keepOutgoing_LoadGroup(elem : _jointarget::NonConformLoadGroup) {
+	self.LoadGroup:=elem;
+}
+
+-- set the links for "LoadGroup" if instances have to be created
+mapping inout _jointarget::PowerCutNonConformLoad::update_keepOutgoing_and_create_LoadGroup(elem : _CIM::IEC61970::LoadModel::NonConformLoadGroup) {
+	self.LoadGroup:=elem.map LoadGroup_NonConformLoadGroup_to_NonConformLoadGroup();
+}
+
+-- create instances of the type of "LoadGroup"
+mapping _CIM::IEC61970::LoadModel::NonConformLoadGroup::LoadGroup_NonConformLoadGroup_to_NonConformLoadGroup() : _jointarget::NonConformLoadGroup {
+}
+
+mapping _jointarget::NonConformLoadGroup::trace_keepOutgoing_LoadGroup(source : _CIM::IEC61970::LoadModel::NonConformLoadGroup) : _mjtrace::ref_NonConformLoadGroup_NonConformLoadGroup_LoadGroup {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for PowerCutNonConformLoad
+
+-- set the links for "ServiceDeliveryPoints" if instances already exist
+mapping inout _jointarget::PowerCutNonConformLoad::update_keepOutgoing_ServiceDeliveryPoints(elem : _jointarget::ServiceDeliveryPoint) {
+	self.ServiceDeliveryPoints+=elem;
+}
+
+-- set the links for "ServiceDeliveryPoints" if instances have to be created
+mapping inout _jointarget::PowerCutNonConformLoad::update_keepOutgoing_and_create_ServiceDeliveryPoints(elem : _CIM::IEC61968::Metering::ServiceDeliveryPoint) {
+	self.ServiceDeliveryPoints+=elem.map ServiceDeliveryPoints_ServiceDeliveryPoint_to_ServiceDeliveryPoint();
+}
+
+-- create instances of the type of "ServiceDeliveryPoints"
+/*mapping _CIM::IEC61968::Metering::ServiceDeliveryPoint::ServiceDeliveryPoints_ServiceDeliveryPoint_to_ServiceDeliveryPoint() : _jointarget::ServiceDeliveryPoint {
+}
+
+mapping _jointarget::ServiceDeliveryPoint::trace_keepOutgoing_ServiceDeliveryPoints(source : _CIM::IEC61968::Metering::ServiceDeliveryPoint) : _mjtrace::ref_ServiceDeliveryPoint_ServiceDeliveryPoint_ServiceDeliveryPoints {
+	result.source := source;
+	result.target := self;
+}*/
+
+-- mappings for ConformLoadGroup
+
+-- set the links for "SubLoadArea" if instances already exist
+mapping inout _jointarget::ConformLoadGroup::update_keepOutgoing_SubLoadArea(elem : _jointarget::SubLoadArea) {
+	self.SubLoadArea:=elem;
+}
+
+-- set the links for "SubLoadArea" if instances have to be created
+mapping inout _jointarget::ConformLoadGroup::update_keepOutgoing_and_create_SubLoadArea(elem : _CIM::IEC61970::LoadModel::SubLoadArea) {
+	self.SubLoadArea:=elem.map SubLoadArea_SubLoadArea_to_SubLoadArea();
+}
+
+-- create instances of the type of "SubLoadArea"
+mapping _CIM::IEC61970::LoadModel::SubLoadArea::SubLoadArea_SubLoadArea_to_SubLoadArea() : _jointarget::SubLoadArea {
+}
+
+mapping _jointarget::SubLoadArea::trace_keepOutgoing_SubLoadArea(source : _CIM::IEC61970::LoadModel::SubLoadArea) : _mjtrace::ref_SubLoadArea_SubLoadArea_SubLoadArea {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for SubLoadArea
+
+-- set the links for "LoadArea" if instances already exist
+mapping inout _jointarget::SubLoadArea::update_keepOutgoing_LoadArea(elem : _jointarget::LoadArea) {
+	self.LoadArea:=elem;
+}
+
+-- set the links for "LoadArea" if instances have to be created
+mapping inout _jointarget::SubLoadArea::update_keepOutgoing_and_create_LoadArea(elem : _CIM::IEC61970::LoadModel::LoadArea) {
+	self.LoadArea:=elem.map LoadArea_LoadArea_to_LoadArea();
+}
+
+-- create instances of the type of "LoadArea"
+mapping _CIM::IEC61970::LoadModel::LoadArea::LoadArea_LoadArea_to_LoadArea() : _jointarget::LoadArea {
+}
+
+mapping _jointarget::LoadArea::trace_keepOutgoing_LoadArea(source : _CIM::IEC61970::LoadModel::LoadArea) : _mjtrace::ref_LoadArea_LoadArea_LoadArea {
+	result.source := source;
+	result.target := self;
+}
+
+-- mappings for LoadArea
+
+-- set the links for "ControlArea" if instances already exist
+mapping inout _jointarget::LoadArea::update_keepOutgoing_ControlArea(elem : _jointarget::ControlArea) {
+	self.ControlArea:=elem;
+}
+
+-- set the links for "ControlArea" if instances have to be created
+mapping inout _jointarget::LoadArea::update_keepOutgoing_and_create_ControlArea(elem : _CIM::IEC61970::ControlArea::ControlArea) {
+	self.ControlArea:=elem.map ControlArea_ControlArea_to_ControlArea();
+}
+
+-- create instances of the type of "ControlArea"
+/*mapping _CIM::IEC61970::ControlArea::ControlArea::ControlArea_ControlArea_to_ControlArea() : _jointarget::ControlArea {
+}
+
+mapping _jointarget::ControlArea::trace_keepOutgoing_ControlArea(source : _CIM::IEC61970::ControlArea::ControlArea) : _mjtrace::ref_ControlArea_ControlArea_ControlArea {
+	result.source := source;
+	result.target := self;
+}*/
+
+-- mappings for NonConformLoadGroup
+
+-- set the links for "SubLoadArea" if instances already exist
+mapping inout _jointarget::NonConformLoadGroup::update_keepOutgoing_SubLoadArea(elem : _jointarget::SubLoadArea) {
+	self.SubLoadArea:=elem;
+}
+
+-- set the links for "SubLoadArea" if instances have to be created
+mapping inout _jointarget::NonConformLoadGroup::update_keepOutgoing_and_create_SubLoadArea(elem : _CIM::IEC61970::LoadModel::SubLoadArea) {
+	self.SubLoadArea:=elem.map SubLoadArea_SubLoadArea_to_SubLoadArea();
+}
+
+-- create instances of the type of "SubLoadArea"
+/*mapping _CIM::IEC61970::LoadModel::SubLoadArea::SubLoadArea_SubLoadArea_to_SubLoadArea() : _jointarget::SubLoadArea {
+}
+
+mapping _jointarget::SubLoadArea::trace_keepOutgoing_SubLoadArea(source : _CIM::IEC61970::LoadModel::SubLoadArea) : _mjtrace::ref_SubLoadArea_SubLoadArea_SubLoadArea {
+	result.source := source;
+	result.target := self;
+}*/
+
+
+-- ##
+-- # Keep incoming Mappings
+-- ##
+-- ##
+-- # Keep attribute Mappings
+-- ##
+mapping inout _jointarget::PowerCutConformLoad::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::PowerCutNonConformLoad::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::ServiceDeliveryPoint::update_attribute_ratedPower(attValue : Real) {
+	self.ratedPower:=attValue;
+}
+
+-- ##
+-- # Keep calculated Mappings
+-- ##
+mapping inout _jointarget::GeneratingUnit::update_attribute_ID(leftElement : _CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit, rightElement : _substationStandard::LNNodes::LNGroupZ::ZGEN) {
+	self.ID:=leftElement.GeneratingUnit.mRID;
+}
+mapping inout _jointarget::GeneratingUnit::update_attribute_DemandedPower(leftElement : _CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit, rightElement : _substationStandard::LNNodes::LNGroupZ::ZGEN) {
+	self.DemandedPower:=rightElement.DmdPwr.setMag.f;
+}
+mapping inout _jointarget::GeneratingUnit::update_attribute_ControlState(leftElement : _CIM::IEC61970::ControlArea::ControlAreaGeneratingUnit, rightElement : _substationStandard::LNNodes::LNGroupZ::ZGEN) {
+	self.ControlState:=rightElement.GnCtl.ctlVal.oclAsType(String);
+}
+mapping inout _jointarget::PowerCutConformLoad::update_attribute_LoadShedding(leftElement : _CIM::IEC61970::LoadModel::ConformLoad, rightElement : _CIM::IEC61970::LoadModel::ConformLoad) {
+	self.LoadShedding:='0';
+}
+mapping inout _jointarget::PowerCutNonConformLoad::update_attribute_LoadShedding(leftElement : _CIM::IEC61970::LoadModel::NonConformLoad, rightElement : _CIM::IEC61970::LoadModel::NonConformLoad) {
+	self.LoadShedding:='0';
+}
+mapping inout _jointarget::ControlArea::update_attribute_ImportFrom(sourceElement : _CIM::IEC61970::ControlArea::ControlArea) {
+	self.ImportFrom:='ID1';
+}		
+mapping inout _jointarget::ControlArea::update_attribute_ExportTo(sourceElement : _CIM::IEC61970::ControlArea::ControlArea) {
+	self.ExportTo:='ID2';
+}		
+
+
+
+-- ##
+-- # Keep aggregate Mappings
+-- ##

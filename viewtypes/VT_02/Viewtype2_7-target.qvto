@@ -1,0 +1,285 @@
+/* Generated ModelJoin transformation 
+ *
+ */
+transformation M1toM2(
+in __Viewtype2_6_target: _Viewtype2_6_target, 
+out __jointarget: _jointarget,
+out __mjtrace: _mjtrace);	
+	
+// source metamodels
+modeltype _Viewtype2_6_target uses "BalancingViewtype7";
+// target metamodel
+modeltype _jointarget uses "BalancingViewtype8";
+// trace metamodel
+modeltype _mjtrace uses "BalancingViewtype8.trace";
+	
+//alway import ecore
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+main() {
+-- ###
+-- # operations for target class ControlArea
+-- ##
+
+-- get all elements of of type ControlArea and ControlArea
+var leftAllControlArea = __Viewtype2_6_target.objectsOfType(_Viewtype2_6_target::ControlArea);
+var rightAllControlArea = __Viewtype2_6_target.objectsOfType(_Viewtype2_6_target::ControlArea);
+
+-- theta join operation
+rightAllControlArea->forEach(rightControlArea) {
+	leftAllControlArea->map thetaJoin_ControlArea_ControlArea_To_ControlArea(rightControlArea);
+};
+
+
+
+
+
+	-- keep attributes
+	var keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02 = __jointarget.objectsOfType(_jointarget::ControlArea);
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_CIM::IEC61970::Core::IdentifiedObject);
+				elem.map update_attribute_mRID(sourceClass.mRID)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_1_target::ControlAreaGeneratingUnit);
+				elem.map update_attribute_NuclearPowerProd(sourceClass.NuclearPowerProd)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_1_target::ControlAreaGeneratingUnit);
+				elem.map update_attribute_WindPowerProd(sourceClass.WindPowerProd)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_1_target::ControlAreaGeneratingUnit);
+				elem.map update_attribute_HydroPowerProd(sourceClass.HydroPowerProd)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_1_target::ControlAreaGeneratingUnit);
+				elem.map update_attribute_FossilPowerProd(sourceClass.FossilPowerProd)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_3_target::ControlArea);
+				elem.map update_attribute_SolarPowerProd(sourceClass.SolarPowerProd)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_4_target::LoadArea);
+				elem.map update_attribute_PowerExport(sourceClass.PowerExport)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_4_target::LoadArea);
+				elem.map update_attribute_PowerImport(sourceClass.PowerImport)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_6_target::ControlArea);
+				elem.map update_attribute_AllPowerProd(sourceClass.AllPowerProd)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_6_target::ControlArea);
+				elem.map update_attribute_Difference(sourceClass.Difference)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_6_target::ControlArea);
+				elem.map update_attribute_GeneratorEstimation(sourceClass.GeneratorEstimation)	
+				};
+			keepAttControlArea_1b85b438_c4d3_4811_80d6_1d699e323c02->forEach(elem) {
+				var sourceClass = elem.invresolveone(_Viewtype2_5_target::LoadArea);
+				elem.map update_attribute_estimatedLoad(sourceClass.estimatedLoad)	
+				};
+
+
+
+	-- keep calculated
+	var keepAttControlArea_c418acfc_def5_40a3_b580_373e45f7143f = __jointarget.objectsOfType(_jointarget::ControlArea);
+keepAttControlArea_c418acfc_def5_40a3_b580_373e45f7143f->forEach(elem) {
+	var leftElement = elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	var rightElement =  elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	elem.map update_attribute_SolarPowerProd(leftElement, rightElement)	
+	};
+keepAttControlArea_c418acfc_def5_40a3_b580_373e45f7143f->forEach(elem) {
+	var leftElement = elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	var rightElement =  elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	elem.map update_attribute_AllPowerProd(leftElement, rightElement)	
+	};
+keepAttControlArea_c418acfc_def5_40a3_b580_373e45f7143f->forEach(elem) {
+	var leftElement = elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	var rightElement =  elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	elem.map update_attribute_Difference(leftElement, rightElement)	
+	};
+keepAttControlArea_c418acfc_def5_40a3_b580_373e45f7143f->forEach(elem) {
+	var leftElement = elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	var rightElement =  elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	elem.map update_attribute_GeneratorEstimation(leftElement, rightElement)	
+	};
+keepAttControlArea_c418acfc_def5_40a3_b580_373e45f7143f->forEach(elem) {
+	var leftElement = elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	var rightElement =  elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	elem.map update_attribute_LoadDifference(leftElement, rightElement)	
+	};
+keepAttControlArea_c418acfc_def5_40a3_b580_373e45f7143f->forEach(elem) {
+	var leftElement = elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	var rightElement =  elem.invresolveone(_Viewtype2_6_target::ControlArea);
+	elem.map update_attribute_GeneratorDifference(leftElement, rightElement)	
+	};
+
+
+
+	-- keep aggregates
+	var keepAggControlArea_5c6b3876_11b7_4156_a6da_7ab04a311e55 = __jointarget.objectsOfType(_jointarget::ControlArea);
+keepAggControlArea_5c6b3876_11b7_4156_a6da_7ab04a311e55->forEach(elem) {
+	elem.map update_attribute_NuclearPowerProd(elem.invresolveone(_Viewtype2_1_target::ControlArea))	
+	};
+keepAggControlArea_5c6b3876_11b7_4156_a6da_7ab04a311e55->forEach(elem) {
+	elem.map update_attribute_WindPowerProd(elem.invresolveone(_Viewtype2_1_target::ControlArea))	
+	};
+keepAggControlArea_5c6b3876_11b7_4156_a6da_7ab04a311e55->forEach(elem) {
+	elem.map update_attribute_HydroPowerProd(elem.invresolveone(_Viewtype2_1_target::ControlArea))	
+	};
+keepAggControlArea_5c6b3876_11b7_4156_a6da_7ab04a311e55->forEach(elem) {
+	elem.map update_attribute_FossilPowerProd(elem.invresolveone(_Viewtype2_1_target::ControlArea))	
+	};
+keepAggControlArea_5c6b3876_11b7_4156_a6da_7ab04a311e55->forEach(elem) {
+	elem.map update_attribute_PowerExport(elem.invresolveone(_Viewtype2_4_target::ControlArea))	
+	};
+keepAggControlArea_5c6b3876_11b7_4156_a6da_7ab04a311e55->forEach(elem) {
+	elem.map update_attribute_PowerImport(elem.invresolveone(_Viewtype2_4_target::ControlArea))	
+	};
+keepAggControlArea_5c6b3876_11b7_4156_a6da_7ab04a311e55->forEach(elem) {
+	elem.map update_attribute_estimatedLoad(elem.invresolveone(_Viewtype2_5_target::ControlArea))	
+	};
+
+	}
+	
+-- ##
+-- # Natural Join Mappings
+-- ##
+
+-- ##
+-- # Left Outer Join Mappings
+-- ##
+	
+-- ##
+-- # Theta Join Mappings
+-- ##
+
+-- mapping for ControlArea
+mapping _Viewtype2_6_target::ControlArea::thetaJoin_ControlArea_ControlArea_To_ControlArea(rightElement : _Viewtype2_6_target::ControlArea) : _jointarget::ControlArea 
+when {
+		true
+}
+{
+		-- create the target instances
+		end {
+			rightElement.map thetaJoin_update_ControlArea(result);
+			result.map thetaJoin_trace_ControlArea(self, rightElement)
+		}
+}
+
+-- additional mapping for the right element, so that it appears in the QVT mapping table (for resolve)
+mapping _Viewtype2_6_target::ControlArea::thetaJoin_update_ControlArea(rightElement : _jointarget::ControlArea) : _jointarget::ControlArea {
+	init {
+		result:=rightElement;
+	}
+}
+
+-- create the trace class instance
+mapping _jointarget::ControlArea::thetaJoin_trace_ControlArea(leftElement : _Viewtype2_6_target::ControlArea, rightElement : _Viewtype2_6_target::ControlArea) : _mjtrace::join_ControlArea_ControlArea_ControlArea {
+	left := leftElement;
+	right := rightElement;
+	target := self;
+}
+
+
+-- ##
+-- # Keep outgoing Mappings
+-- ##
+
+-- ##
+-- # Keep incoming Mappings
+-- ##
+-- ##
+-- # Keep attribute Mappings
+-- ##
+mapping inout _jointarget::ControlArea::update_attribute_mRID(attValue : String) {
+	self.mRID:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_NuclearPowerProd(attValue : Real) {
+	self.NuclearPowerProd:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_WindPowerProd(attValue : Real) {
+	self.WindPowerProd:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_HydroPowerProd(attValue : Real) {
+	self.HydroPowerProd:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_FossilPowerProd(attValue : Real) {
+	self.FossilPowerProd:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_SolarPowerProd(attValue : Real) {
+	self.SolarPowerProd:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_PowerExport(attValue : Real) {
+	self.PowerExport:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_PowerImport(attValue : Real) {
+	self.PowerImport:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_AllPowerProd(attValue : Real) {
+	self.AllPowerProd:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_Difference(attValue : Real) {
+	self.Difference:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_GeneratorEstimation(attValue : Real) {
+	self.GeneratorEstimation:=attValue;
+}
+mapping inout _jointarget::ControlArea::update_attribute_estimatedLoad(attValue : Real) {
+	self.estimatedLoad:=attValue;
+}
+
+-- ##
+-- # Keep calculated Mappings
+-- ##
+mapping inout _jointarget::ControlArea::update_attribute_SolarPowerProd(leftElement : _Viewtype2_6_target::ControlArea, rightElement : _Viewtype2_6_target::ControlArea) {
+	self.SolarPowerProd:=Viewtype2_2_target.ControlArea.AllPowerProd - Viewtype2_2_target.ControlArea.NuclearPowerProd - Viewtype2_2_target.ControlArea.WindPowerProd - Viewtype2_2_target.ControlArea.HydroPowerProd - Viewtype2_2_target.ControlArea.FossilPowerProd;
+}
+mapping inout _jointarget::ControlArea::update_attribute_AllPowerProd(leftElement : _Viewtype2_6_target::ControlArea, rightElement : _Viewtype2_6_target::ControlArea) {
+	self.AllPowerProd:=Viewtype2_5_target.ControlArea.AllPowerProd + Viewtype2_5_target.ControlArea.PowerExport;
+}
+mapping inout _jointarget::ControlArea::update_attribute_Difference(leftElement : _Viewtype2_6_target::ControlArea, rightElement : _Viewtype2_6_target::ControlArea) {
+	self.Difference:=Viewtype2_5_target.ControlArea.AllPowerProd + Viewtype2_5_target.ControlArea.PowerExport - Viewtype2_5_target.ControlArea.PowerImport;
+}
+mapping inout _jointarget::ControlArea::update_attribute_GeneratorEstimation(leftElement : _Viewtype2_6_target::ControlArea, rightElement : _Viewtype2_6_target::ControlArea) {
+	self.GeneratorEstimation:='10000';
+}
+mapping inout _jointarget::ControlArea::update_attribute_LoadDifference(leftElement : _Viewtype2_6_target::ControlArea, rightElement : _Viewtype2_6_target::ControlArea) {
+	self.LoadDifference:=leftElement.PowerImport - leftElement.estimatedLoad;
+}
+mapping inout _jointarget::ControlArea::update_attribute_GeneratorDifference(leftElement : _Viewtype2_6_target::ControlArea, rightElement : _Viewtype2_6_target::ControlArea) {
+	self.GeneratorDifference:=leftElement.AllPowerProd - leftElement.GeneratorEstimation;
+}
+
+
+
+-- ##
+-- # Keep aggregate Mappings
+-- ##
+mapping inout _jointarget::ControlArea::update_attribute_NuclearPowerProd(sourceObject : _Viewtype2_1_target::ControlArea) {
+	self.NuclearPowerProd:=sourceObject->ControlAreaGeneratingUnit->collect(a|a.NuclearPowerProd)->sum();
+}
+mapping inout _jointarget::ControlArea::update_attribute_WindPowerProd(sourceObject : _Viewtype2_1_target::ControlArea) {
+	self.WindPowerProd:=sourceObject->ControlAreaGeneratingUnit->collect(a|a.WindPowerProd)->sum();
+}
+mapping inout _jointarget::ControlArea::update_attribute_HydroPowerProd(sourceObject : _Viewtype2_1_target::ControlArea) {
+	self.HydroPowerProd:=sourceObject->ControlAreaGeneratingUnit->collect(a|a.HydroPowerProd)->sum();
+}
+mapping inout _jointarget::ControlArea::update_attribute_FossilPowerProd(sourceObject : _Viewtype2_1_target::ControlArea) {
+	self.FossilPowerProd:=sourceObject->ControlAreaGeneratingUnit->collect(a|a.FossilPowerProd)->sum();
+}
+mapping inout _jointarget::ControlArea::update_attribute_PowerExport(sourceObject : _Viewtype2_4_target::ControlArea) {
+	self.PowerExport:=sourceObject->EnergyArea->collect(a|a.PowerExport)->sum();
+}
+mapping inout _jointarget::ControlArea::update_attribute_PowerImport(sourceObject : _Viewtype2_4_target::ControlArea) {
+	self.PowerImport:=sourceObject->EnergyArea->collect(a|a.PowerImport)->sum();
+}
+mapping inout _jointarget::ControlArea::update_attribute_estimatedLoad(sourceObject : _Viewtype2_5_target::ControlArea) {
+	self.estimatedLoad:=sourceObject->EnergyArea->collect(a|a.estimatedLoad)->sum();
+}

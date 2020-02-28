@@ -1,0 +1,35 @@
+import "platform:/resource/CIM/model/61850.ecore"
+import "platform:/resource/CIM/model/schema.ecore"
+import "platform:/resource/CIM/model/COSEM.ecore"
+target "ConsumerMonitoringViewtype"
+
+theta join CIM.IEC61968.Metering.MeterAsset with COSEM.PhysicalDevice where "CIM.IEC61968.Metering.MeterAsset.mRID = COSEM.PhysicalDevice.ID" as jointarget.Meter {
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ApparentPowerMAll" as Meter.PowerImport:Double
+	keep calculated attribute "COSEM.PhysicalDevice.ElectricityValues.ApparentPowerPAll" as Meter.PowerExport:Double
+	keep outgoing CIM.IEC61968.Metering.EndDeviceAsset.ServiceDeliveryPoint as type jointarget.ServiceDeliveryPoint {
+		keep calculated attribute "CIM.IEC61968.Metering.EndDeviceAsset.ServiceDeliveryPoint.estimatedLoad" as ServiceDeliveryPoint.loadForecast:Double
+		keep calculated attribute "CIM.IEC61968.Metering.MeterAsset.ServiceDeliveryPoint.ratedPower" as ServiceDeliveryPoint.DeliveredPower:Double	
+		keep outgoing CIM.IEC61968.Metering.ServiceDeliveryPoint.EnergyConsumer as type jointarget.EnergyConsumer {
+			keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID,
+							CIM.IEC61970.Wires.EnergyConsumer.pfixed
+			keep subtype CIM.IEC61970.LoadModel.ConformLoad as type jointarget.ConformLoad {
+				keep outgoing CIM.IEC61970.LoadModel.ConformLoad.LoadGroup as type jointarget.ConformLoadGroup {
+					keep supertype CIM.IEC61970.LoadModel.LoadGroup as type jointarget.LoadGroup {
+						keep outgoing CIM.IEC61970.LoadModel.LoadGroup.SubLoadArea as type jointarget.SubLoadArea {
+							keep outgoing CIM.IEC61970.LoadModel.SubLoadArea.LoadArea as type jointarget.LoadArea {
+								keep outgoing CIM.IEC61970.LoadModel.EnergyArea.ControlArea as type jointarget.ControlArea {
+									keep attributes CIM.IEC61970.Core.IdentifiedObject.mRID
+								}
+							}
+						}
+					}
+				}
+			}
+			keep subtype CIM.IEC61970.LoadModel.NonConformLoad as type jointarget.NonConformLoad {
+				keep outgoing CIM.IEC61970.LoadModel.NonConformLoad.LoadGroup as type jointarget.NonConformLoadGroup {
+					keep supertype CIM.IEC61970.LoadModel.LoadGroup as type jointarget.LoadGroup
+				}
+			}
+		}
+	}
+}

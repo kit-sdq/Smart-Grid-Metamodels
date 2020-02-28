@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jt:root xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jt="loadShedding_GeneratorControl"
+    xsi:schemaLocation="loadShedding_GeneratorControl Viewtype4-target.ecore">
+  <SubLoadArea/>
+  <ConformLoadGroup/>
+  <ControlArea
+      mRID="AmprionControlArea"
+      ExportTo="Hertz50ControlArea"/>
+  <GeneratingUnit
+      ControlArea="//@ControlArea.0"
+      ID="_5832402"
+      DemandedPower="1467.0"
+      ControlState="running"/>
+</jt:root>

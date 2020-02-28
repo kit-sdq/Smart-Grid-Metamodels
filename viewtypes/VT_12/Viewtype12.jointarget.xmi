@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jt:root xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jt="ControlAreaOverview"
+    xsi:schemaLocation="ControlAreaOverview Viewtype12-target.ecore">
+  <ConductingEquipment
+      mRID="_688372"/>
+  <ConductingEquipment
+      mRID="_527234"/>
+  <ConductingEquipment
+      mRID="_091821"/>
+  <Terminal
+      ConductingEquipment="//@ConductingEquipment.0"/>
+  <Terminal
+      ConductingEquipment="//@ConductingEquipment.1"/>
+  <Terminal
+      ConductingEquipment="//@ConductingEquipment.2"/>
+  <TieFlow Terminal="//@Terminal.0"/>
+  <TieFlow Terminal="//@Terminal.1"/>
+  <TieFlow Terminal="//@Terminal.2"/>
+  <GeneratingUnit
+      mRID="_572452"/>
+  <ControlAreaGeneratingUnit
+      GeneratingUnit="//@GeneratingUnit.0"/>
+  <NonConformLoad
+      mRID="_472734"/>
+  <NonConformLoad
+      mRID="_092342"/>
+  <NonConformLoad
+      mRID="_923442"/>
+  <NonConformLoadGroup
+      EnergyConsumers="//@NonConformLoad.0 //@NonConformLoad.1 //@NonConformLoad.2"/>
+  <ConformLoad
+      mRID="_283424"/>
+  <ConformLoad
+      mRID="_927342"/>
+  <ConformLoad
+      mRID="_273462"/>
+  <ConformLoadGroup
+      EnergyConsumers="//@ConformLoad.0 //@ConformLoad.1 //@ConformLoad.2"/>
+  <SubLoadArea
+      LoadGroups="//@NonConformLoadGroup.0 //@ConformLoadGroup.0"/>
+  <LoadArea
+      SubLoadAreas="//@SubLoadArea.0"/>
+  <ControlArea
+      EnergyArea="//@LoadArea.0"
+      ControlAreaGeneratingUnit="//@ControlAreaGeneratingUnit.0"
+      TieFlow="//@TieFlow.0 //@TieFlow.1 //@TieFlow.2"
+      mRID="EnBWControlArea"/>
+</jt:root>

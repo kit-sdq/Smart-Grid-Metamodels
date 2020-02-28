@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jt:ControlArea
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jt="BalancingViewtype8"
+    xsi:schemaLocation="BalancingViewtype8 Viewtype2_7-target.ecore"
+    mRID="Hertz50ControlArea"
+    NuclearPowerProd="1400.0"
+    WindPowerProd="50.0"
+    HydroPowerProd="400.0"
+    FossilPowerProd="1600.0"
+    SolarPowerProd="30.0"
+    PowerExport="20.0"
+    PowerImport="3200.0"
+    AllPowerProd="3500.0"
+    Difference="300.0"
+    GeneratorEstimation="4000.0"
+    estimatedLoad="3400.0"
+    LoadDifference="200.0"
+    GeneratorDifference="500.0"/>
